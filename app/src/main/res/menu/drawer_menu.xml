@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_favorite"
+            android:title="Favorite" />
+        <item android:title="Configuration">
+            <menu>
+                <item
+                    android:id="@+id/nav_compte"
+                    android:title="Account" />
+                <item
+                    android:id="@+id/nav_modepaiment"
+                    android:title="Method of payment" />
+                <item
+                    android:id="@+id/nav_setting"
+                    android:title="Settings"
+                    />
+            </menu>
+        </item>
+
+        <item android:title="Edikel information">
+            <menu>
+                <item
+                    android:id="@+id/nav_help_comment"
+                    android:title="Help and Comments" />
+                <item
+                    android:id="@+id/nav_about_us"
+                    android:title="About Edikel" />
+                <item
+                    android:id="@+id/nav_quit"
+                    android:title="Quit" />
+            </menu>
+        </item>
+    </group>
+</menu>
