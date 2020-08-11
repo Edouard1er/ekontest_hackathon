@@ -1,5 +1,8 @@
 package com.example.ekontest_hackathon.ui;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,9 +11,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.example.ekontest_hackathon.R;
 import com.example.ekontest_hackathon.ui.about_us.AboutUsFragment;
@@ -36,6 +36,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         setContentView(R.layout.activity_nav_drawer);
         mDrawerLayout = findViewById(R.id.nav_drawer_activity);
         mToolbar = findViewById(R.id.toolbar);
+
       //  setSupportActionBar(mToolbar);
         mNavigationView = findViewById(R.id.navigationView);
         mNavigationView.setNavigationItemSelectedListener(this);
@@ -43,14 +44,16 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
         mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         mActionBarDrawerToggle.syncState();
+        //NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        //NavigationUI.setupWithNavController(navigationView, navController);
 
         // load default fragment
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.add(R.id.container_fragment, new HomeFragment());
         mFragmentTransaction.commit();
+        mToolbar.setTitle("Home");
     }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -60,6 +63,8 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
             mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.container_fragment, new HomeFragment());
             mFragmentTransaction.commit();
+            mToolbar.setTitle("Home");
+
         }
 
         if (menuItem.getItemId() == R.id.nav_favorite) {
@@ -68,6 +73,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
             mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.container_fragment, new FavoriteFragment());
             mFragmentTransaction.commit();
+            mToolbar.setTitle("Favorite");
         }
 
         switch (menuItem.getItemId()) {
@@ -76,6 +82,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_fragment, new AccountFragment());
                 mFragmentTransaction.commit();
+                mToolbar.setTitle("Account");
                 break;
             }
 
@@ -84,6 +91,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_fragment, new AboutUsFragment());
                 mFragmentTransaction.commit();
+                mToolbar.setTitle("About PwòfPam");
                 break;
             }
 
@@ -92,9 +100,11 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_fragment, new HelpCommentFragment());
                 mFragmentTransaction.commit();
+                mToolbar.setTitle("Help and Comment");
                 break;
             }
             case R.id.nav_quit: {
+                mToolbar.setTitle("Quit");
                 break;
             }
 
@@ -103,6 +113,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_fragment, new PaymentMethodFragment());
                 mFragmentTransaction.commit();
+                mToolbar.setTitle("Method of Payment");
                 break;
             }
 
@@ -111,6 +122,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_fragment, new SettingFragment());
                 mFragmentTransaction.commit();
+                mToolbar.setTitle("Setting");
                 break;
             }
         }

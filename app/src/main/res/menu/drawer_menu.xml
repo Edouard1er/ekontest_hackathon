@@ -29,7 +29,7 @@
             </menu>
         </item>
 
-        <item android:title="Edikel information">
+        <item android:title="PwòfPam information">
             <menu>
                 <item
                     android:id="@+id/nav_help_comment"
@@ -38,7 +38,7 @@
                     />
                 <item
                     android:id="@+id/nav_about_us"
-                    android:title="About Edikel"
+                    android:title="About PwòfPam"
                     android:icon="@drawable/about"/>
                 <item
                     android:id="@+id/nav_quit"
