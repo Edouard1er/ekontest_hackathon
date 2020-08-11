@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="bleu_fonce">#021C41</color>
+
+    <color name="red">#F61459</color>
+
+
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#D3D3D3</color>
+    <color name="black">#000000</color>
+    <color name="red_transparent">#AAF61459</color>
+    <color name="bleu_fonce_transparent">#88021C41</color>
+
+    //Color for firebase login custom theme
+    <color name="material_blue_50"> #ffffff</color>
+    <color name="material_blue_500">#0761df</color>
+    <color name="material_blue_700"> #0656c6</color>
+    <color name="material_blue_a200">  #ffffff</color>
+    <color name="material_lime_a700">#04367c</color>
+    <color name="material_purple_a700"> #F61459</color>
 </resources>

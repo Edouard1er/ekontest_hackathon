@@ -5,21 +5,26 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="Home" />
+            android:title="Home"
+            android:icon="@drawable/home_blue"/>
         <item
             android:id="@+id/nav_favorite"
-            android:title="Favorite" />
+            android:title="Favorite"
+            android:icon="@drawable/favorite_star_blue"/>
         <item android:title="Configuration">
             <menu>
                 <item
                     android:id="@+id/nav_compte"
-                    android:title="Account" />
+                    android:title="Account"
+                    android:icon="@drawable/account"/>
                 <item
                     android:id="@+id/nav_modepaiment"
-                    android:title="Method of payment" />
+                    android:title="Method of payment"
+                    android:icon="@drawable/payment"/>
                 <item
                     android:id="@+id/nav_setting"
                     android:title="Settings"
+                    android:icon="@drawable/settings_blue"
                     />
             </menu>
         </item>
@@ -28,13 +33,17 @@
             <menu>
                 <item
                     android:id="@+id/nav_help_comment"
-                    android:title="Help and Comments" />
+                    android:title="Help and Comments"
+                    android:icon="@drawable/question"
+                    />
                 <item
                     android:id="@+id/nav_about_us"
-                    android:title="About Edikel" />
+                    android:title="About Edikel"
+                    android:icon="@drawable/about"/>
                 <item
                     android:id="@+id/nav_quit"
-                    android:title="Quit" />
+                    android:title="Quit"
+                    android:icon="@drawable/quit"/>
             </menu>
         </item>
     </group>
