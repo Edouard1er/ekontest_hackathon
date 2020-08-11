@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimDateProgramList">15sp</dimen>
+    <dimen name="dimNameProgramList">25sp</dimen>
+    <dimen name="dimAddressProgramList">22sp</dimen>
+    <dimen name="dimFaShProgramList">35dp</dimen>
+    <dimen name="dimFaShProgramListMargin">130dp</dimen>
+
+    <dimen name="dimImgProgramListWidth">130dp</dimen>
+    <dimen name="dimImgProgramListHeight">130dp</dimen>
+
+    <dimen name="dimMarginLeftShareProgramList">10dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+</resources>
