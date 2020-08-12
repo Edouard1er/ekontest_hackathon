@@ -1,4 +1,4 @@
-package com.example.ekontest_hackathon;
+package com.example.ekontest_hackathon.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.ekontest_hackathon.R;
-import com.example.ekontest_hackathon.ui.NavDrawerActivity;
 
 public class MainActivity extends AppCompatActivity {
 
