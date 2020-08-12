@@ -64,9 +64,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
             mFragmentTransaction.replace(R.id.container_fragment, new HomeFragment());
             mFragmentTransaction.commit();
             mToolbar.setTitle("Homepage");
-
         }
-
         if (menuItem.getItemId() == R.id.nav_favorite) {
             // load dashboard fragment
             mFragmentManager = getSupportFragmentManager();
