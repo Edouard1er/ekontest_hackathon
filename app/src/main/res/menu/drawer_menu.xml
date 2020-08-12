@@ -1,50 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:title="Home"
-            android:icon="@drawable/home_blue"/>
-        <item
-            android:id="@+id/nav_favorite"
-            android:title="Favorite"
-            android:icon="@drawable/favorite_star_blue"/>
-        <item android:title="Configuration">
-            <menu>
-                <item
-                    android:id="@+id/nav_compte"
-                    android:title="Account"
-                    android:icon="@drawable/account"/>
-                <item
-                    android:id="@+id/nav_modepaiment"
-                    android:title="Method of payment"
-                    android:icon="@drawable/payment"/>
-                <item
-                    android:id="@+id/nav_setting"
-                    android:title="Settings"
-                    android:icon="@drawable/settings_blue"
-                    />
-            </menu>
-        </item>
+    <menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:showIn="navigation_view">
+        <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_home"
+                android:title="Home"
+                android:icon="@drawable/home_blue"/>
+            <item
+                android:id="@+id/nav_favorite"
+                android:title="Favorite"
+                android:icon="@drawable/favorite_star_blue"/>
 
-        <item android:title="PwòfPam information">
-            <menu>
-                <item
-                    android:id="@+id/nav_help_comment"
-                    android:title="Help and Comments"
-                    android:icon="@drawable/question"
-                    />
-                <item
-                    android:id="@+id/nav_about_us"
-                    android:title="About PwòfPam"
-                    android:icon="@drawable/about"/>
-                <item
-                    android:id="@+id/nav_quit"
-                    android:title="Quit"
-                    android:icon="@drawable/quit"/>
-            </menu>
-        </item>
-    </group>
-</menu>
+            <item android:title="Configuration">
+                <menu>
+                    <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_compte"
+                        android:title="Account"
+                        android:icon="@drawable/account"/>
+                    <item
+                        android:id="@+id/nav_modepaiment"
+                        android:title="Method of payment"
+                        android:icon="@drawable/payment"/>
+                    <item
+                        android:id="@+id/nav_setting"
+                        android:title="Settings"
+                        android:icon="@drawable/settings_blue"
+                        />
+                    </group>
+                </menu>
+            </item>
+
+            <item android:title="PwòfPam information">
+                <menu>
+                    <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_help_comment"
+                        android:title="Help and Comments"
+                        android:icon="@drawable/question"
+                        />
+                    <item
+                        android:id="@+id/nav_about_us"
+                        android:title="About PwòfPam"
+                        android:icon="@drawable/about"/>
+                    <item
+                        android:id="@+id/nav_quit"
+                        android:title="Quit"
+                        android:icon="@drawable/quit"/>
+                    </group>
+                </menu>
+            </item>
+        </group>
+    </menu>
