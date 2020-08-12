@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/bottom_search"
+        android:id="@+id/bottom_search_fl"
         android:icon="@drawable/search_icon"
         android:title="Search" />
     <item
-        android:id="@+id/bottom_freelancer"
+        android:id="@+id/bottom_freelancer_fl"
         android:icon="@drawable/list"
         android:title="Frelancers" />
     <item
-        android:id="@+id/bottom_student"
+        android:id="@+id/bottom_student_fl"
         android:icon="@drawable/students"
         android:title="Students" />
     <item
-        android:id="@+id/bottom_message"
+        android:id="@+id/bottom_message_fl"
         android:icon="@drawable/message"
         android:title="Message" />
     <item
-        android:id="@+id/bottom_document"
+        android:id="@+id/bottom_document_fl"
         android:icon="@drawable/file_explorer"
         android:title="Documents" />
 

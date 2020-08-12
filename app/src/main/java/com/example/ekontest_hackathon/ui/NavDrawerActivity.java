@@ -22,7 +22,7 @@ import com.example.ekontest_hackathon.ui.payment.PaymentMethodFragment;
 import com.example.ekontest_hackathon.ui.setting.SettingFragment;
 import com.google.android.material.navigation.NavigationView;
 
-public class NavDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class NavDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.onItemBottomMenuSelected {
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mActionBarDrawerToggle;
     Toolbar mToolbar;
@@ -52,7 +52,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.add(R.id.container_fragment, new HomeFragment());
         mFragmentTransaction.commit();
-        mToolbar.setTitle("Home");
+        mToolbar.setTitle("Homepage");
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -63,7 +63,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
             mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.container_fragment, new HomeFragment());
             mFragmentTransaction.commit();
-            mToolbar.setTitle("Home");
+            mToolbar.setTitle("Homepage");
 
         }
 
@@ -127,5 +127,11 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
             }
         }
         return true;
+    }
+
+    @Override
+    public void toolBarTitle(String fragment) {
+        mToolbar = findViewById(R.id.toolbar);
+        mToolbar.setTitle(fragment);
     }
 }
