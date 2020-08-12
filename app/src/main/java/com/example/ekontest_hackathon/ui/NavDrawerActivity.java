@@ -1,5 +1,7 @@
 package com.example.ekontest_hackathon.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -9,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -54,51 +57,43 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         mFragmentTransaction.commit();
         mToolbar.setTitle("Homepage");
     }
+
+    @Override
+    public void onBackPressed() {
+        mToolbar.findViewById(R.id.toolbar);
+        switch (mToolbar.getTitle().toString()){
+            default:{
+                setFragmentChange("Homepage", new HomeFragment());
+                break;
+            }
+        }
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
         if (menuItem.getItemId() == R.id.nav_home) {
             // load home fragment
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.container_fragment, new HomeFragment());
-            mFragmentTransaction.commit();
-            mToolbar.setTitle("Homepage");
+            setFragmentChange("Homepage", new HomeFragment());
         }
         if (menuItem.getItemId() == R.id.nav_favorite) {
             // load dashboard fragment
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.container_fragment, new FavoriteFragment());
-            mFragmentTransaction.commit();
-            mToolbar.setTitle("Favorite");
+            setFragmentChange("Favorite", new FavoriteFragment());
         }
 
         switch (menuItem.getItemId()) {
             case R.id.nav_compte: {
-                mFragmentManager = getSupportFragmentManager();
-                mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.container_fragment, new AccountFragment());
-                mFragmentTransaction.commit();
-                mToolbar.setTitle("Account");
+                setFragmentChange("Account", new AccountFragment());
                 break;
             }
 
             case R.id.nav_about_us: {
-                mFragmentManager = getSupportFragmentManager();
-                mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.container_fragment, new AboutUsFragment());
-                mFragmentTransaction.commit();
-                mToolbar.setTitle("About PwòfPam");
+                setFragmentChange("About PwòfPam", new AboutUsFragment());
                 break;
             }
 
             case R.id.nav_help_comment: {
-                mFragmentManager = getSupportFragmentManager();
-                mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.container_fragment, new HelpCommentFragment());
-                mFragmentTransaction.commit();
-                mToolbar.setTitle("Help and Comment");
+                setFragmentChange("Help and Comments", new HelpCommentFragment());
                 break;
             }
             case R.id.nav_quit: {
@@ -107,29 +102,58 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
             }
 
             case R.id.nav_modepaiment: {
-                mFragmentManager = getSupportFragmentManager();
-                mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.container_fragment, new PaymentMethodFragment());
-                mFragmentTransaction.commit();
-                mToolbar.setTitle("Method of Payment");
+                setFragmentChange("Method of Payment", new PaymentMethodFragment());
                 break;
             }
 
             case R.id.nav_setting: {
-                mFragmentManager = getSupportFragmentManager();
-                mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.container_fragment, new SettingFragment());
-                mFragmentTransaction.commit();
-                mToolbar.setTitle("Setting");
+                setFragmentChange("Setting", new SettingFragment());
                 break;
             }
         }
         return true;
+    }
+    public void setFragmentChange (String name, Fragment fragment){
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction.replace(R.id.container_fragment, fragment);
+        mFragmentTransaction.commit();
+        toolBarTitle(name);
     }
 
     @Override
     public void toolBarTitle(String fragment) {
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitle(fragment);
+    }
+    public  void message(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Exit");
+        // set message
+        builder.setMessage("Do you really want to exit PwòfPam ?");
+        // set icon
+        builder.setIcon(R.drawable.quit);
+        // set cancelable
+        builder.setCancelable(true);
+        // set Yes and No button
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                System.exit(0);
+
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        // create dialog
+        AlertDialog alertDialog = builder.create();
+        // show dialog
+        alertDialog.show();
+
     }
 }
