@@ -47,9 +47,6 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
         mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         mActionBarDrawerToggle.syncState();
-        //NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        //NavigationUI.setupWithNavController(navigationView, navController);
-
         // load default fragment
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
@@ -57,41 +54,38 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         mFragmentTransaction.commit();
         mToolbar.setTitle("Homepage");
     }
-
     @Override
     public void onBackPressed() {
         mToolbar.findViewById(R.id.toolbar);
         switch (mToolbar.getTitle().toString()){
+            case "Homepage":{
+                message();
+                break;
+            }
             default:{
                 setFragmentChange("Homepage", new HomeFragment());
                 break;
             }
         }
     }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
         if (menuItem.getItemId() == R.id.nav_home) {
-            // load home fragment
             setFragmentChange("Homepage", new HomeFragment());
         }
         if (menuItem.getItemId() == R.id.nav_favorite) {
-            // load dashboard fragment
             setFragmentChange("Favorite", new FavoriteFragment());
         }
-
         switch (menuItem.getItemId()) {
             case R.id.nav_compte: {
                 setFragmentChange("Account", new AccountFragment());
                 break;
             }
-
             case R.id.nav_about_us: {
                 setFragmentChange("About PwòfPam", new AboutUsFragment());
                 break;
             }
-
             case R.id.nav_help_comment: {
                 setFragmentChange("Help and Comments", new HelpCommentFragment());
                 break;
@@ -100,12 +94,10 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                 mToolbar.setTitle("Quit");
                 break;
             }
-
             case R.id.nav_modepaiment: {
                 setFragmentChange("Method of Payment", new PaymentMethodFragment());
                 break;
             }
-
             case R.id.nav_setting: {
                 setFragmentChange("Setting", new SettingFragment());
                 break;
@@ -120,7 +112,6 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         mFragmentTransaction.commit();
         toolBarTitle(name);
     }
-
     @Override
     public void toolBarTitle(String fragment) {
         mToolbar = findViewById(R.id.toolbar);
@@ -141,7 +132,6 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
             public void onClick(DialogInterface dialog, int which) {
                 finish();
                 System.exit(0);
-
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -154,6 +144,5 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         AlertDialog alertDialog = builder.create();
         // show dialog
         alertDialog.show();
-
     }
 }
