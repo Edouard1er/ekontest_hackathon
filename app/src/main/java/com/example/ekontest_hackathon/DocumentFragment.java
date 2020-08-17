@@ -1,64 +1,64 @@
 package com.example.ekontest_hackathon;
 
+import android.content.Context;
 import android.os.Bundle;
-
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DocumentFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DocumentFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public DocumentFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DocumentFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DocumentFragment newInstance(String param1, String param2) {
-        DocumentFragment fragment = new DocumentFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    ViewPager mViewPager;
+    TabLayout mTabLayout;
+    TabItem mUpload;
+    TabItem mAvailable;
+    TabItem mPurshase;
+    PagerAdapter mPagerAdapter;
+    onFragmentBtnSelected listener;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if( context instanceof onFragmentBtnSelected){
+            listener = (onFragmentBtnSelected) context;
+
+        }else {
+            throw new ClassCastException(context.toString()+ "must implement listener");
         }
     }
-
+    public  interface onFragmentBtnSelected{
+        public void onButtonSelected();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_document, container, false);
+        View view = inflater.inflate(R.layout.fragment_document, container,false);
+        mViewPager = view.findViewById(R.id.id_viewpager_tab);
+        mTabLayout = view.findViewById(R.id.id_tab_layout);
+        mUpload = view.findViewById(R.id.id_upload_tab);
+        mPurshase = view.findViewById(R.id.id_purshased_tab);
+        mAvailable = view.findViewById(R.id.id_available_tab);
+        mPagerAdapter = new PagerAdapter(getChildFragmentManager(),
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
+                mTabLayout.getTabCount());
+        mViewPager.setAdapter(mPagerAdapter);
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        return  view;
     }
 }
