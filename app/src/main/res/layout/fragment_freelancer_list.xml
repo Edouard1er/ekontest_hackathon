@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FreelancerListFragment">
+    android:paddingBottom="50dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    tools:context=".FreelancerListFragment"
+    android:orientation="vertical">
+
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search a freelancer"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+    </SearchView>
+
+    <GridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Freelancer" />
+        android:id="@+id/freelancer_gridview"
+        android:numColumns="2"
+        android:layout_margin="10dp"
+       >
+    </GridView>
 
-</FrameLayout>
+
+
+</LinearLayout>

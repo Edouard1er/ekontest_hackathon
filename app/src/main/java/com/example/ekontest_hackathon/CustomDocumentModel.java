@@ -11,6 +11,7 @@ class CustomDocumentModel {
         DocumentName = documentName;
         this.timeUploadedDocument = timeUploadedDocument;
         mDateUploadedDocument = dateUploadedDocument;
+
     }
 
     public String getDocumentName() {

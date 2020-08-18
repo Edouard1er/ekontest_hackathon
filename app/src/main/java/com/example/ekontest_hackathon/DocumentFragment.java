@@ -20,7 +20,10 @@ public class DocumentFragment extends Fragment {
     TabItem mAvailable;
     TabItem mPurshase;
     PagerAdapter mPagerAdapter;
+    // declaration of the listener
     onFragmentBtnSelected listener;
+
+    // Important when you have a listener with an interface
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -31,6 +34,7 @@ public class DocumentFragment extends Fragment {
             throw new ClassCastException(context.toString()+ "must implement listener");
         }
     }
+    // the interface
     public  interface onFragmentBtnSelected{
         public void onButtonSelected();
     }
