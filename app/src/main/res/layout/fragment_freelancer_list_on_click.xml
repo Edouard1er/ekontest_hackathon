@@ -211,49 +211,6 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/textView21"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="Coordonnees du freelancer"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Site Web"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Adresse e-mail"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/email_freelancer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="edchevenslove@gmail.com" />
-
-        <TextView
-            android:id="@+id/textView22"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Adresse"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/adresse_freelancer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Port-au-Prince, Haiti" />
-
-        <TextView
             android:id="@+id/textView19"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
