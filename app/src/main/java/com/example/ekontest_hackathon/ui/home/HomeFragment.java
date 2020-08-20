@@ -16,13 +16,15 @@ import android.view.ViewGroup;
 
 import com.example.ekontest_hackathon.DocumentFragment;
 import com.example.ekontest_hackathon.FreelancerListFragment;
+import com.example.ekontest_hackathon.FreelancerListOnClickFragment;
 import com.example.ekontest_hackathon.HomePageFragment;
 import com.example.ekontest_hackathon.MessageFragment;
 import com.example.ekontest_hackathon.R;
+import com.example.ekontest_hackathon.ui.NavDrawerActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements FreelancerListFragment.freelancerInterface {
     BottomNavigationView mBottomNavigationView;
     onItemBottomMenuSelected listener;
 
@@ -47,13 +49,19 @@ public class HomeFragment extends Fragment {
 
         // perfom ItemSelectedListener
         getChildFragmentManager().beginTransaction().replace(R.id.home_container_layout, new HomePageFragment()).commit();
+        switch (NavDrawerActivity.bottomMenu){
+            case "My Freelancers":{
+                menuItemClick(new FreelancerListFragment(), "My Freelancers");
+                mBottomNavigationView.setSelectedItemId(R.id.bottom_freelancer);
+                break;
+            }
+        }
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
                 switch (item.getItemId()){
                     case R.id.bottom_freelancer:{
-                        listener.toolBarTitle("Freelancer List");
+                        listener.toolBarTitle("My Freelancers");
                         item.setChecked(true);
                         getChildFragmentManager().beginTransaction().replace(R.id.home_container_layout, new FreelancerListFragment()).commit();
                         break;
@@ -82,12 +90,25 @@ public class HomeFragment extends Fragment {
                         break;
                     }
                 }
-                return false;
+
+
+                return true;
             }
         });
         return view;
     }
+
+    @Override
+    public void onClickFreelancer(String name) {
+        getChildFragmentManager().beginTransaction().replace(R.id.home_container_layout, new FreelancerListOnClickFragment()).commit();
+
+    }
+
     public  interface onItemBottomMenuSelected{
-        public void toolBarTitle(String fragment);
+        void toolBarTitle(String fragment);
+    }
+    public void menuItemClick(Fragment fragment, String toolBar){
+        listener.toolBarTitle(toolBar);
+        getChildFragmentManager().beginTransaction().replace(R.id.home_container_layout, fragment).commit();
     }
 }

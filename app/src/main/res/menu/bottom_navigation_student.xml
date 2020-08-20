@@ -8,7 +8,7 @@
     <item
         android:id="@+id/bottom_freelancer"
         android:icon="@drawable/list"
-        android:title="Frelancers" />
+        android:title="Freelancers" />
     <item
         android:id="@+id/bottom_message"
         android:icon="@drawable/message"

@@ -39,7 +39,7 @@
             android:id="@+id/nbr_cours_freelancer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="3dp"
             android:layout_weight="1"
             android:text="Cours : 25"
             android:textColor="@color/black"

@@ -4,10 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.PopupMenu;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.ekontest_hackathon.DocumentFragment;
+import com.example.ekontest_hackathon.FreelancerListFragment;
+import com.example.ekontest_hackathon.FreelancerListOnClickFragment;
 import com.example.ekontest_hackathon.R;
 import com.example.ekontest_hackathon.ui.about_us.AboutUsFragment;
 import com.example.ekontest_hackathon.ui.account.AccountFragment;
@@ -29,13 +27,14 @@ import com.example.ekontest_hackathon.ui.setting.SettingFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class NavDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        HomeFragment.onItemBottomMenuSelected, DocumentFragment.onFragmentBtnSelected {
+        HomeFragment.onItemBottomMenuSelected, DocumentFragment.onFragmentBtnSelected, FreelancerListFragment.freelancerInterface {
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mActionBarDrawerToggle;
     Toolbar mToolbar;
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
+     public static String bottomMenu;
 
 
     @Override
@@ -56,6 +55,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         mFragmentTransaction.add(R.id.container_fragment, new HomeFragment());
         mFragmentTransaction.commit();
         mToolbar.setTitle("Homepage");
+        bottomMenu="HomePage";
 
     }
     @Override
@@ -66,8 +66,14 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                 message();
                 break;
             }
+            case "Freelancer Information":{
+                bottomMenu="My Freelancers";
+                setFragmentChange(bottomMenu, new HomeFragment());
+                break;
+            }
             default:{
                 setFragmentChange("Homepage", new HomeFragment());
+                bottomMenu="HomePage";
                 break;
             }
         }
@@ -121,6 +127,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitle(fragment);
     }
+
     public  void message(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Exit");
@@ -153,5 +160,9 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
     @Override
     public void onButtonSelected() {
 
+    }
+    @Override
+    public void onClickFreelancer(String name) {
+    setFragmentChange("Freelancer Information", new FreelancerListOnClickFragment());
     }
 }
