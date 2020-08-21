@@ -64,7 +64,8 @@
                 android:paddingRight="7dp"
                 android:text="@string/strProfile"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:drawableRight="@drawable/right2" />
         </LinearLayout>
 
     </LinearLayout>
