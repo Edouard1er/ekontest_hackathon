@@ -13,6 +13,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.ekontest_hackathon.AvisDisplayFreelancerFragment;
+import com.example.ekontest_hackathon.AvisFreelancerFragment;
 import com.example.ekontest_hackathon.DocumentFragment;
 import com.example.ekontest_hackathon.FreelancerListFragment;
 import com.example.ekontest_hackathon.FreelancerListOnClickFragment;
@@ -27,7 +30,7 @@ import com.example.ekontest_hackathon.ui.setting.SettingFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class NavDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        HomeFragment.onItemBottomMenuSelected, DocumentFragment.onFragmentBtnSelected, FreelancerListFragment.freelancerInterface {
+        HomeFragment.onItemBottomMenuSelected, DocumentFragment.onFragmentBtnSelected, FreelancerListOnClickFragment.onClickInfoFreelancer, FreelancerListFragment.freelancerInterface {
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mActionBarDrawerToggle;
     Toolbar mToolbar;
@@ -71,6 +74,15 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                 setFragmentChange(bottomMenu, new HomeFragment());
                 break;
             }
+            case "Rediger un avis":{
+                setFragmentChange("Freelancer Information", new FreelancerListOnClickFragment());
+                break;
+            }
+            case "Tous les avis":{
+                setFragmentChange("Freelancer Information", new FreelancerListOnClickFragment());
+                break;
+            }
+
             default:{
                 setFragmentChange("Homepage", new HomeFragment());
                 bottomMenu="HomePage";
@@ -164,5 +176,15 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
     @Override
     public void onClickFreelancer(String name) {
     setFragmentChange("Freelancer Information", new FreelancerListOnClickFragment());
+    }
+
+    @Override
+    public void redigerAvis() {
+        setFragmentChange("Rediger un avis", new AvisFreelancerFragment());
+    }
+
+    @Override
+    public void allAvis() {
+        setFragmentChange("Tous les avis", new AvisDisplayFreelancerFragment());
     }
 }

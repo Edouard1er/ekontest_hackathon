@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +18,6 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         tools:context=".FreelancerListOnClickFragment">
-
 
         <ImageView
             android:id="@+id/imageView"
@@ -38,72 +40,78 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal"
             android:paddingLeft="30dp">
 
-            <TextView
-                android:id="@+id/textView4"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nom: "
-                android:textColor="@color/black" />
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/nom_freelancer"
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_weight="1"
+                    android:text="Nom: "
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_weight="1"
+                    android:text="Prenom: "
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_weight="1"
+                    android:text="Sexe: "
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Edouard"
-                android:textColor="@color/black" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="30dp">
+                <TextView
+                    android:id="@+id/nom_freelancer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_weight="1"
+                    android:text="Edouard"
+                    android:textColor="@color/black" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Prenom: "
-                android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/prenom_freelancer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_weight="1"
+                    android:text="Chevenslove"
+                    android:textColor="@color/black" />
 
-            <TextView
-                android:id="@+id/prenom_freelancer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Chevenslove"
-                android:textColor="@color/black" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/sexe_freelancer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_weight="1"
+                    android:text="Homme"
+                    android:textColor="@color/black" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="30dp">
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Sexe: "
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/sexe_freelancer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Homme"
-                android:textColor="@color/black" />
-
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
@@ -203,7 +211,7 @@
 
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/id_rediger_avis_freelancer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -279,7 +287,7 @@
                     <ProgressBar
                         android:id="@+id/progressBar1"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="250dp"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginBottom="3dp"
@@ -303,7 +311,7 @@
                     <ProgressBar
                         android:id="@+id/progressBar2"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="250dp"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginBottom="3dp"
@@ -327,7 +335,7 @@
                     <ProgressBar
                         android:id="@+id/progressBar3"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="250dp"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginBottom="3dp"
@@ -351,7 +359,7 @@
                     <ProgressBar
                         android:id="@+id/progressBar4"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="250dp"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginBottom="3dp"
@@ -375,7 +383,7 @@
                     <ProgressBar
                         android:id="@+id/progressBar5"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="250dp"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginBottom="3dp"
@@ -392,7 +400,8 @@
             android:drawablePadding="10dp"
             android:text="Edouard Chevenslove"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:drawableLeft="@drawable/luka2" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -437,7 +446,7 @@
                 android:id="@+id/textView28"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="60dp"
+                android:layout_marginRight="30dp"
                 android:layout_weight="1"
                 android:text="Avez-vous trouvé cet avis utile?" />
 
@@ -445,7 +454,7 @@
                 android:id="@+id/textView24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/custom_program_list"
                 android:padding="10dp"
@@ -462,11 +471,23 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView29"
+            android:id="@+id/avisDisplayFreelancer"
             android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
             android:layout_height="wrap_content"
             android:text="Afficher tous les avis"
             android:textColor="@color/black" />
 
     </LinearLayout>
 </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_freelancer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
+        android:clickable="true"
+        android:src="@drawable/fab" />
+</FrameLayout>
