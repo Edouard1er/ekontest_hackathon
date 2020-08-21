@@ -8,20 +8,25 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainAdaper extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private String [] number;
     private int [] img;
+    private ArrayList<CustomFreelancerModel>mArrayList;
 
-    public  MainAdaper(Context context, String [] numberWord, int[] imgN){
+
+    public  MainAdaper(Context context, ArrayList <CustomFreelancerModel> modelArrayList){
         this.mContext=context;
-        this.number=numberWord;
-        this.img=imgN;
+       // this.number=numberWord;
+       // this.img=imgN;
+        this.mArrayList=modelArrayList;
     }
     @Override
     public int getCount() {
-        return number.length;
+        return mArrayList.size();
     }
 
     @Override
@@ -45,8 +50,8 @@ public class MainAdaper extends BaseAdapter {
         ImageView imageView = convertView.findViewById(R.id.image_freelancer);
         TextView textView = convertView.findViewById(R.id.name_freelancer);
 
-        imageView.setImageResource(img[position]);
-        textView.setText(number[position]);
+        imageView.setImageResource(mArrayList.get(position).getImage());
+        textView.setText(mArrayList.get(position).getNom()+" " + mArrayList.get(position).getPrenom());
         return convertView;
     }
 }

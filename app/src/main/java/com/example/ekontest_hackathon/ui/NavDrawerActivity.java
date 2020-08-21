@@ -22,7 +22,7 @@ import com.example.ekontest_hackathon.FreelancerListOnClickFragment;
 import com.example.ekontest_hackathon.R;
 import com.example.ekontest_hackathon.ui.about_us.AboutUsFragment;
 import com.example.ekontest_hackathon.ui.account.AccountFragment;
-import com.example.ekontest_hackathon.ui.favorite.FavoriteFragment;
+import com.example.ekontest_hackathon.FavoriteFragment;
 import com.example.ekontest_hackathon.ui.help_comment.HelpCommentFragment;
 import com.example.ekontest_hackathon.ui.home.HomeFragment;
 import com.example.ekontest_hackathon.ui.payment.PaymentMethodFragment;
