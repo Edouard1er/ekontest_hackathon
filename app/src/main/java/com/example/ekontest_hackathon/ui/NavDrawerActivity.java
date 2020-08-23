@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.ekontest_hackathon.AvisDisplayFreelancerFragment;
 import com.example.ekontest_hackathon.AvisFreelancerFragment;
 import com.example.ekontest_hackathon.DocumentFragment;
@@ -94,6 +95,9 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         logout = header.findViewById(R.id.logout);
 
         profile_name.setText(user.getDisplayName());
+        Glide.with(profile_image)
+                .load(user.getPhotoUrl())
+                .into(profile_image);
     }
 
     @Override

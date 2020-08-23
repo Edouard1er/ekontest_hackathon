@@ -129,7 +129,7 @@ public class MessageAdapter extends RecyclerView.Adapter< MessageAdapter.ViewHol
     private String getDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
-        String date = DateFormat.format("hh:mm:ss", cal).toString();
+        String date = DateFormat.format("hh:mm", cal).toString();
 
         return date;
     }

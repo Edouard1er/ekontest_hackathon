@@ -24,6 +24,8 @@ import com.example.ekontest_hackathon.ui.NavDrawerActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -52,6 +54,7 @@ public class ReviewActivity extends AppCompatActivity {
     private String imageStoragePath;
     private  String filename;
     Uri uri;
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         uri = Uri.parse(getIntent().getStringExtra("photo"));
         mStorageRef= FirebaseStorage.getInstance().getReference();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
 
         nom = (TextView) findViewById(R.id.textViewNom);
@@ -160,44 +164,53 @@ public class ReviewActivity extends AppCompatActivity {
 
             Toast.makeText(ReviewActivity.this, ""+uri, Toast.LENGTH_SHORT).show();
 
-            InputStream stream = new FileInputStream(new File(String.valueOf(uri)));
+            if(getIntent().getStringExtra("photo").equals(user.getPhotoUrl().toString())){
+                saveUserInformation(user.getPhotoUrl().toString(),user.getPhotoUrl().toString(),mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
+                saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
+                Toast.makeText(ReviewActivity.this, "upload succeed", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(), NavDrawerActivity.class));
+                finish();
 
+            }else{
+                InputStream stream = new FileInputStream(new File(String.valueOf(uri)));
+                mUploadTask=fileReference.putStream(stream)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Task <Uri> downloadUri=taskSnapshot.getStorage().getDownloadUrl();
+                                fileReference.getDownloadUrl()
+                                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri2) {
+                                                imageStoragePath=uri2.toString();
+                                                saveUserInformation(imageStoragePath,fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
+                                                saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
+                                                Toast.makeText(ReviewActivity.this, "upload succeed", Toast.LENGTH_LONG).show();
+                                                startActivity(new Intent(getApplicationContext(), NavDrawerActivity.class));
+                                                finish();
+                                            }
+                                        });
 
-            mUploadTask=fileReference.putStream(stream)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Task <Uri> downloadUri=taskSnapshot.getStorage().getDownloadUrl();
-                            fileReference.getDownloadUrl()
-                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri2) {
-                                            imageStoragePath=uri2.toString();
-                                            saveUserInformation(imageStoragePath,fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
-                                            saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
-                                        }
-                                    });
-                            Toast.makeText(ReviewActivity.this, "upload succeed", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(getApplicationContext(), NavDrawerActivity.class));
-                            finish();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
 
-                            Toast.makeText(ReviewActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ReviewActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            // double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                            //mProgressBar.setProgress((int)progress);
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                                // double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                                //mProgressBar.setProgress((int)progress);
 
-                        }
-                    });
+                            }
+                        });
+
+            }
 
         }else{
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();

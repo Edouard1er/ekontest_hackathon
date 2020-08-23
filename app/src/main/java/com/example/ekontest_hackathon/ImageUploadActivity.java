@@ -14,11 +14,14 @@ import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.bumptech.glide.*;
 
 import com.aminography.choosephotohelper.ChoosePhotoHelper;
 import com.aminography.choosephotohelper.callback.ChoosePhotoCallback;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.time.Instant;
 
@@ -82,8 +85,16 @@ public class ImageUploadActivity extends AppCompatActivity {
         intent.putExtra("sexe", getIntent().getStringExtra("sexe"));
         intent.putExtra("type", getIntent().getStringExtra("type"));
         //let's add the photo path
-        if(this.photoPath != null)
+        if(this.photoPath != null){
             intent.putExtra("photo", this.photoPath);
+            Toast.makeText(this, "Get image path", Toast.LENGTH_SHORT).show();
+        }else{
+            FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+            intent.putExtra("photo",firebaseUser.getPhotoUrl().toString());
+            Toast.makeText(this, "Get image link", Toast.LENGTH_SHORT).show();
+
+        }
+
 
         //from freelancer or professor
         if(getIntent().hasExtra("level"))

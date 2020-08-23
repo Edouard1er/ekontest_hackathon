@@ -100,7 +100,6 @@ public class MessageFragment extends Fragment {
         recyclerView = v.findViewById(R.id.listChatUser);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -148,6 +147,7 @@ public class MessageFragment extends Fragment {
                     }
 
                 }
+
                 adapter= new UserAdapter(getContext(), mUsers,true);
                 recyclerView.setAdapter(adapter);
 

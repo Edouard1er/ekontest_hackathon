@@ -37,17 +37,17 @@ public class MessageModel {
     public MessageModel(){
     }
 
-    public void InsertMessage(MessageModel model){
+    public void InsertMessage(String receiver,String sender, String message){
         databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
-        databaseReference.push().setValue(model);
+        //databaseReference.push().setValue(model);
 
-        /*String key = databaseReference.push().getKey();
+        String key = databaseReference.push().getKey();
         Map<String,Object> messageModel= new HashMap<>();
         messageModel.put("receiver", receiver);
         messageModel.put("sender", sender);
         messageModel.put("message", message);
         messageModel.put("datetime", ServerValue.TIMESTAMP);
-        databaseReference.child(key).setValue(messageModel);*/
+        databaseReference.child(key).setValue(messageModel);
     }
 
     public String getReceiver() {

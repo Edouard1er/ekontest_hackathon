@@ -3,6 +3,7 @@ package com.example.ekontest_hackathon;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +16,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +33,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -66,9 +71,10 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     public void onBindViewHolder(@NonNull UserAdapter.UserHolder holder, int position) {
         UserModel u=mUser.get(position);
         holder.userName.setText(u.getUserName());
-        holder.userImage.setImageResource(R.drawable.ic_launcher_background);
+        holder.userImage.setImageResource(R.drawable.username);
         holder.userId.setText(u.getId());
         getLastMessage(u.getId(), holder.lastMessage);
+        getUrlImage(u.getImageUrl().toString(), holder.userImage);
         //Toast.makeText(context, "The last message is: "+theLastMessage, Toast.LENGTH_SHORT).show();
         holder.lastMessage.setText(theLastMessage);
 
@@ -181,7 +187,26 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     }
 
 
+    public void getUrlImage(String imagename, final ImageView imageUser){
 
+        if(user.getPhotoUrl().toString().equals(imagename)){
+            Glide.with(imageUser)
+                    .load(imagename)
+                    .into(imageUser);
+        }else{
+            final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
+            final StorageReference fileReference= mStorageRef.child("Images").child(imagename+"_200x200");
+            fileReference.getDownloadUrl()
+                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri2) {
+                            Glide.with(imageUser)
+                                    .load(uri2)
+                                    .into(imageUser);
+                        }
+                    });
+        }
+    }
 }
 
 

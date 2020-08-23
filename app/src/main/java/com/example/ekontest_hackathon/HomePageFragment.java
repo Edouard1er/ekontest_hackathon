@@ -121,6 +121,6 @@ public class HomePageFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         UserModel iUser = new UserModel(user.getUid(), user.getPhotoUrl().toString(), user.getDisplayName(), "offline");
-        iUser.InsertUsers(iUser);
+       // iUser.InsertUsers(iUser);
     }
 }

@@ -26,10 +26,10 @@ public class PersonalInformationModel {
 
 
 
-    public PersonalInformationModel(String image_photo, String imagename, String firstname,
+    public PersonalInformationModel(String imagelink, String imagename, String firstname,
                                     String lastname, String sexe, String email,
                                     String phone, String username, String type) {
-        this.imagelink = image_photo;
+        this.imagelink = imagelink;
         this.firstname = firstname;
         this.lastname = lastname;
         this.sexe = sexe;
@@ -56,14 +56,14 @@ public class PersonalInformationModel {
 
 
     }
-    public String getImage_photo() {
-        return imagelink;
+
+    public String getImagename() {
+        return imagename;
     }
 
-    public void setImage_photo(String image_photo) {
-        this.imagelink = image_photo;
+    public void setImagename(String imagename) {
+        this.imagename = imagename;
     }
-
 
     public String getImagelink() {
         return imagelink;
