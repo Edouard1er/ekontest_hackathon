@@ -4,6 +4,7 @@ package com.example.ekontest_hackathon;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -68,7 +74,7 @@ public class MessageAdapter extends RecyclerView.Adapter< MessageAdapter.ViewHol
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
         MessageModel m=chats.get(position);
         holder.showMessage.setText(m.getMessage());
-       // holder.datetime.setText(getDate(m.getDatetime()));
+        holder.datetime.setText(getDate(m.getDatetime()));
     }
 
     @Override
@@ -79,6 +85,7 @@ public class MessageAdapter extends RecyclerView.Adapter< MessageAdapter.ViewHol
 
         TextView showMessage;
         TextView datetime;
+
         public  ViewHolder(View itemView){
             super(itemView);
             itemView.setOnClickListener(this);
@@ -120,16 +127,14 @@ public class MessageAdapter extends RecyclerView.Adapter< MessageAdapter.ViewHol
 
     }
     private String getDate(long time) {
-        Calendar calendar = Calendar.getInstance();
-        TimeZone tz = TimeZone.getDefault();
-        calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.getTimeInMillis()));
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        java.util.Date currenTimeZone=new java.util.Date((time*1000));
-        // Toast.makeText(DisplayMessage.this, ""+sdf.format(currenTimeZone), Toast.LENGTH_SHORT).show();
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time);
+        String date = DateFormat.format("hh:mm:ss", cal).toString();
 
-        return sdf.format(currenTimeZone);
+        return date;
     }
+
+
 }
 
 

@@ -10,10 +10,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MessageModel {
@@ -36,7 +38,16 @@ public class MessageModel {
     }
 
     public void InsertMessage(MessageModel model){
+        databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
         databaseReference.push().setValue(model);
+
+        /*String key = databaseReference.push().getKey();
+        Map<String,Object> messageModel= new HashMap<>();
+        messageModel.put("receiver", receiver);
+        messageModel.put("sender", sender);
+        messageModel.put("message", message);
+        messageModel.put("datetime", ServerValue.TIMESTAMP);
+        databaseReference.child(key).setValue(messageModel);*/
     }
 
     public String getReceiver() {

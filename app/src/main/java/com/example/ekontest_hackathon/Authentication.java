@@ -64,6 +64,7 @@ public class Authentication extends AppCompatActivity {
                                     .setAvailableProviders(providers)
                                     .build(),
                             RC_SIGN_IN);
+                    /*.setLogo(R.drawable.logo)*/
 
                 }
             }
@@ -78,7 +79,7 @@ public class Authentication extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 //  insertUserToDatabase();
-                Intent intent =new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent =new Intent(getApplicationContext(), PersonalInformationActivity.class);
                 startActivity(intent);
                 // finish();
                 // ...

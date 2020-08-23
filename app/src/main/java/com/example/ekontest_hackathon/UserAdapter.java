@@ -20,6 +20,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,7 +39,7 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     public static final int  MSG_RECEIVER = 0;
     public static final int  MSG_SENDER = 1;
 
-
+     String theLastMessage;
     private  Context context;
     private Boolean isChat;
     List <UserModel> mUser;
@@ -63,15 +68,18 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
         holder.userName.setText(u.getUserName());
         holder.userImage.setImageResource(R.drawable.ic_launcher_background);
         holder.userId.setText(u.getId());
+        getLastMessage(u.getId(), holder.lastMessage);
+        //Toast.makeText(context, "The last message is: "+theLastMessage, Toast.LENGTH_SHORT).show();
+        holder.lastMessage.setText(theLastMessage);
 
 
         if(isChat){
             if(u.getStatus().equals("online")){
-                holder.online.setVisibility(View.VISIBLE);
+                holder.online.setVisibility(View.GONE);
                 holder.offline.setVisibility(View.GONE);
 
             }else{
-                holder.offline.setVisibility(View.VISIBLE);
+                holder.offline.setVisibility(View.GONE);
                 holder.online.setVisibility(View.GONE);
 
             }
@@ -98,6 +106,8 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
 
         TextView online;
         TextView offline;
+
+        TextView lastMessage;
         public  UserHolder(View itemView){
             super(itemView);
             itemView.setOnClickListener(this);
@@ -108,10 +118,13 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
             userImage=itemView.findViewById(R.id.cUserImage);
             userId = itemView.findViewById(R.id.UserId);
 
+            lastMessage = itemView.findViewById(R.id.lastMessage);
+
             online=itemView.findViewById(R.id.statusOnline);
             offline=itemView.findViewById(R.id.statusOfline);
 
         }
+
 
         @Override
         public void onClick(View v) {
@@ -132,9 +145,39 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
         }
     }
 
-    public interface ClickListener {
-        void onItemClick(int position, View v);
-        void onItemLongClick(int position, View v);
+    private void getLastMessage(final String receiver, final TextView lastMessage){
+        theLastMessage = "default";
+        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chats");
+
+        chatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    MessageModel model = dataSnapshot.getValue(MessageModel.class);
+                    if((model.getReceiver().equals(receiver) && model.getSender().equals(user.getUid())) || (model.getReceiver().equals(user.getUid()) && model.getSender().equals(receiver))){
+                        theLastMessage =model.getMessage();
+                    }
+                }
+
+                switch (theLastMessage){
+                    case "default":
+                        lastMessage.setText("No Message");
+                        break;
+                    default:
+                        lastMessage.setText(theLastMessage);
+                        break;
+                }
+                theLastMessage = "default";
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 

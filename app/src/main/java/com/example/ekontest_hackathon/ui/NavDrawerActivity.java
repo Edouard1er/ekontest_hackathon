@@ -2,8 +2,14 @@ package com.example.ekontest_hackathon.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +33,12 @@ import com.example.ekontest_hackathon.ui.help_comment.HelpCommentFragment;
 import com.example.ekontest_hackathon.ui.home.HomeFragment;
 import com.example.ekontest_hackathon.ui.payment.PaymentMethodFragment;
 import com.example.ekontest_hackathon.ui.setting.SettingFragment;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class NavDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         HomeFragment.onItemBottomMenuSelected, DocumentFragment.onFragmentBtnSelected, FreelancerListOnClickFragment.onClickInfoFreelancer, FreelancerListFragment.freelancerInterface {
@@ -37,8 +48,15 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
+    View header ;
      public static String bottomMenu;
 
+     //Profile configuration Variable
+
+    ImageView profile_image;
+    TextView  profile_name;
+    TextView  profile_type;
+    Button logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +70,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
         mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         mActionBarDrawerToggle.syncState();
+        header = mNavigationView.getHeaderView(0);
         // load default fragment
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
@@ -60,7 +79,23 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         mToolbar.setTitle("Homepage");
         bottomMenu="HomePage";
 
+
+
+
+        addProfileInformation();
+
     }
+
+    private void addProfileInformation() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        profile_image = header.findViewById(R.id.profile_image);
+        profile_name = header.findViewById(R.id.profile_name);
+        profile_type = header.findViewById(R.id.profile_type);
+        logout = header.findViewById(R.id.logout);
+
+        profile_name.setText(user.getDisplayName());
+    }
+
     @Override
     public void onBackPressed() {
         mToolbar.findViewById(R.id.toolbar);
@@ -187,4 +222,18 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
     public void allAvis() {
         setFragmentChange("Tous les avis", new AvisDisplayFreelancerFragment());
     }
+
+    public void signOut(View view){
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                    }
+                });
+    }
+
 }

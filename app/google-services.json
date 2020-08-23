@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "271583968484",
+    "firebase_url": "https://ekontesthackathon.firebaseio.com",
+    "project_id": "ekontesthackathon",
+    "storage_bucket": "ekontesthackathon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:271583968484:android:258e381b10b9ef9c8740f1",
+        "android_client_info": {
+          "package_name": "com.example.ekontest_hackathon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "271583968484-4702mfdl1eaoffb27fnfkpefitmm3qie.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ekontest_hackathon",
+            "certificate_hash": "4ec2031f87202ef8996e78d563f685c897396500"
+          }
+        },
+        {
+          "client_id": "271583968484-a5mf2oovk4nof5931e285qfkg0npiisn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArBk24j6yQiRS5fsTDPcGrgafwGzuR4WM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "271583968484-a5mf2oovk4nof5931e285qfkg0npiisn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

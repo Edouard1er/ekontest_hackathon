@@ -101,7 +101,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
     public void sendingMessage(final String receiver, String sender, String mes){
 
-        MessageModel chatMessage = new MessageModel(receiver, sender,mes);
+        MessageModel chatMessage = new MessageModel(receiver,sender, mes);
+
         chatMessage.InsertMessage(chatMessage);
         final String message = mes;
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Tokens").child(user.getUid());
