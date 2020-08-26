@@ -49,7 +49,7 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     private Boolean isChat;
     List <UserModel> mUser;
 
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser usr = FirebaseAuth.getInstance().getCurrentUser();
 
 
     public UserAdapter(Context context, List <UserModel> mUser, Boolean isChat) {
@@ -58,6 +58,9 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
         this.isChat=isChat;
     }
 
+    public UserAdapter (){
+        //Empty constructor
+    }
     @NonNull
     @Override
     public UserAdapter.UserHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -70,16 +73,14 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.UserHolder holder, int position) {
         UserModel u=mUser.get(position);
-        holder.userName.setText(u.getUserName());
+        holder.userName.setText(u.getPersonalInformationModel().getFirstname()+" "+u.getPersonalInformationModel().getLastname());
         holder.userImage.setImageResource(R.drawable.username);
         holder.userId.setText(u.getId());
         getLastMessage(u.getId(), holder.lastMessage);
-        getUrlImage(u.getImageUrl().toString(), holder.userImage);
+        getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
         //Toast.makeText(context, "The last message is: "+theLastMessage, Toast.LENGTH_SHORT).show();
         holder.lastMessage.setText(theLastMessage);
-
-
-        if(isChat){
+        /*if(isChat){
             if(u.getStatus().equals("online")){
                 holder.online.setVisibility(View.GONE);
                 holder.offline.setVisibility(View.GONE);
@@ -87,16 +88,13 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
             }else{
                 holder.offline.setVisibility(View.GONE);
                 holder.online.setVisibility(View.GONE);
-
             }
 
         }else{
             holder.offline.setVisibility(View.GONE);
             holder.online.setVisibility(View.GONE);
         }
-
-
-
+*/
     }
 
 
@@ -152,6 +150,7 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     }
 
     private void getLastMessage(final String receiver, final TextView lastMessage){
+       final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         theLastMessage = "default";
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chats");
 
@@ -187,25 +186,29 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     }
 
 
-    public void getUrlImage(String imagename, final ImageView imageUser){
-
+    public String getUrlImage(String imagename, final ImageView imageUser){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String[] url = new String[1];
         if(user.getPhotoUrl().toString().equals(imagename)){
+            url[0] = imagename;
             Glide.with(imageUser)
                     .load(imagename)
                     .into(imageUser);
         }else{
             final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
-            final StorageReference fileReference= mStorageRef.child("Images").child(imagename+"_200x200");
+            final StorageReference fileReference= mStorageRef.child("Images").child(imagename+"_500x500");
             fileReference.getDownloadUrl()
                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri2) {
+                            url[0] =String.valueOf(uri2);
                             Glide.with(imageUser)
                                     .load(uri2)
                                     .into(imageUser);
                         }
                     });
         }
+        return url[0];
     }
 }
 

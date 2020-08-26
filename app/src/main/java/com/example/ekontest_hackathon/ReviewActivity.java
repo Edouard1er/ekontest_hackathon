@@ -139,22 +139,31 @@ public class ReviewActivity extends AppCompatActivity {
         }
     }
 
-    public void saveUserInformation(String imagelink, String fileIdentity, String firstname,
+    public PersonalInformationModel saveUserInformation(String imagelink, String fileIdentity, String firstname,
                                     String lastname, String sexe, String email,
                                     String phone, String username, String type){
 
         PersonalInformationModel model = new PersonalInformationModel(imagelink, fileIdentity,firstname, lastname, sexe, email, phone, username, type);
-        model.insertPersonalInformation(model);
+       // model.insertPersonalInformation(model);
 
+        return model;
     }
 
-    public void saveUserAcademicInformation(String level, String institution, String faculte,
+    public AcademicInformationModel saveUserAcademicInformation(String level, String institution, String faculte,
 
                                             String degree, String startDate, String endDate){
         AcademicInformationModel model = new AcademicInformationModel(level, institution, faculte,degree,startDate,endDate);
-        model.insertAcademicInformation(model);
+        //model.insertAcademicInformation(model);
+        return model;
 
     }
+
+    public void goToNavDrawerActivity(){
+        Toast.makeText(ReviewActivity.this, "upload succeed", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(getApplicationContext(), NavDrawerActivity.class));
+        finish();
+    }
+
     private void uploadData(Uri uri) throws FileNotFoundException {
         if(uri != null){
             final String fileIdentity=String.valueOf(System.currentTimeMillis());
@@ -165,12 +174,13 @@ public class ReviewActivity extends AppCompatActivity {
             Toast.makeText(ReviewActivity.this, ""+uri, Toast.LENGTH_SHORT).show();
 
             if(getIntent().getStringExtra("photo").equals(user.getPhotoUrl().toString())){
-                saveUserInformation(user.getPhotoUrl().toString(),user.getPhotoUrl().toString(),mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
-                saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
-                Toast.makeText(ReviewActivity.this, "upload succeed", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getApplicationContext(), NavDrawerActivity.class));
-                finish();
+                PersonalInformationModel pInfo= saveUserInformation(user.getPhotoUrl().toString(),user.getPhotoUrl().toString(),mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
+                AcademicInformationModel aInfo = saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
 
+                UserModel userModel = new UserModel();
+                userModel.InsertUsers(pInfo,aInfo);
+
+                goToNavDrawerActivity();
             }else{
                 InputStream stream = new FileInputStream(new File(String.valueOf(uri)));
                 mUploadTask=fileReference.putStream(stream)
@@ -183,11 +193,13 @@ public class ReviewActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Uri uri2) {
                                                 imageStoragePath=uri2.toString();
-                                                saveUserInformation(imageStoragePath,fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
-                                                saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
-                                                Toast.makeText(ReviewActivity.this, "upload succeed", Toast.LENGTH_LONG).show();
-                                                startActivity(new Intent(getApplicationContext(), NavDrawerActivity.class));
-                                                finish();
+                                             PersonalInformationModel pInfo= saveUserInformation(imageStoragePath,fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
+                                             AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
+
+                                             UserModel userModel = new UserModel();
+                                             userModel.InsertUsers(pInfo,aInfo);
+
+                                             goToNavDrawerActivity();
                                             }
                                         });
 

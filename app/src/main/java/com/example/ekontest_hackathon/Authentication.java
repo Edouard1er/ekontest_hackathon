@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,8 +38,8 @@ public class Authentication extends AppCompatActivity {
     FirebaseUser user;
     DatabaseReference reference;
 
-
-
+    List<String> whitelistedCountries;
+    //Set up list of authentication method
     List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.EmailBuilder().build(),
             new AuthUI.IdpConfig.GoogleBuilder().build());
@@ -48,24 +49,40 @@ public class Authentication extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
+
+        whitelistedCountries= new ArrayList<String>();
+        whitelistedCountries.add("+509");
+
+
+        providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.PhoneBuilder().setWhitelistedCountries(whitelistedCountries).build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build());
+
+
         mFirebaseAuth=FirebaseAuth.getInstance();
+        //Authentication UI specify country for phone number authentication
+        whitelistedCountries= new ArrayList<String>();
+        whitelistedCountries.add("+509");
+
+
         mAuthListener=new FirebaseAuth.AuthStateListener(){
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
                 user =FirebaseAuth.getInstance().getCurrentUser();
                 if(user!=null){
-                    startActivity(new Intent(getApplicationContext(), NavDrawerActivity.class));
+                    startActivity(new Intent(getApplicationContext(), PersonalInformationActivity.class));
                     finish();
                 }else{
+                    //Sign in Intent
                     startActivityForResult(
-
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
                                     .setAvailableProviders(providers)
+                                    .setLogo(R.drawable.logo)
                                     .build(),
                             RC_SIGN_IN);
                     /*.setLogo(R.drawable.logo)*/
-
                 }
             }
         };
