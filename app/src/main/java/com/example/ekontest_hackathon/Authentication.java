@@ -79,7 +79,7 @@ public class Authentication extends AppCompatActivity {
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
                                     .setAvailableProviders(providers)
-                                    .setLogo(R.drawable.logo)
+                                    .setLogo(R.drawable.pwofpam_logo)
                                     .build(),
                             RC_SIGN_IN);
                     /*.setLogo(R.drawable.logo)*/
