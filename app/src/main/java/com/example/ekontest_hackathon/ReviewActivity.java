@@ -60,7 +60,8 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
-        uri = Uri.parse(getIntent().getStringExtra("photo"));
+
+
         mStorageRef= FirebaseStorage.getInstance().getReference();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -125,6 +126,16 @@ public class ReviewActivity extends AppCompatActivity {
                         .load(getIntent().getStringExtra("photo"))
                         .into(imagePhoto);
             }
+            if(getIntent().getStringExtra("photo")!= null) {
+                uri = Uri.parse(getIntent().getStringExtra("photo"));
+            }else{
+                if(user.getPhotoUrl()!= null){
+                    uri = Uri.parse(user.getPhotoUrl().toString());
+                    Glide.with(imagePhoto)
+                            .load(getIntent().getStringExtra("photo"))
+                            .into(imagePhoto);
+                }
+            }
         } catch (NullPointerException e) {
             e.getStackTrace();
         }
@@ -164,6 +175,7 @@ public class ReviewActivity extends AppCompatActivity {
         finish();
     }
 
+
     private void uploadData(Uri uri) throws FileNotFoundException {
         if(uri != null){
             final String fileIdentity=String.valueOf(System.currentTimeMillis());
@@ -173,14 +185,78 @@ public class ReviewActivity extends AppCompatActivity {
 
             Toast.makeText(ReviewActivity.this, ""+uri, Toast.LENGTH_SHORT).show();
 
-            if(getIntent().getStringExtra("photo").equals(user.getPhotoUrl().toString())){
-                PersonalInformationModel pInfo= saveUserInformation(user.getPhotoUrl().toString(),user.getPhotoUrl().toString(),mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
-                AcademicInformationModel aInfo = saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
+            if(user.getPhotoUrl() != null){
+                if(getIntent().getStringExtra("photo").equals(user.getPhotoUrl().toString())){
+                    mUploadTask=fileReference.putFile(Uri.parse(getIntent().getStringExtra("photo")))
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    fileReference.getDownloadUrl()
+                                            .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri2) {
+                                                    imageStoragePath=uri2.toString();
+                                                    PersonalInformationModel pInfo= saveUserInformation(imageStoragePath,imageStoragePath,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
+                                                    AcademicInformationModel aInfo = saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
 
-                UserModel userModel = new UserModel();
-                userModel.InsertUsers(pInfo,aInfo);
+                                                    UserModel userModel = new UserModel();
+                                                    userModel.InsertUsers(pInfo,aInfo);
 
-                goToNavDrawerActivity();
+                                                    goToNavDrawerActivity();
+                                                }
+                                            });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle unsuccessful uploads
+                                    // ...
+                                }
+                            });
+                }else{
+                    InputStream stream = new FileInputStream(new File(String.valueOf(uri)));
+                    mUploadTask=fileReference.putStream(stream)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    Task <Uri> downloadUri=taskSnapshot.getStorage().getDownloadUrl();
+                                    fileReference.getDownloadUrl()
+                                            .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri2) {
+                                                    imageStoragePath=uri2.toString();
+                                                    PersonalInformationModel pInfo= saveUserInformation(imageStoragePath,fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
+                                                    AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
+
+                                                    UserModel userModel = new UserModel();
+                                                    userModel.InsertUsers(pInfo,aInfo);
+
+                                                    goToNavDrawerActivity();
+                                                }
+                                            });
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                    Toast.makeText(ReviewActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                }
+                            })
+                            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                                    // double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                                    //mProgressBar.setProgress((int)progress);
+
+                                }
+                            });
+
+
+                }
             }else{
                 InputStream stream = new FileInputStream(new File(String.valueOf(uri)));
                 mUploadTask=fileReference.putStream(stream)
@@ -193,13 +269,13 @@ public class ReviewActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Uri uri2) {
                                                 imageStoragePath=uri2.toString();
-                                             PersonalInformationModel pInfo= saveUserInformation(imageStoragePath,fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
-                                             AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
+                                                PersonalInformationModel pInfo= saveUserInformation(imageStoragePath,fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
+                                                AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
 
-                                             UserModel userModel = new UserModel();
-                                             userModel.InsertUsers(pInfo,aInfo);
+                                                UserModel userModel = new UserModel();
+                                                userModel.InsertUsers(pInfo,aInfo);
 
-                                             goToNavDrawerActivity();
+                                                goToNavDrawerActivity();
                                             }
                                         });
 
@@ -224,8 +300,22 @@ public class ReviewActivity extends AppCompatActivity {
 
             }
 
+           /* if(getIntent().getStringExtra("photo").equals(user.getPhotoUrl().toString())){
+
+            }else{
+
+            }*/
+
         }else{
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+
+            PersonalInformationModel pInfo= saveUserInformation("","",mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
+            AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
+
+            UserModel userModel = new UserModel();
+            userModel.InsertUsers(pInfo,aInfo);
+
+            goToNavDrawerActivity();
         }
     }
 

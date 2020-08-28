@@ -49,9 +49,6 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     private Boolean isChat;
     List <UserModel> mUser;
 
-    FirebaseUser usr = FirebaseAuth.getInstance().getCurrentUser();
-
-
     public UserAdapter(Context context, List <UserModel> mUser, Boolean isChat) {
         this.context=context;
         this.mUser=mUser;
@@ -189,25 +186,26 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     public String getUrlImage(String imagename, final ImageView imageUser){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String[] url = new String[1];
-        if(user.getPhotoUrl().toString().equals(imagename)){
+        final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
+        final StorageReference fileReference= mStorageRef.child("Images").child(imagename+"_500x500");
+        fileReference.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri2) {
+                        url[0] =String.valueOf(uri2);
+                        Glide.with(imageUser)
+                                .load(uri2)
+                                .into(imageUser);
+                    }
+                });
+        /*if(user.getPhotoUrl().toString().equals(imagename)){
             url[0] = imagename;
             Glide.with(imageUser)
                     .load(imagename)
                     .into(imageUser);
         }else{
-            final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
-            final StorageReference fileReference= mStorageRef.child("Images").child(imagename+"_500x500");
-            fileReference.getDownloadUrl()
-                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri2) {
-                            url[0] =String.valueOf(uri2);
-                            Glide.with(imageUser)
-                                    .load(uri2)
-                                    .into(imageUser);
-                        }
-                    });
-        }
+
+        }*/
         return url[0];
     }
 }

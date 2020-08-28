@@ -1,5 +1,6 @@
 package com.example.ekontest_hackathon;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -11,6 +12,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.ekontest_hackathon.ui.MainActivity;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -40,13 +45,27 @@ public class PersonalInformationActivity extends AppCompatActivity {
         phone = (EditText) findViewById(R.id.editTextPhone);
         username = (EditText) findViewById(R.id.editTextTextUsername);
 
+       // signOut();
+        String provider = user.getProviderId();
 
-        String[] fullname = user.getDisplayName().split(" ");
-        nom.setText(fullname[0]);
-        prenom.setText(fullname[1]);
-        email.setText(user.getEmail());
-        phone.setText(user.getPhoneNumber());
-        username.setText(user.getDisplayName());
+
+        if(user.getDisplayName()!= null){
+            String[] fullname = user.getDisplayName().split(" ");
+            nom.setText(fullname[0]);
+            prenom.setText(fullname[1]);
+        }
+
+        if(user.getPhoneNumber() != null){
+            phone.setText(user.getPhoneNumber());
+        }
+        if(user.getEmail() != null){
+            email.setText(user.getEmail());
+        }
+
+      /*
+
+
+       */
 
     }
 
@@ -92,4 +111,17 @@ public class PersonalInformationActivity extends AppCompatActivity {
             Toast.makeText(PersonalInformationActivity.this, "All the information are required", Toast.LENGTH_SHORT).show();
         }
     }
+    public void signOut(){
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        startActivity(new Intent(getApplicationContext(), Authentication.class));
+
+                    }
+                });
+    }
+
 }

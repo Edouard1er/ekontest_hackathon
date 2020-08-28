@@ -90,7 +90,12 @@ public class ImageUploadActivity extends AppCompatActivity {
             Toast.makeText(this, "Get image path", Toast.LENGTH_SHORT).show();
         }else{
             FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-            intent.putExtra("photo",firebaseUser.getPhotoUrl().toString());
+            if(firebaseUser.getPhotoUrl() != null) {
+                intent.putExtra("photo", firebaseUser.getPhotoUrl().toString());
+                Glide.with(imageUpload)
+                        .load(firebaseUser.getPhotoUrl())
+                        .into(imageUpload);
+            }
             Toast.makeText(this, "Get image link", Toast.LENGTH_SHORT).show();
 
         }
