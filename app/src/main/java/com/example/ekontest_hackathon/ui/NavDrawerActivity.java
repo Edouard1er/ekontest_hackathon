@@ -166,6 +166,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
             }
         }
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
