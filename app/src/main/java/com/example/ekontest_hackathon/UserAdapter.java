@@ -70,6 +70,7 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.UserHolder holder, int position) {
         UserModel u=mUser.get(position);
+
         holder.userName.setText(u.getPersonalInformationModel().getFirstname()+" "+u.getPersonalInformationModel().getLastname());
         holder.userImage.setImageResource(R.drawable.username);
         holder.userId.setText(u.getId());
@@ -187,17 +188,19 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String[] url = new String[1];
         final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
-        final StorageReference fileReference= mStorageRef.child("Images").child(imagename+"_500x500");
-        fileReference.getDownloadUrl()
-                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri2) {
-                        url[0] =String.valueOf(uri2);
-                        Glide.with(imageUser)
-                                .load(uri2)
-                                .into(imageUser);
-                    }
-                });
+
+        if(user.getPhotoUrl().toString()!=null && user.getPhotoUrl().toString()!= imagename && imagename!="" && imagename!=null){
+            final StorageReference fileReference= mStorageRef.child("Images").child(imagename+"_500x500");
+            fileReference.getDownloadUrl()
+                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri2) {
+                            url[0] =String.valueOf(uri2);
+                            Glide.with(imageUser)
+                                    .load(uri2)
+                                    .into(imageUser);
+                        }
+                    });
         /*if(user.getPhotoUrl().toString().equals(imagename)){
             url[0] = imagename;
             Glide.with(imageUser)
@@ -206,7 +209,16 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
         }else{
 
         }*/
-        return url[0];
+            return url[0];
+        }else{
+            url[0] =user.getPhotoUrl().toString();
+            Glide.with(imageUser)
+                    .load(url[0])
+                    .into(imageUser);
+
+            return url[0];
+        }
+
     }
 }
 

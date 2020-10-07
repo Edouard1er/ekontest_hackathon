@@ -1,6 +1,7 @@
 package com.example.ekontest_hackathon;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
@@ -13,12 +14,16 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aminography.choosephotohelper.ChoosePhotoHelper;
+import com.aminography.choosephotohelper.callback.ChoosePhotoCallback;
 import com.bumptech.glide.Glide;
 import com.example.ekontest_hackathon.ui.NavDrawerActivity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -55,6 +60,7 @@ public class ReviewActivity extends AppCompatActivity {
     private  String filename;
     Uri uri;
     FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,7 +145,11 @@ public class ReviewActivity extends AppCompatActivity {
         } catch (NullPointerException e) {
             e.getStackTrace();
         }
+
     }
+
+
+
 
     public void onButtonUploadClick(View view) throws FileNotFoundException {
         if(mUploadTask!=null && mUploadTask.isInProgress()){
@@ -186,77 +196,13 @@ public class ReviewActivity extends AppCompatActivity {
             Toast.makeText(ReviewActivity.this, ""+uri, Toast.LENGTH_SHORT).show();
 
             if(user.getPhotoUrl() != null){
-                if(getIntent().getStringExtra("photo").equals(user.getPhotoUrl().toString())){
-                    mUploadTask=fileReference.putFile(Uri.parse(getIntent().getStringExtra("photo")))
-                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    fileReference.getDownloadUrl()
-                                            .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                @Override
-                                                public void onSuccess(Uri uri2) {
-                                                    imageStoragePath=uri2.toString();
-                                                    PersonalInformationModel pInfo= saveUserInformation(imageStoragePath,imageStoragePath,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
-                                                    AcademicInformationModel aInfo = saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
 
-                                                    UserModel userModel = new UserModel();
-                                                    userModel.InsertUsers(pInfo,aInfo);
+                PersonalInformationModel pInfo= saveUserInformation(user.getPhotoUrl().toString(),fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
+                AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
+                UserModel userModel = new UserModel();
+                userModel.InsertUsers(pInfo,aInfo);
+                goToNavDrawerActivity();
 
-                                                    goToNavDrawerActivity();
-                                                }
-                                            });
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    // Handle unsuccessful uploads
-                                    // ...
-                                }
-                            });
-                }else{
-                    InputStream stream = new FileInputStream(new File(String.valueOf(uri)));
-                    mUploadTask=fileReference.putStream(stream)
-                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    Task <Uri> downloadUri=taskSnapshot.getStorage().getDownloadUrl();
-                                    fileReference.getDownloadUrl()
-                                            .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                @Override
-                                                public void onSuccess(Uri uri2) {
-                                                    imageStoragePath=uri2.toString();
-                                                    PersonalInformationModel pInfo= saveUserInformation(imageStoragePath,fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
-                                                    AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
-
-                                                    UserModel userModel = new UserModel();
-                                                    userModel.InsertUsers(pInfo,aInfo);
-
-                                                    goToNavDrawerActivity();
-                                                }
-                                            });
-
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-
-                                    Toast.makeText(ReviewActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                                }
-                            })
-                            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                                    // double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                                    //mProgressBar.setProgress((int)progress);
-
-                                }
-                            });
-
-
-                }
             }else{
                 InputStream stream = new FileInputStream(new File(String.valueOf(uri)));
                 mUploadTask=fileReference.putStream(stream)
@@ -308,7 +254,6 @@ public class ReviewActivity extends AppCompatActivity {
 
         }else{
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
-
             PersonalInformationModel pInfo= saveUserInformation("","",mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
             AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
 
