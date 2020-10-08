@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ekontest_hackathon.ui.NavDrawerActivity;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
@@ -25,8 +27,10 @@ public class FreelancerListOnClickFragment extends Fragment {
     ListView mListView;
     ArrayList mArrayList;
     InfoAcademicAdapter mAdapter;
-    TextView redigerAvis, avisDisplayFreelancer;
+    TextView redigerAvis, avisDisplayFreelancer, mFirstname, mLastname, mSexe;
     onClickInfoFreelancer listener;
+    Bundle results;
+    ImageView mImageFreelancer;
     // Important when you have a listener with an interface
     @Override
     public void onAttach(@NonNull Context context) {
@@ -34,7 +38,7 @@ public class FreelancerListOnClickFragment extends Fragment {
         if( context instanceof onClickInfoFreelancer){
             listener = (onClickInfoFreelancer) context;
         }else {
-            throw new ClassCastException(context.toString()+ "must implement listener");
+            //throw new ClassCastException(context.toString()+ "must implement listener");
         }
     }
 
@@ -48,6 +52,12 @@ public class FreelancerListOnClickFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //getting data from activity
+        FreelancerOnclickActivity activity = (FreelancerOnclickActivity)getActivity();
+        results = activity.getFreelancerData();
+        String value = results.getString("firstname");
+        Toast.makeText(activity, value, Toast.LENGTH_SHORT).show();
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_freelancer_list_on_click, container, false);
         mRatingBar = view.findViewById(R.id.id_rating_bar_freelancer);
@@ -78,8 +88,33 @@ public class FreelancerListOnClickFragment extends Fragment {
                 listener.allAvis();
             }
         });
+
+        //getting and setting info dynamically
+        mFirstname = view.findViewById(R.id.prenom_freelancer);
+        mLastname = view.findViewById(R.id.nom_freelancer);
+        mSexe = view.findViewById(R.id.sexe_freelancer);
+        mImageFreelancer = view.findViewById(R.id.image_freelancer);
+
+        setInfoPerso();
         return view;
     }
+
+    public void setInfoPerso(){
+        mFirstname.setText(results.getString("firstname"));
+        mLastname.setText(results.getString("lastname"));
+        mSexe.setText(results.getString("sexe"));
+        final String[] url = new String[2];
+        url[0] = results.getString("imagelink");
+        url[1] = results.getString("imagename");
+        UserAdapter userAdapter = new UserAdapter();
+        userAdapter.getUrlImage(url, mImageFreelancer);
+
+
+
+
+    }
+
+
     public interface onClickInfoFreelancer{
          void redigerAvis();
          void allAvis();

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ekontest_hackathon">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
@@ -12,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".PersonalInformationActivity"></activity>
+        <activity android:name=".FreelancerOnclickActivity"></activity>
+        <activity android:name=".PersonalInformationActivity" />
         <activity android:name=".ImageUploadActivity" />
         <activity android:name=".TypeAccount" />
         <activity android:name=".AcademicActivity" />

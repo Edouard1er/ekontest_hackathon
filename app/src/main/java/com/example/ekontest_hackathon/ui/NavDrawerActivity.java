@@ -115,9 +115,12 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                        for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                            UserModel model = dataSnapshot.getValue(UserModel.class);
+                           final String[] url = new String[2];
+                           url[0] = model.getPersonalInformationModel().getImagelink();
+                           url[1] = model.getPersonalInformationModel().getImagename();
                            if(model.getId().equals(user.getUid())){
                                UserAdapter userAdapter = new UserAdapter();
-                               userAdapter.getUrlImage(model.getPersonalInformationModel().getImagename(), profile_image);
+                               userAdapter.getUrlImage(url, profile_image);
                                profile_name.setText(model.getPersonalInformationModel().getUsername());
                                profile_type.setText(model.getPersonalInformationModel().getType());
 

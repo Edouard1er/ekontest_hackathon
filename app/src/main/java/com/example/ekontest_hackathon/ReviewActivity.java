@@ -188,6 +188,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void uploadData(Uri uri) throws FileNotFoundException {
         if(uri != null){
+            // Using time to identify each upload picture
             final String fileIdentity=String.valueOf(System.currentTimeMillis());
             Calendar c = Calendar.getInstance();
 
@@ -195,7 +196,7 @@ public class ReviewActivity extends AppCompatActivity {
 
             Toast.makeText(ReviewActivity.this, ""+uri, Toast.LENGTH_SHORT).show();
 
-            if(user.getPhotoUrl() != null){
+            if(user.getPhotoUrl() != null && user.getPhotoUrl().toString().length()!=0){
 
                 PersonalInformationModel pInfo= saveUserInformation(user.getPhotoUrl().toString(),fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
                 AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
