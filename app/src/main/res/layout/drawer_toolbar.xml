@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/secondaryColor"
+        android:background="@color/couleur4"
         android:theme="@style/AppTheme"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/couleur5" />
 </LinearLayout>
