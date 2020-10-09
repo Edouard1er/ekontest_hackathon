@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/row_item_freelancer_id"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
 
