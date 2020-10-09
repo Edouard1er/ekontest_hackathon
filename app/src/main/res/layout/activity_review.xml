@@ -38,8 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="150sp"
                     android:layout_weight="1">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
+                   <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imageViewPhoto"
                         android:layout_width="96dp"
                         android:layout_height="96dp"
@@ -47,6 +46,8 @@
                         android:elevation="10dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/username" />
+
+
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>

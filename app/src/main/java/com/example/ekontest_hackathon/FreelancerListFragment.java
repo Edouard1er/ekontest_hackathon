@@ -88,7 +88,7 @@ public class FreelancerListFragment extends Fragment {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     UserModel model = dataSnapshot.getValue(UserModel.class);
                         mFreelancers.add(model);
-                        Toast.makeText(getContext(), model.getId()+" "+ model.getPersonalInformationModel().getType(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), model.getId()+" "+ model.getPersonalInformationModel().getType(), Toast.LENGTH_SHORT).show();
 
 
                 }

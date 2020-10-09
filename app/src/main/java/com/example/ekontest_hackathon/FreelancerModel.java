@@ -1,6 +1,6 @@
 package com.example.ekontest_hackathon;
 
-public class FreelancerModel extends StudentModel{
+public class FreelancerModel extends StudentModel {
     public FreelancerModel() {
         super();
 

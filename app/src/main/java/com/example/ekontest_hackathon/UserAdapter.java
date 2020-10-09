@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -70,11 +71,17 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.UserHolder holder, int position) {
         UserModel u=mUser.get(position);
+
         holder.userName.setText(u.getPersonalInformationModel().getFirstname()+" "+u.getPersonalInformationModel().getLastname());
         holder.userImage.setImageResource(R.drawable.username);
         holder.userId.setText(u.getId());
         getLastMessage(u.getId(), holder.lastMessage);
-        getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
+        final String[] url = new String[2];
+        url[0] = u.getPersonalInformationModel().getImagelink();
+        url[1] = u.getPersonalInformationModel().getImagename();
+        //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
+        getUrlImage(url, holder.userImage);
+
         //Toast.makeText(context, "The last message is: "+theLastMessage, Toast.LENGTH_SHORT).show();
         holder.lastMessage.setText(theLastMessage);
         /*if(isChat){
@@ -183,21 +190,28 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     }
 
 
-    public String getUrlImage(String imagename, final ImageView imageUser){
+    public String getUrlImage(String[] imageSource, final ImageView imageUser){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String[] url = new String[1];
         final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
-        final StorageReference fileReference= mStorageRef.child("Images").child(imagename+"_500x500");
-        fileReference.getDownloadUrl()
-                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri2) {
-                        url[0] =String.valueOf(uri2);
-                        Glide.with(imageUser)
-                                .load(uri2)
-                                .into(imageUser);
-                    }
-                });
+
+        if(imageSource[0].contains("firebasestorage.googleapis.com")){
+            final StorageReference fileReference= mStorageRef.child("Images").child(imageSource[1]+"_200x200");
+            fileReference.getDownloadUrl()
+                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri2) {
+                            url[0] =String.valueOf(uri2);
+                            Glide.with(imageUser)
+                                    .load(uri2)
+                                    .centerCrop()
+                                    .into(imageUser);
+                                                           //     .apply(new RequestOptions().override(200,90))
+
+
+
+                        }
+                    });
         /*if(user.getPhotoUrl().toString().equals(imagename)){
             url[0] = imagename;
             Glide.with(imageUser)
@@ -206,7 +220,18 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
         }else{
 
         }*/
-        return url[0];
+            return url[0];
+        }else{
+            url[0] =imageSource[0];
+            Glide.with(imageUser)
+                    .load(url[0])
+                  //  .apply(new RequestOptions().override(120,90))
+                    .centerCrop()
+                    .into(imageUser);
+
+            return url[0];
+        }
+
     }
 }
 

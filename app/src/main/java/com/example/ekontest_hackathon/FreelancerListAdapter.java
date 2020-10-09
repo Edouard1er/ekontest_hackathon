@@ -1,6 +1,8 @@
 package com.example.ekontest_hackathon;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class FreelancerListAdapter extends BaseAdapter {
@@ -52,8 +55,13 @@ public class FreelancerListAdapter extends BaseAdapter {
 
 
         final UserModel model= (UserModel) mFreelancer.get(position);
+        final String[] url = new String[2];
+        url[0] = model.getPersonalInformationModel().getImagelink();
+        url[1] = model.getPersonalInformationModel().getImagename();
+
         UserAdapter userAdapter= new UserAdapter();
-        userAdapter.getUrlImage(model.getPersonalInformationModel().getImagename(),imageFreelancer);
+     //   userAdapter.getUrlImage(model.getPersonalInformationModel().getImagelink(),imageFreelancer);
+        userAdapter.getUrlImage(url,imageFreelancer);
         nameFreelancer.setText(model.getPersonalInformationModel().getFirstname()+" "+model.getPersonalInformationModel().getLastname());
 
         //ONITECLICK
@@ -61,6 +69,18 @@ public class FreelancerListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context,model.getPersonalInformationModel().getFirstname(),Toast.LENGTH_SHORT).show();
+                String nom = model.getPersonalInformationModel().getFirstname();
+                Intent intent = new Intent(v.getContext(), FreelancerOnclickActivity.class);
+                intent.putExtra("firstname", model.getPersonalInformationModel().getFirstname());
+                intent.putExtra("lastname", model.getPersonalInformationModel().getLastname());
+                intent.putExtra("sexe", model.getPersonalInformationModel().getSexe());
+                intent.putExtra("imagelink", model.getPersonalInformationModel().getImagelink());
+                intent.putExtra("imagename", model.getPersonalInformationModel().getImagename());
+
+
+                // intent.putExtra("model",(Parcelable) model);
+                v.getContext().startActivity(intent);
+
             }
         });
 

@@ -2,6 +2,8 @@ package com.example.ekontest_hackathon;
 
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,11 +18,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class UserModel {
+public class UserModel implements Parcelable {
     private String id;
     private PersonalInformationModel personalInformationModel;
     private AcademicInformationModel academicInformationModel;
     private String TAG ="Inside User Class";
+
+    private  int mData;
 
     private DatabaseReference databaseReference;
 
@@ -82,6 +86,32 @@ public class UserModel {
 
     public void setAcademicInformationModel(AcademicInformationModel academicInformationModel) {
         this.academicInformationModel = academicInformationModel;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(mData);
+    }
+
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<UserModel> CREATOR = new Parcelable.Creator<UserModel>() {
+        public UserModel createFromParcel(Parcel in) {
+            return new UserModel(in);
+        }
+
+        public UserModel[] newArray(int size) {
+            return new UserModel[size];
+        }
+    };
+
+    // example constructor that takes a Parcel and gives you an object populated with it's values
+    private UserModel(Parcel in) {
+        mData = in.readInt();
     }
 }
 

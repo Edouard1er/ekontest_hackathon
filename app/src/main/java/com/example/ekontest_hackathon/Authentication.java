@@ -49,7 +49,7 @@ public class Authentication extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
-
+        //signOut();
         whitelistedCountries= new ArrayList<String>();
         whitelistedCountries.add("+509");
 
@@ -124,6 +124,18 @@ public class Authentication extends AppCompatActivity {
     }
 
     public void signOut(View view){
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                    }
+                });
+    }
+    public void signOut(){
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
