@@ -11,12 +11,16 @@
         android:id="@+id/id_tab_layout"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/couleur2"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicatorColor="@color/couleur5"
+        app:tabRippleColor="@color/bleu_fonce"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/black">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/id_purshased_tab"
