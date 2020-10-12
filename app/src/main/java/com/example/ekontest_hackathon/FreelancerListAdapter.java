@@ -9,13 +9,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.internal.$Gson$Preconditions;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class FreelancerListAdapter extends BaseAdapter {
+public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQueryTextListener {
     private  Context context;
     private Boolean isChat;
     List<UserModel> mFreelancer;
@@ -50,8 +55,10 @@ public class FreelancerListAdapter extends BaseAdapter {
 
         ImageView imageFreelancer= convertView.findViewById(R.id.image_freelancer);
         TextView nameFreelancer= (TextView) convertView.findViewById(R.id.name_freelancer);
+        RatingBar mRatingBar=convertView.findViewById(R.id.rating_bar_item_freelancer);
         TextView nbrCoursFreelancer= (TextView) convertView.findViewById(R.id.nbr_cours_freelancer);
         TextView nbrEtudiantFreelancer= (TextView) convertView.findViewById(R.id.nbr_etudiant_freelancer);
+
 
 
         final UserModel model= (UserModel) mFreelancer.get(position);
@@ -63,19 +70,35 @@ public class FreelancerListAdapter extends BaseAdapter {
      //   userAdapter.getUrlImage(model.getPersonalInformationModel().getImagelink(),imageFreelancer);
         userAdapter.getUrlImage(url,imageFreelancer);
         nameFreelancer.setText(model.getPersonalInformationModel().getFirstname()+" "+model.getPersonalInformationModel().getLastname());
+        nbrCoursFreelancer.setText("Cours : "+model.getProfilModel().getnCours());
+        nbrEtudiantFreelancer.setText("Etudiants : "+model.getProfilModel().getnEtudiant());
 
+        AvisModel fl = new AvisModel();
+        fl.setInfoAvis(model.getId(), mRatingBar);
         //ONITECLICK
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context,model.getPersonalInformationModel().getFirstname(),Toast.LENGTH_SHORT).show();
                 String nom = model.getPersonalInformationModel().getFirstname();
+                //Intent intent = new Intent(v.getContext(), FreelancerOnclickActivity.class);
                 Intent intent = new Intent(v.getContext(), FreelancerOnclickActivity.class);
+
+                intent.putExtra("idFreelancer", model.getId());
+
                 intent.putExtra("firstname", model.getPersonalInformationModel().getFirstname());
                 intent.putExtra("lastname", model.getPersonalInformationModel().getLastname());
                 intent.putExtra("sexe", model.getPersonalInformationModel().getSexe());
                 intent.putExtra("imagelink", model.getPersonalInformationModel().getImagelink());
                 intent.putExtra("imagename", model.getPersonalInformationModel().getImagename());
+                intent.putExtra("nCours", ""+model.getProfilModel().getnCours());
+                intent.putExtra("nEtudiants", ""+model.getProfilModel().getnEtudiant());
+
+
+
+
+
+
 
 
                 // intent.putExtra("model",(Parcelable) model);
@@ -87,4 +110,13 @@ public class FreelancerListAdapter extends BaseAdapter {
         return convertView;
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
 }

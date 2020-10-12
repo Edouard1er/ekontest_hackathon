@@ -1,5 +1,7 @@
 package com.example.ekontest_hackathon;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -9,7 +11,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class PersonalInformationModel {
+import java.util.List;
+
+public class PersonalInformationModel implements Parcelable {
 
         private String imagelink;
         private String firstname;
@@ -39,22 +43,33 @@ public class PersonalInformationModel {
         this.type = type;
         this.imagename=imagename;
     }
+    public PersonalInformationModel( String firstname,
+                                    String lastname, String sexe, String email,
+                                    String phone, String username, String type) {
+
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.sexe = sexe;
+        this.email = email;
+        this.phone = phone;
+        this.username = username;
+        this.type = type;
+
+    }
     public  PersonalInformationModel (){
 
     }
 
+
     public void insertPersonalInformation(PersonalInformationModel model){
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        databaseReference.child(firebaseUser.getUid()).child("PersonalInformation").child(firebaseUser.getUid()).setValue(model)
+        databaseReference.child(firebaseUser.getUid()).child("personalInformationModel").setValue(model)
         .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
             }
         });
-
-
-
     }
 
     public String getImagename() {
@@ -128,4 +143,40 @@ public class PersonalInformationModel {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.firstname);
+        dest.writeString(this.lastname);
+        dest.writeString(this.sexe);
+        dest.writeString(this.email);
+        dest.writeString(this.phone);
+        dest.writeString(this.username);
+        dest.writeString(this.type);
+
+
+    }
+    public PersonalInformationModel(Parcel in) {
+        this.firstname = in.readString();
+        this.lastname = in.readString();
+        this.sexe = in.readString();
+        this.email = in.readString();
+        this.phone = in.readString();
+        this.username = in.readString();
+        this.type = in.readString();
+    }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public PersonalInformationModel createFromParcel(Parcel in) {
+            return new PersonalInformationModel(in);
+        }
+
+        public PersonalInformationModel[] newArray(int size) {
+            return new PersonalInformationModel[size];
+        }
+    };
 }

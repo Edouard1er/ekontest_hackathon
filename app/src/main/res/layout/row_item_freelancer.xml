@@ -39,6 +39,7 @@
                 android:layout_gravity="center"
                 />
             <RatingBar
+                android:id="@+id/rating_bar_item_freelancer"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

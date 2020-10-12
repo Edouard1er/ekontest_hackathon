@@ -163,6 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="35sp"
                     android:layout_weight="1"
+                    android:onClick="addAcademicFormation"
                     android:text="Add" />
 
                 <Button
@@ -174,6 +175,14 @@
                     android:layout_marginRight="30sp"
                     android:onClick="nextFormAction"
                     android:text="Next" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_info_academic_real"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </LinearLayout>

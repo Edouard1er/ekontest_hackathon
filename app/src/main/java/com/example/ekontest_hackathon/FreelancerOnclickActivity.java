@@ -19,6 +19,9 @@ public class FreelancerOnclickActivity extends AppCompatActivity {
         String sexe = getIntent().getStringExtra("sexe");
         String imagelink = getIntent().getStringExtra("imagelink");
         String imagename = getIntent().getStringExtra("imagename");
+        String nCours = getIntent().getStringExtra("nCours");
+        String nEtudiant = getIntent().getStringExtra("nEtudiants");
+        String idFreelancer = getIntent().getStringExtra("idFreelancer");
 
 
 
@@ -30,6 +33,9 @@ public class FreelancerOnclickActivity extends AppCompatActivity {
         fd.putString("sexe", sexe);
         fd.putString("imagelink", imagelink);
         fd.putString("imagename", imagename);
+        fd.putString("nCours", nCours);
+        fd.putString("nEtudiants", nEtudiant);
+        fd.putString("idFreelancer", idFreelancer);
 
 
         return fd;

@@ -9,8 +9,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+
+
 
 class InfoAcademicAdapter extends ArrayAdapter {
     Context mContext;
@@ -39,10 +44,11 @@ class InfoAcademicAdapter extends ArrayAdapter {
         filiere.setText(mArrayList.get(position).getFiliere());
         diplome.setText(mArrayList.get(position).getDiplome());
 
-        etudeNumber.setText(""+ mArrayList.get(position).getEtudeNumber());
+        etudeNumber.setText(""+ mArrayList.get(position).getLevel());
         startYear.setText(mArrayList.get(position).getStartYear());
         endYear.setText(mArrayList.get(position).getEndYear());
         return convertView;
 
     }
 }
+

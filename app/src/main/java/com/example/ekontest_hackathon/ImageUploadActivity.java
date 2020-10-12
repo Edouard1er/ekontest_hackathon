@@ -77,13 +77,17 @@ public class ImageUploadActivity extends AppCompatActivity {
 
     public void nextFormAction(View view) {
         Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
-        intent.putExtra("nom", getIntent().getStringExtra("nom"));
+       /* intent.putExtra("nom", getIntent().getStringExtra("nom"));
         intent.putExtra("prenom", getIntent().getStringExtra("prenom"));
         intent.putExtra("email", getIntent().getStringExtra("email"));
         intent.putExtra("phone", getIntent().getStringExtra("phone"));
         intent.putExtra("username", getIntent().getStringExtra("username"));
         intent.putExtra("sexe", getIntent().getStringExtra("sexe"));
-        intent.putExtra("type", getIntent().getStringExtra("type"));
+        intent.putExtra("type", getIntent().getStringExtra("type"));*/
+
+
+        intent.putExtra("personnel",getIntent().getParcelableArrayListExtra("personnel"));
+        intent.putExtra("academic",getIntent().getParcelableArrayListExtra("academic"));
         //let's add the photo path
         if(this.photoPath != null){
             intent.putExtra("photo", this.photoPath);

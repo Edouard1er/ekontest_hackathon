@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,12 @@ public class FreelancerListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_freelancer_list, container, false);
+        AvisModel avisModel = new AvisModel();
+       // avisModel.InsertAvis("5NsGzmSz2RgtdphvyK3vQJI5u2G2", "Ce professeur est genial",4);
+       /* avisModel.InsertAvis("YcvzpV0btkURawrKYJGzeHWGNfb2", "Ce professeur est parfait",5);
+        avisModel.InsertAvis("ZLdEAuSTgLfWJME1XFIdDjZvbR73", "Ce professeur est bon",3);
+        avisModel.InsertAvis("hRYQaLWw89M0xmBpqwZqsUHkcwY2", "Ce professeur est catastrophique",1);*/
+
         mFreelancers=new ArrayList<>();
 
       /*  mGridView = view.findViewById(R.id.freelancer_gridview);
@@ -81,13 +88,17 @@ public class FreelancerListFragment extends Fragment {
         //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users");
+       // Query query = freelancerRef.equalTo("personalInformationModel").equalTo("Student","type");
         freelancerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mFreelancers.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     UserModel model = dataSnapshot.getValue(UserModel.class);
+                    if(model.getPersonalInformationModel().getType().equals("Freelancer")){
                         mFreelancers.add(model);
+                    }
+
                         //Toast.makeText(getContext(), model.getId()+" "+ model.getPersonalInformationModel().getType(), Toast.LENGTH_SHORT).show();
 
 

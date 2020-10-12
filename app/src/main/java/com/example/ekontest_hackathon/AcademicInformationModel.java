@@ -1,5 +1,7 @@
 package com.example.ekontest_hackathon;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -8,7 +10,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AcademicInformationModel {
+import java.util.List;
+
+public class AcademicInformationModel implements Parcelable {
     private String level;
     private String institution;
     private String faculte;
@@ -31,6 +35,19 @@ public class AcademicInformationModel {
 
     public AcademicInformationModel (){
 
+    }
+
+    public void insertAcademicInformation(List<AcademicInformationModel> model){
+        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        for(int i=0; i<model.size(); i++) {
+            databaseReference.child(firebaseUser.getUid()).child("academicInformationModel").push().setValue(model.get(i))
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                        }
+                    });
+        }
     }
     public void insertAcademicInformation(AcademicInformationModel model){
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
@@ -93,4 +110,37 @@ public class AcademicInformationModel {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.level);
+        dest.writeString(this.institution);
+        dest.writeString(this.faculte);
+        dest.writeString(this.degree);
+        dest.writeString(this.startDate);
+        dest.writeString(this.endDate);
+    }
+    public AcademicInformationModel(Parcel in) {
+        this.level = in.readString();
+        this.institution = in.readString();
+        this.faculte = in.readString();
+        this.degree = in.readString();
+        this.startDate = in.readString();
+        this.endDate = in.readString();
+
+    }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public AcademicInformationModel createFromParcel(Parcel in) {
+            return new AcademicInformationModel(in);
+        }
+
+        public AcademicInformationModel[] newArray(int size) {
+            return new AcademicInformationModel[size];
+        }
+    };
 }

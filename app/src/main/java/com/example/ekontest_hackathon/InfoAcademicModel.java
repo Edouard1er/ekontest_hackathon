@@ -1,19 +1,36 @@
 package com.example.ekontest_hackathon;
 
-class InfoAcademicModel {
-    private int etudeNumber;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+class InfoAcademicModel implements Parcelable {
+    private String level;
     private String ecole;
     private String filiere;
     private String diplome;
     private String startYear;
     private String endYear;
 
-    public int getEtudeNumber() {
-        return etudeNumber;
+    public InfoAcademicModel(String level, String ecole, String filiere, String diplome, String startYear, String endYear) {
+       this.level=level;
+        this.ecole = ecole;
+        this.filiere = filiere;
+        this.diplome = diplome;
+        this.startYear = startYear;
+        this.endYear = endYear;
     }
 
-    public void setEtudeNumber(int etudeNumber) {
-        this.etudeNumber = etudeNumber;
+    public InfoAcademicModel() {
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public String getEcole() {
@@ -56,12 +73,37 @@ class InfoAcademicModel {
         this.endYear = endYear;
     }
 
-    public InfoAcademicModel(int etudeNumber, String ecole, String filiere, String diplome, String startYear, String endYear) {
-        this.etudeNumber = etudeNumber;
-        this.ecole = ecole;
-        this.filiere = filiere;
-        this.diplome = diplome;
-        this.startYear = startYear;
-        this.endYear = endYear;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.level);
+        dest.writeString(this.ecole);
+        dest.writeString(this.filiere);
+        dest.writeString(this.diplome);
+        dest.writeString(this.startYear);
+        dest.writeString(this.endYear);
+    }
+    public InfoAcademicModel(Parcel in) {
+        this.level = in.readString();
+        this.ecole = in.readString();
+        this.filiere = in.readString();
+        this.diplome = in.readString();
+        this.startYear = in.readString();
+        this.endYear = in.readString();
+
+    }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public InfoAcademicModel createFromParcel(Parcel in) {
+            return new InfoAcademicModel(in);
+        }
+
+        public InfoAcademicModel[] newArray(int size) {
+            return new InfoAcademicModel[size];
+        }
+    };
 }

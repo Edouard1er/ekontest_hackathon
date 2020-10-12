@@ -12,13 +12,17 @@ import android.os.Bundle;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PersistableBundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +47,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class ReviewActivity extends AppCompatActivity {
     TextView nom, prenom, sexe, email, phone, username, account,
@@ -51,6 +57,15 @@ public class ReviewActivity extends AppCompatActivity {
     String mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount,
             mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd;
     ImageView imagePhoto;
+    List<AcademicInformationModel> academicList;
+    List<PersonalInformationModel> personelList;
+    ProfilModel profilModel;
+    ListView mListView;
+    ArrayList mArrayList;
+   // InfoAcademicAdapter mAdapter;
+    AcademicInformationAdapter adapter;
+    RecyclerView recyclerView;
+
 
     private Uri mImageUr;
     private StorageReference mStorageRef;
@@ -67,7 +82,9 @@ public class ReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_review);
 
 
-
+        academicList = new ArrayList<>();
+        personelList= new ArrayList<>();
+        profilModel= new ProfilModel(0,0);
         mStorageRef= FirebaseStorage.getInstance().getReference();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -81,8 +98,7 @@ public class ReviewActivity extends AppCompatActivity {
         account = (TextView) findViewById(R.id.textViewAccountType);
 
 
-
-        mNom=getIntent().getStringExtra("nom");
+       /* mNom=getIntent().getStringExtra("nom");
         mPrenom=getIntent().getStringExtra("prenom");
         mSexe=getIntent().getStringExtra("sexe");
         mEmail=getIntent().getStringExtra("email");
@@ -95,26 +111,69 @@ public class ReviewActivity extends AppCompatActivity {
         mFaculty=getIntent().getStringExtra("faculty");
         mDegree=getIntent().getStringExtra("degree");
         mStart=getIntent().getStringExtra("start");
-        mEnd=getIntent().getStringExtra("end");
+        mEnd=getIntent().getStringExtra("end");*/
 
-        level = (TextView) findViewById(R.id.textViewLevel);
+        //Get array list academic
+        academicList=getIntent().getParcelableArrayListExtra("academic");
+        personelList=getIntent().getParcelableArrayListExtra("personnel");
+
+        recyclerView= findViewById(R.id.list_info_academic);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter=new AcademicInformationAdapter(this, academicList);
+        recyclerView.setAdapter(adapter);
+
+        imagePhoto = (ImageView) findViewById(R.id.imageViewPhoto);
+
+        nom.setText(personelList.get(0).getLastname());
+        prenom.setText(personelList.get(0).getFirstname());
+        sexe.setText(personelList.get(0).getSexe());
+        email.setText(personelList.get(0).getEmail());
+        phone.setText(personelList.get(0).getPhone());
+        username.setText(personelList.get(0).getUsername());
+        account.setText(personelList.get(0).getType());
+
+        //Setting value
+        mNom=personelList.get(0).getLastname();
+        mPrenom=personelList.get(0).getFirstname();
+        mSexe=personelList.get(0).getSexe();
+        mEmail=personelList.get(0).getEmail();
+        mPhone=personelList.get(0).getPhone();
+        mUsername=personelList.get(0).getUsername();
+        mAccount=personelList.get(0).getType();
+
+        Toast.makeText(this, "The name of the array personnel :" + personelList.get(0).getLastname(), Toast.LENGTH_SHORT).show();
+
+       /* level = (TextView) findViewById(R.id.textViewLevel);
         institution = (TextView) findViewById(R.id.textViewInstitution);
         faculty = (TextView) findViewById(R.id.textViewFaculty);
         degree = (TextView) findViewById(R.id.textViewDegree);
         start = (TextView) findViewById(R.id.textViewStart);
         end = (TextView) findViewById(R.id.textViewEnd);
 
-        imagePhoto = (ImageView) findViewById(R.id.imageViewPhoto);
-
-        nom.setText(getIntent().getStringExtra("nom"));
-        prenom.setText(getIntent().getStringExtra("prenom"));
-        sexe.setText(getIntent().getStringExtra("sexe"));
-        email.setText(getIntent().getStringExtra("email"));
-        phone.setText(getIntent().getStringExtra("phone"));
-        username.setText(getIntent().getStringExtra("username"));
-        account.setText(getIntent().getStringExtra("type"));
-
+       */
         try {
+
+            if(getIntent().hasExtra("photo")) {
+                Glide.with(imagePhoto)
+                        .load(getIntent().getStringExtra("photo"))
+                        .into(imagePhoto);
+            }
+            if(getIntent().getStringExtra("photo")!= null) {
+                uri = Uri.parse(getIntent().getStringExtra("photo"));
+            }else{
+                if(user.getPhotoUrl()!= null){
+                    uri = Uri.parse(user.getPhotoUrl().toString());
+                    Glide.with(imagePhoto)
+                            .load(getIntent().getStringExtra("photo"))
+                            .into(imagePhoto);
+                }
+            }
+        } catch (NullPointerException e) {
+            e.getStackTrace();
+        }
+       /* try {
             if(getIntent().hasExtra("level"))
                 level.setText(getIntent().getStringExtra("level"));
             if(getIntent().hasExtra("institution"))
@@ -145,7 +204,7 @@ public class ReviewActivity extends AppCompatActivity {
         } catch (NullPointerException e) {
             e.getStackTrace();
         }
-
+*/
     }
 
 
@@ -160,11 +219,12 @@ public class ReviewActivity extends AppCompatActivity {
         }
     }
 
-    public PersonalInformationModel saveUserInformation(String imagelink, String fileIdentity, String firstname,
+    public PersonalInformationModel toSaveUserInformation(String imagelink, String fileIdentity, String firstname,
                                     String lastname, String sexe, String email,
                                     String phone, String username, String type){
 
-        PersonalInformationModel model = new PersonalInformationModel(imagelink, fileIdentity,firstname, lastname, sexe, email, phone, username, type);
+        PersonalInformationModel model = new PersonalInformationModel(imagelink, fileIdentity,firstname,
+                lastname, sexe, email, phone, username, type);
        // model.insertPersonalInformation(model);
 
         return model;
@@ -180,9 +240,20 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     public void goToNavDrawerActivity(){
+
         Toast.makeText(ReviewActivity.this, "upload succeed", Toast.LENGTH_LONG).show();
-        startActivity(new Intent(getApplicationContext(), NavDrawerActivity.class));
-        finish();
+
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(getApplicationContext(), NavDrawerActivity.class));
+                finish();
+            }
+        }, 10000);
+
+
     }
 
 
@@ -198,10 +269,11 @@ public class ReviewActivity extends AppCompatActivity {
 
             if(user.getPhotoUrl() != null && user.getPhotoUrl().toString().length()!=0){
 
-                PersonalInformationModel pInfo= saveUserInformation(user.getPhotoUrl().toString(),fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
-                AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
+                PersonalInformationModel pInfo= toSaveUserInformation(user.getPhotoUrl().toString(),fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
+              //  AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
                 UserModel userModel = new UserModel();
-                userModel.InsertUsers(pInfo,aInfo);
+                //userModel.InsertUsers(pInfo,aInfo);
+                userModel.InsertUsers(pInfo,academicList,profilModel);
                 goToNavDrawerActivity();
 
             }else{
@@ -216,11 +288,12 @@ public class ReviewActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Uri uri2) {
                                                 imageStoragePath=uri2.toString();
-                                                PersonalInformationModel pInfo= saveUserInformation(imageStoragePath,fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
-                                                AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
+
+                                                PersonalInformationModel pInfo= toSaveUserInformation(imageStoragePath,fileIdentity,mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
+
 
                                                 UserModel userModel = new UserModel();
-                                                userModel.InsertUsers(pInfo,aInfo);
+                                                userModel.InsertUsers(pInfo,academicList,profilModel);
 
                                                 goToNavDrawerActivity();
                                             }
@@ -255,11 +328,10 @@ public class ReviewActivity extends AppCompatActivity {
 
         }else{
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
-            PersonalInformationModel pInfo= saveUserInformation("","",mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
-            AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
+            PersonalInformationModel pInfo= toSaveUserInformation("","",mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
 
             UserModel userModel = new UserModel();
-            userModel.InsertUsers(pInfo,aInfo);
+            userModel.InsertUsers(pInfo,academicList,profilModel);
 
             goToNavDrawerActivity();
         }

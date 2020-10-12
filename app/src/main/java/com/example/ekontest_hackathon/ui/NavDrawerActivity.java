@@ -29,6 +29,7 @@ import com.example.ekontest_hackathon.FreelancerListFragment;
 import com.example.ekontest_hackathon.FreelancerListOnClickFragment;
 import com.example.ekontest_hackathon.PersonalInformationModel;
 import com.example.ekontest_hackathon.R;
+import com.example.ekontest_hackathon.UrlImageModel;
 import com.example.ekontest_hackathon.UserAdapter;
 import com.example.ekontest_hackathon.UserModel;
 import com.example.ekontest_hackathon.ui.about_us.AboutUsFragment;
@@ -106,27 +107,20 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         logout = header.findViewById(R.id.logout);
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(user.getUid());
         final String[] imagename = new String[1];
         databaseReference
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                       for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
-                           UserModel model = dataSnapshot.getValue(UserModel.class);
-                           final String[] url = new String[2];
-                           url[0] = model.getPersonalInformationModel().getImagelink();
-                           url[1] = model.getPersonalInformationModel().getImagename();
-                           if(model.getId().equals(user.getUid())){
-                               UserAdapter userAdapter = new UserAdapter();
-                               userAdapter.getUrlImage(url, profile_image);
-                               profile_name.setText(model.getPersonalInformationModel().getUsername());
-                               profile_type.setText(model.getPersonalInformationModel().getType());
-
-                           }
-
-                       }
+                        UserModel model = snapshot.getValue(UserModel.class);
+                        final String[] url = new String[2];
+                        url[0] = model.getPersonalInformationModel().getImagelink();
+                        url[1] = model.getPersonalInformationModel().getImagename();
+                        //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
+                        UrlImageModel urlImageModel= new UrlImageModel();
+                        urlImageModel.getUrlImage(url,profile_image);
                     }
 
                     @Override
@@ -279,6 +273,27 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
 
                     }
                 });
+    }
+    public Bundle getFreelancerData(){
+        String firstname = getIntent().getStringExtra("firstname");
+        String lastname = getIntent().getStringExtra("lastname");
+        String sexe = getIntent().getStringExtra("sexe");
+        String imagelink = getIntent().getStringExtra("imagelink");
+        String imagename = getIntent().getStringExtra("imagename");
+
+
+
+        //UserModel model = (UserModel) getIntent().getParcelableExtra("model");
+
+        Bundle fd = new Bundle();
+        fd.putString("firstname", firstname);
+        fd.putString("lastname", lastname);
+        fd.putString("sexe", sexe);
+        fd.putString("imagelink", imagelink);
+        fd.putString("imagename", imagename);
+
+
+        return fd;
     }
 
 }
