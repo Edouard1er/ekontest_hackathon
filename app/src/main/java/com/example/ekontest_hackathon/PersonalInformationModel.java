@@ -13,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class PersonalInformationModel implements Parcelable {
+public class PersonalInformationModel extends ClassLoader implements Parcelable {
 
         private String imagelink;
         private String firstname;
@@ -158,6 +158,8 @@ public class PersonalInformationModel implements Parcelable {
         dest.writeString(this.phone);
         dest.writeString(this.username);
         dest.writeString(this.type);
+        dest.writeString(this.imagelink);
+        dest.writeString(this.imagename);
 
 
     }
@@ -169,6 +171,8 @@ public class PersonalInformationModel implements Parcelable {
         this.phone = in.readString();
         this.username = in.readString();
         this.type = in.readString();
+        this.imagelink=in.readString();
+        this.imagename=in.readString();
     }
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public PersonalInformationModel createFromParcel(Parcel in) {

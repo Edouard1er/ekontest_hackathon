@@ -18,6 +18,7 @@ import com.google.gson.internal.$Gson$Preconditions;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQueryTextListener {
@@ -70,8 +71,13 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
      //   userAdapter.getUrlImage(model.getPersonalInformationModel().getImagelink(),imageFreelancer);
         userAdapter.getUrlImage(url,imageFreelancer);
         nameFreelancer.setText(model.getPersonalInformationModel().getFirstname()+" "+model.getPersonalInformationModel().getLastname());
-        nbrCoursFreelancer.setText("Cours : "+model.getProfilModel().getnCours());
-        nbrEtudiantFreelancer.setText("Etudiants : "+model.getProfilModel().getnEtudiant());
+        try {
+            nbrCoursFreelancer.setText("Cours : "+model.getProfilModel().getnCours());
+            nbrEtudiantFreelancer.setText("Etudiants : "+model.getProfilModel().getnEtudiant());
+        }catch (Exception e){
+
+        }
+
 
         AvisModel fl = new AvisModel();
         fl.setInfoAvis(model.getId(), mRatingBar);
@@ -83,24 +89,9 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
                 String nom = model.getPersonalInformationModel().getFirstname();
                 //Intent intent = new Intent(v.getContext(), FreelancerOnclickActivity.class);
                 Intent intent = new Intent(v.getContext(), FreelancerOnclickActivity.class);
-
-                intent.putExtra("idFreelancer", model.getId());
-
-                intent.putExtra("firstname", model.getPersonalInformationModel().getFirstname());
-                intent.putExtra("lastname", model.getPersonalInformationModel().getLastname());
-                intent.putExtra("sexe", model.getPersonalInformationModel().getSexe());
-                intent.putExtra("imagelink", model.getPersonalInformationModel().getImagelink());
-                intent.putExtra("imagename", model.getPersonalInformationModel().getImagename());
-                intent.putExtra("nCours", ""+model.getProfilModel().getnCours());
-                intent.putExtra("nEtudiants", ""+model.getProfilModel().getnEtudiant());
-
-
-
-
-
-
-
-
+                ArrayList<UserModel> userArray= new ArrayList<>();
+                userArray.add(model);
+                intent.putParcelableArrayListExtra("freelancer",userArray);
                 // intent.putExtra("model",(Parcelable) model);
                 v.getContext().startActivity(intent);
 

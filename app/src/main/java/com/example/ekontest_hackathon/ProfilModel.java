@@ -1,12 +1,15 @@
 package com.example.ekontest_hackathon;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class ProfilModel {
+public class ProfilModel extends ClassLoader implements Parcelable {
     private int nCours=0;
     private int nEtudiant=0;
     private FirebaseUser firebaseUser;
@@ -46,4 +49,30 @@ public class ProfilModel {
     public void setnEtudiant(int nEtudiant) {
         this.nEtudiant = nEtudiant;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.nCours);
+        dest.writeInt(this.nEtudiant);
+
+    }
+    public ProfilModel(Parcel in) {
+        this.nCours = in.readInt();
+        this.nEtudiant = in.readInt();
+
+    }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public ProfilModel createFromParcel(Parcel in) {
+            return new ProfilModel(in);
+        }
+
+        public ProfilModel[] newArray(int size) {
+            return new ProfilModel[size];
+        }
+    };
 }

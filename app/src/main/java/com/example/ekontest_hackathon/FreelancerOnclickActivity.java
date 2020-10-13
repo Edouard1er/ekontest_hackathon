@@ -3,40 +3,34 @@ package com.example.ekontest_hackathon;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 public class FreelancerOnclickActivity extends AppCompatActivity {
+    String nCours, nEtudiant;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freelancer_onclick);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        AvisModel avisModel = new AvisModel();
+        //avisModel.InsertAvis(user.getUid(),"C'est un bon professeur extraordinaire",3);
 
 
     }
     public Bundle getFreelancerData(){
-        String firstname = getIntent().getStringExtra("firstname");
-        String lastname = getIntent().getStringExtra("lastname");
-        String sexe = getIntent().getStringExtra("sexe");
-        String imagelink = getIntent().getStringExtra("imagelink");
-        String imagename = getIntent().getStringExtra("imagename");
-        String nCours = getIntent().getStringExtra("nCours");
-        String nEtudiant = getIntent().getStringExtra("nEtudiants");
-        String idFreelancer = getIntent().getStringExtra("idFreelancer");
-
-
-
-        //UserModel model = (UserModel) getIntent().getParcelableExtra("model");
+        ArrayList <UserModel> userModels;
+        userModels=getIntent().getParcelableArrayListExtra("freelancer");
+        Toast.makeText(this, "Trying something :"+userModels.get(0).getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
 
         Bundle fd = new Bundle();
-        fd.putString("firstname", firstname);
-        fd.putString("lastname", lastname);
-        fd.putString("sexe", sexe);
-        fd.putString("imagelink", imagelink);
-        fd.putString("imagename", imagename);
-        fd.putString("nCours", nCours);
-        fd.putString("nEtudiants", nEtudiant);
-        fd.putString("idFreelancer", idFreelancer);
-
+        fd.putParcelableArrayList("freelancer", userModels);
 
         return fd;
     }

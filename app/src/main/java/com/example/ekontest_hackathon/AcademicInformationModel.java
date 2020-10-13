@@ -12,7 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class AcademicInformationModel implements Parcelable {
+public class AcademicInformationModel extends ClassLoader implements Parcelable {
     private String level;
     private String institution;
     private String faculte;

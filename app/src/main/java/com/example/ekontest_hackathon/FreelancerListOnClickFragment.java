@@ -40,7 +40,7 @@ public class FreelancerListOnClickFragment extends Fragment{
     ArrayList mArrayList;
     InfoAcademicAdapter mAdapter;
     TextView redigerAvis, avisDisplayFreelancer, mFirstname,
-            mLastname, mSexe, mCoursFreelancer,mEtudiantFreelancer, mRatingValue;
+            mLastname, mSexe, mCoursFreelancer,mEtudiantFreelancer, mRatingValue, totalAvis;
     ProgressBar progressBar1,progressBar2, progressBar3, progressBar4, progressBar5;
     RatingBar mRatingBar2;
     onClickInfoFreelancer listener;
@@ -54,6 +54,8 @@ public class FreelancerListOnClickFragment extends Fragment{
 
     RecyclerView recyclerView;
     RecyclerView academicRecyclerView;
+    ArrayList <UserModel> userModels;
+    UserModel singleUser;
 
     // Important when you have a listener with an interface
     @Override
@@ -79,6 +81,8 @@ public class FreelancerListOnClickFragment extends Fragment{
         //getting data from activity
         activity = (FreelancerOnclickActivity) getActivity();
         results = activity.getFreelancerData();
+        userModels=results.getParcelableArrayList("freelancer");
+        singleUser=userModels.get(0);
         String value = results.getString("firstname");
         Toast.makeText(activity, value, Toast.LENGTH_SHORT).show();
 
@@ -134,11 +138,18 @@ public class FreelancerListOnClickFragment extends Fragment{
         mEtudiantFreelancer = view.findViewById(R.id.etudiants_freelancer);
         recyclerView = view.findViewById(R.id.list_avis_on_click);
         academicRecyclerView= view.findViewById(R.id.list_info_academic_freelancer);
+        totalAvis = view.findViewById(R.id.avis_total);
         setInfoPerso();
         setInfoProfil();
-        avisModel.setInfoAvis(results.getString("idFreelancer"), mRatingBar);
-        avisModel.setInfoAvis(results.getString("idFreelancer"), mRatingBar2, mRatingValue, progressBar1,progressBar2,
-                progressBar3, progressBar4,progressBar5);
+        try {
+            avisModel.setInfoAvis(singleUser.getId(), mRatingBar);
+            avisModel.setInfoAvis(singleUser.getId(), mRatingBar2, mRatingValue, progressBar1, progressBar2,
+                    progressBar3, progressBar4, progressBar5,totalAvis);
+        }catch (Exception e){
+            System.out.println("There is something wrong in freelancerlistOnclickFragment oncreateView method");
+
+        }
+
 
          adapter = new AvisAdapter();
         academicInformationAdapter= new AcademicInformationAdapter();
@@ -148,26 +159,39 @@ public class FreelancerListOnClickFragment extends Fragment{
     }
 
     public void setInfoPerso(){
-        mFirstname.setText(results.getString("firstname"));
-        mLastname.setText(results.getString("lastname"));
-        mSexe.setText(results.getString("sexe"));
-        final String[] url = new String[2];
-        url[0] = results.getString("imagelink");
-        url[1] = results.getString("imagename");
-        UserAdapter userAdapter = new UserAdapter();
-        userAdapter.getUrlImage(url, mImageFreelancer);
+        try {
+            //Toast.makeText(activity, "Et oui ca marche: "+userModels.get(0).getPersonalInformationModel().getUsername(), Toast.LENGTH_SHORT).show();
+            // mFirstname.setText(results.getString("firstname"));
+            mFirstname.setText(singleUser.getPersonalInformationModel().getFirstname());
+            mLastname.setText(singleUser.getPersonalInformationModel().getLastname());
+            mSexe.setText(singleUser.getPersonalInformationModel().getSexe());
+            final String[] url = new String[2];
+            url[0] = singleUser.getPersonalInformationModel().getImagelink();
+            url[1] = singleUser.getPersonalInformationModel().getImagename();
+            UrlImageModel urlImageModel = new UrlImageModel();
+            Toast.makeText(activity, "Image link: "+singleUser.getPersonalInformationModel().getImagename(), Toast.LENGTH_SHORT).show();
+            urlImageModel.getUrlImage(url, mImageFreelancer);
+        }catch (Exception e){
+            System.out.println("There is something wrong in freelancerlistOnclickFragment setinfoperson method");
+        }
+
     }
 
     public void setInfoProfil(){
-        mCoursFreelancer.setText(results.getString("nCours"));
-        mEtudiantFreelancer.setText(results.getString("nEtudiants"));
-        //mCoursFreelancer.setText(results.getString("nCours"));
-       // mCoursFreelancer.setText(results.getString("nEtudiants"));
+
+        try {
+            mCoursFreelancer.setText(""+singleUser.getProfilModel().getnCours());
+            mEtudiantFreelancer.setText(""+singleUser.getProfilModel().getnEtudiant());
+        }catch (Exception e){
+            System.out.println("There is something wrong in freelancerlistOnclickFragment setinfoprofil method");
+
+        }
+
     }
 
     private void readAvis(final View v) {
         DatabaseReference avisRef = FirebaseDatabase.getInstance().getReference("Users")
-                .child(results.getString("idFreelancer"))
+                .child(singleUser.getId())
                 .child("avisModel");
         avisRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -198,7 +222,7 @@ public class FreelancerListOnClickFragment extends Fragment{
     private void readAcademicInfo(final View v) {
 
         DatabaseReference avisRef = FirebaseDatabase.getInstance().getReference("Users")
-                .child(results.getString("idFreelancer"))
+                .child(singleUser.getId())
                 .child("academicInformationModel");
         avisRef.addValueEventListener(new ValueEventListener() {
             @Override

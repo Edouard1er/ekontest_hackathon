@@ -1,5 +1,7 @@
 package com.example.ekontest_hackathon;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,7 +22,7 @@ import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AvisModel {
+public class AvisModel extends ClassLoader implements Parcelable  {
     private int nStar;
     private String comment;
     private String idUser;
@@ -40,14 +42,11 @@ public class AvisModel {
         this.third_question = third_question;
     }
 
-    public AvisModel(int nStar, String comment, String idUser, long datetime, boolean first_question, boolean second_question, boolean third_question) {
+    public AvisModel(int nStar, String comment, String idUser, long datetime) {
         this.nStar = nStar;
         this.comment = comment;
         this.idUser = idUser;
         this.datetime = datetime;
-        this.first_question = first_question;
-        this.second_question = second_question;
-        this.third_question = third_question;
     }
 
     public AvisModel(){}
@@ -65,6 +64,21 @@ public class AvisModel {
         avis.put("datetime", ServerValue.TIMESTAMP);
         databaseReference.child(key).setValue(avis);
     }
+
+    public void InsertAvisForCourse(String idCours,String comment, int nStar){
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child("coursModel").child(idCours).child("avisModel");
+        //databaseReference.push().setValue(model);
+
+        String key = databaseReference.push().getKey();
+        Map<String,Object> avis= new HashMap<>();
+        avis.put("idUser", cUser.getUid());
+        avis.put("nStar", nStar);
+        avis.put("comment", comment);
+        avis.put("datetime", ServerValue.TIMESTAMP);
+        databaseReference.child(key).setValue(avis);
+    }
+
 
     public void setInfoAvis(String idFreelancer,final RatingBar bar){
        /* AvisModel avisModel = new AvisModel();
@@ -138,14 +152,13 @@ public class AvisModel {
         });
     }
     public void setInfoAvis(String idFreelancer, final RatingBar bar, final TextView mRatingValue,
-    final ProgressBar p1,final ProgressBar p2,final ProgressBar p3, final ProgressBar p4,final ProgressBar p5 ){
-       /* AvisModel avisModel = new AvisModel();
-        int [] data = avisModel.getAvisData(results.getString("idFreelancer"));
-        Toast.makeText(activity, "Voyons si les donnees sont recuperees: "+data[1], Toast.LENGTH_SHORT).show();*/
+                            final ProgressBar p1, final ProgressBar p2, final ProgressBar p3, final ProgressBar p4, final ProgressBar p5, final TextView tot_avis ){
         final int[] tStars = new int[1];
         final int[] tRate = new int [1];
+        final int[] tavis = new int[1];
         tStars[0]=0;
         tRate[0]=0;
+        tavis[0]=0;
 
         final int [] pro1= new int[1];
         final int [] pro2= new int[1];
@@ -172,6 +185,7 @@ public class AvisModel {
                     model = dataSnapshot.getValue(AvisModel.class);
                     tStars[0] =tStars[0]+ (int)model.getnStar();
                     tRate[0] =tRate[0]+1;
+                    tavis[0] = tavis[0] +1;
 
                     //Progress bar
                     switch (model.getnStar()){
@@ -209,6 +223,7 @@ public class AvisModel {
                     p3.setProgress(pV3);
                     p4.setProgress(pV4);
                     p5.setProgress(pV5);
+                    tot_avis.setText(""+tavis[0]);
 
                     // mRatingBar.setNumberOfStars(tStars[0]/tRate[0]);
                 }else{
@@ -219,6 +234,7 @@ public class AvisModel {
                     p3.setProgress(0);
                     p4.setProgress(0);
                     p5.setProgress(0);
+                    tot_avis.setText(""+0);
                 }
             }
 
@@ -292,4 +308,34 @@ public class AvisModel {
     public void setData(int[] data) {
         this.data = data;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.nStar);
+        dest.writeString(this.comment);
+        dest.writeString(this.idUser);
+        dest.writeLong(this.datetime);
+    }
+
+    public AvisModel(Parcel in) {
+        this.nStar = in.readInt();
+        this.comment = in.readString();
+        this.idUser = in.readString();
+        this.datetime = in.readLong();
+
+    }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public AvisModel createFromParcel(Parcel in) {
+            return new AvisModel(in);
+        }
+
+        public AvisModel[] newArray(int size) {
+            return new AvisModel[size];
+        }
+    };
 }

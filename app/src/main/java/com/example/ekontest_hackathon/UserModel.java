@@ -178,8 +178,26 @@ public class UserModel implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeInt(mData);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeParcelable(this.personalInformationModel,flags);
+        dest.writeParcelable(this.academicInformationModel,flags);
+        dest.writeParcelable(this.profilModel,flags);
+        dest.writeParcelable(this.avisModel,flags);
+    }
+
+    // example constructor that takes a Parcel and gives you an object populated with it's values
+    private UserModel(Parcel in) {
+        PersonalInformationModel loaderPersonal= new PersonalInformationModel();
+        AcademicInformationModel loaderAcademic = new AcademicInformationModel();
+        ProfilModel loaderProfil = new ProfilModel();
+        AvisModel loaderAvis = new AvisModel();
+
+        this.id = in.readString();
+        this.personalInformationModel = in.readParcelable(getClass().getClassLoader());
+        this.academicInformationModel = in.readParcelable(getClass().getClassLoader());
+        this.profilModel = in.readParcelable(getClass().getClassLoader());
+        this.avisModel = in.readParcelable(getClass().getClassLoader());
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
@@ -193,9 +211,6 @@ public class UserModel implements Parcelable {
         }
     };
 
-    // example constructor that takes a Parcel and gives you an object populated with it's values
-    private UserModel(Parcel in) {
-        mData = in.readInt();
-    }
+
 }
 
