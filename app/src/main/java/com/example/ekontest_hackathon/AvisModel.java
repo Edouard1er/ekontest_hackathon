@@ -22,7 +22,7 @@ import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AvisModel extends ClassLoader implements Parcelable  {
+public class AvisModel  implements Parcelable  {
     private int nStar;
     private String comment;
     private String idUser;

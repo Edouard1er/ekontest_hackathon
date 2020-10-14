@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +33,7 @@ public class FreelancerListFragment extends Fragment {
     freelancerInterface listener;
     ArrayList<CustomFreelancerModel>mArrayList;
     FreelancerListAdapter adapter;
+    SearchView searchFreelancer;
     // Important when you have a listener with an interface
     @Override
     public void onAttach(@NonNull Context context) {
@@ -48,13 +50,15 @@ public class FreelancerListFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    List<UserModel> mFreelancers;
+    List<FreelancerModel> mFreelancers;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_freelancer_list, container, false);
+        searchFreelancer = (SearchView) view.findViewById(R.id.search_freelancer);
+
         AvisModel avisModel = new AvisModel();
-       // avisModel.InsertAvis("5NsGzmSz2RgtdphvyK3vQJI5u2G2", "Ce professeur est genial",4);
+        // avisModel.InsertAvis("5NsGzmSz2RgtdphvyK3vQJI5u2G2", "Ce professeur est genial",4);
        /* avisModel.InsertAvis("YcvzpV0btkURawrKYJGzeHWGNfb2", "Ce professeur est parfait",5);
         avisModel.InsertAvis("ZLdEAuSTgLfWJME1XFIdDjZvbR73", "Ce professeur est bon",3);
         avisModel.InsertAvis("hRYQaLWw89M0xmBpqwZqsUHkcwY2", "Ce professeur est catastrophique",1);*/
@@ -75,10 +79,25 @@ public class FreelancerListFragment extends Fragment {
             }
         });*/
         setDisplayUsers(view);
+        searchFreelancer.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                // Log.e("Main"," data search: "+newText);
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
         return  view;
     }
     public interface freelancerInterface{
-       public void onClickFreelancer(String name);
+        public void onClickFreelancer(String name);
     }
 
     private void setDisplayUsers(View v){
@@ -88,18 +107,18 @@ public class FreelancerListFragment extends Fragment {
         //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users");
-       // Query query = freelancerRef.equalTo("personalInformationModel").equalTo("Student","type");
+        // Query query = freelancerRef.equalTo("personalInformationModel").equalTo("Student","type");
         freelancerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mFreelancers.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    UserModel model = dataSnapshot.getValue(UserModel.class);
+                    FreelancerModel model = dataSnapshot.getValue(FreelancerModel.class);
                     if(model.getPersonalInformationModel().getType().equals("Freelancer")){
                         mFreelancers.add(model);
                     }
 
-                        //Toast.makeText(getContext(), model.getId()+" "+ model.getPersonalInformationModel().getType(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), model.getId()+" "+ model.getPersonalInformationModel().getType(), Toast.LENGTH_SHORT).show();
 
 
                 }

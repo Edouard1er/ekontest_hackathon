@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,8 @@ public class PersonalInformationActivity extends AppCompatActivity {
     EditText nom, prenom, email, phone, username;
 
     FirebaseUser user ;
+    ArrayList<PersonalInformationModel> infoPersoList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.editTextTextEmail);
         phone = (EditText) findViewById(R.id.editTextPhone);
         username = (EditText) findViewById(R.id.editTextTextUsername);
-
+        infoPersoList = new ArrayList<>();
        // signOut();
         String provider = user.getProviderId();
 
@@ -100,12 +103,16 @@ public class PersonalInformationActivity extends AppCompatActivity {
             //let's save all the information, we need to send them to the next intent
             //check some information against firebase here
             Intent intent = new Intent(getApplicationContext(), TypeAccount.class);
-            intent.putExtra("nom", nom_);
-            intent.putExtra("prenom", prenom_);
-            intent.putExtra("email", email_);
-            intent.putExtra("phone", phone_);
-            intent.putExtra("username", username_);
-            intent.putExtra("sexe", sexe_);
+            PersonalInformationModel personalInformationModel = new PersonalInformationModel(
+                    nom_,
+                   prenom_,
+                    sexe_,
+                   email_,
+                    phone_,
+                    username_
+            );
+            infoPersoList.add(personalInformationModel);
+            intent.putParcelableArrayListExtra("personnel", (ArrayList<? extends Parcelable>) infoPersoList);
             startActivity(intent);
         } else {
             Toast.makeText(PersonalInformationActivity.this, "All the information are required", Toast.LENGTH_SHORT).show();

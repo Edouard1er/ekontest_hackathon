@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class ProfilModel extends ClassLoader implements Parcelable {
+public class ProfilModel  implements Parcelable {
     private int nCours=0;
     private int nEtudiant=0;
     private FirebaseUser firebaseUser;

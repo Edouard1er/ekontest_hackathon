@@ -13,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class PersonalInformationModel extends ClassLoader implements Parcelable {
+public class PersonalInformationModel  implements Parcelable {
 
         private String imagelink;
         private String firstname;
@@ -42,6 +42,16 @@ public class PersonalInformationModel extends ClassLoader implements Parcelable 
         this.username = username;
         this.type = type;
         this.imagename=imagename;
+    }
+    public PersonalInformationModel(String firstname,
+                                    String lastname, String sexe, String email,
+                                    String phone, String username) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.sexe = sexe;
+        this.email = email;
+        this.phone = phone;
+        this.username = username;
     }
     public PersonalInformationModel( String firstname,
                                     String lastname, String sexe, String email,

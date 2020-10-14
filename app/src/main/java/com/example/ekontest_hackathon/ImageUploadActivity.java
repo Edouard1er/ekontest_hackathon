@@ -88,6 +88,8 @@ public class ImageUploadActivity extends AppCompatActivity {
 
         intent.putExtra("personnel",getIntent().getParcelableArrayListExtra("personnel"));
         intent.putExtra("academic",getIntent().getParcelableArrayListExtra("academic"));
+        intent.putExtra("type", getIntent().getStringExtra("type"));
+
         //let's add the photo path
         if(this.photoPath != null){
             intent.putExtra("photo", this.photoPath);

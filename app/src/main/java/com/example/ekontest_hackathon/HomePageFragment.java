@@ -77,7 +77,7 @@ public class HomePageFragment extends Fragment {
     List<UserModel> mUsers=new ArrayList<>();
     RecyclerView recyclerView;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-
+    UserModel userModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,9 +100,9 @@ public class HomePageFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUsers.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    UserModel model = dataSnapshot.getValue(UserModel.class);
-                    if(!model.getId().equals(user.getUid())){
-                        mUsers.add(model);
+                    userModel = dataSnapshot.getValue(UserModel.class);
+                    if(! userModel.getId().equals(user.getUid())){
+                        mUsers.add(userModel);
                     }
                 }
                 adapter= new UserAdapter(getContext(), mUsers,false);

@@ -113,16 +113,10 @@ public class ReviewActivity extends AppCompatActivity {
         mStart=getIntent().getStringExtra("start");
         mEnd=getIntent().getStringExtra("end");*/
 
-        //Get array list academic
-        academicList=getIntent().getParcelableArrayListExtra("academic");
+
         personelList=getIntent().getParcelableArrayListExtra("personnel");
 
-        recyclerView= findViewById(R.id.list_info_academic);
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new AcademicInformationAdapter(this, academicList);
-        recyclerView.setAdapter(adapter);
 
         imagePhoto = (ImageView) findViewById(R.id.imageViewPhoto);
 
@@ -134,6 +128,21 @@ public class ReviewActivity extends AppCompatActivity {
         username.setText(personelList.get(0).getUsername());
         account.setText(personelList.get(0).getType());
 
+        //Get array list academic
+        if(getIntent().getStringExtra("type").equals("Student")) {
+        }
+        if(getIntent().getStringExtra("type").equals("Freelancer") ||
+                getIntent().getStringExtra("type").equals("Professor") ) {
+            academicList=getIntent().getParcelableArrayListExtra("academic");
+            recyclerView= findViewById(R.id.list_info_academic);
+
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            adapter=new AcademicInformationAdapter(this, academicList);
+            recyclerView.setAdapter(adapter);
+        }
+
+
         //Setting value
         mNom=personelList.get(0).getLastname();
         mPrenom=personelList.get(0).getFirstname();
@@ -141,7 +150,7 @@ public class ReviewActivity extends AppCompatActivity {
         mEmail=personelList.get(0).getEmail();
         mPhone=personelList.get(0).getPhone();
         mUsername=personelList.get(0).getUsername();
-        mAccount=personelList.get(0).getType();
+        mAccount=getIntent().getStringExtra("type");
 
         Toast.makeText(this, "The name of the array personnel :" + personelList.get(0).getLastname(), Toast.LENGTH_SHORT).show();
 
@@ -251,7 +260,7 @@ public class ReviewActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), NavDrawerActivity.class));
                 finish();
             }
-        }, 10000);
+        }, 3000);
 
 
     }

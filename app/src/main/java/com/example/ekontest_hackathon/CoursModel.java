@@ -89,7 +89,7 @@ public class CoursModel implements Parcelable {
         this.idCours=in.readString();
         this.cours=in.readString();
         this.nEtudiant=in.readInt();
-        this.avisModel=in.readParcelable(this.avisModel);
+      //  this.avisModel=in.readParcelable(this.avisModel);
     }
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public CoursModel createFromParcel(Parcel in) {

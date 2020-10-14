@@ -49,6 +49,7 @@ public class Authentication extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
+        //
         //signOut();
         whitelistedCountries= new ArrayList<String>();
         whitelistedCountries.add("+509");
@@ -72,7 +73,7 @@ public class Authentication extends AppCompatActivity {
                 user =FirebaseAuth.getInstance().getCurrentUser();
                 if(user!=null){
 
-                    startActivity(new Intent(getApplicationContext(),NavDrawerActivity.class));
+                    startActivity(new Intent(getApplicationContext(),PersonalInformationActivity.class));
                     finish();
                 }else{
                     //Sign in Intent

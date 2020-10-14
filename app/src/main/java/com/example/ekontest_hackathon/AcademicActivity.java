@@ -31,7 +31,7 @@ public class AcademicActivity extends AppCompatActivity {
     EditText faculty, institution;
     Spinner level, degree, start, end;
     ArrayList<AcademicInformationModel> academicList;
-    ArrayList<PersonalInformationModel> infoPersoList;
+    List<PersonalInformationModel> personelList;
     AcademicInformationAdapter adapter;
     RecyclerView recyclerView;
 
@@ -42,9 +42,10 @@ public class AcademicActivity extends AppCompatActivity {
 
         //Set up list
         academicList= new ArrayList<>();
+        personelList= new ArrayList<>();
         recyclerView= findViewById(R.id.list_info_academic_real);
 
-        infoPersoList = new ArrayList<>();
+
 
         next = (Button) findViewById(R.id.next_button);
         level = (Spinner) findViewById(R.id.spinnerLevel);
@@ -122,17 +123,11 @@ public class AcademicActivity extends AppCompatActivity {
             //testing output
             //sending data to next actitvity
             Intent intent = new Intent(getApplicationContext(), ImageUploadActivity.class);
+            intent.putExtra("personnel",getIntent().getParcelableArrayListExtra("personnel"));
 
-            PersonalInformationModel personalInformationModel = new PersonalInformationModel(
-                    getIntent().getStringExtra("nom"),
-                    getIntent().getStringExtra("prenom"),
-                    getIntent().getStringExtra("sexe"),
-                    getIntent().getStringExtra("email"),
-                    getIntent().getStringExtra("phone"),
-                    getIntent().getStringExtra("username"),
-                    getIntent().getStringExtra("type")
-            );
-            infoPersoList.add(personalInformationModel);
+
+
+
           /*  intent.putExtra("nom", getIntent().getStringExtra("nom"));
             intent.putExtra("prenom", getIntent().getStringExtra("prenom"));
             intent.putExtra("email", getIntent().getStringExtra("email"));
@@ -150,8 +145,10 @@ public class AcademicActivity extends AppCompatActivity {
             intent.putExtra("end", end_);*/
 
             //intent.putExtra("academic", (Serializable) academicList);
-            intent.putParcelableArrayListExtra("personnel", (ArrayList<? extends Parcelable>) infoPersoList);
+            personelList=getIntent().getParcelableArrayListExtra("personnel");
+            intent.putParcelableArrayListExtra("personnel", (ArrayList<? extends Parcelable>) personelList);
             intent.putParcelableArrayListExtra("academic", (ArrayList<? extends Parcelable>) academicList);
+            intent.putExtra("type", getIntent().getStringExtra("type"));
 
             startActivity(intent);
         } else {

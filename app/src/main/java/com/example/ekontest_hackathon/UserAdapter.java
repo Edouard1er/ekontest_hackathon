@@ -71,7 +71,6 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.UserHolder holder, int position) {
         UserModel u=mUser.get(position);
-
         holder.userName.setText(u.getPersonalInformationModel().getFirstname()+" "+u.getPersonalInformationModel().getLastname());
         holder.userImage.setImageResource(R.drawable.username);
         holder.userId.setText(u.getId());

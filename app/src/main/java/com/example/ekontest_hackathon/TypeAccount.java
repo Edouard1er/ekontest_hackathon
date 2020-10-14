@@ -6,16 +6,21 @@ import android.os.Bundle;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TypeAccount extends AppCompatActivity {
 
     Button next;
     RadioGroup radioGroup;
+    List<PersonalInformationModel> personelList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,7 @@ public class TypeAccount extends AppCompatActivity {
 
         next = (Button) findViewById(R.id.next_button);
         radioGroup = (RadioGroup) findViewById(R.id.typeGroup);
+        personelList = new ArrayList<>();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -51,13 +57,20 @@ public class TypeAccount extends AppCompatActivity {
         if(type.compareTo("Professor") == 0) {
             intent = new Intent(getApplicationContext(), AcademicActivity.class);
         }
-        intent.putExtra("nom", getIntent().getStringExtra("nom"));
-        intent.putExtra("prenom", getIntent().getStringExtra("prenom"));
-        intent.putExtra("email", getIntent().getStringExtra("email"));
-        intent.putExtra("phone", getIntent().getStringExtra("phone"));
-        intent.putExtra("username", getIntent().getStringExtra("username"));
-        intent.putExtra("sexe", getIntent().getStringExtra("sexe"));
+        personelList=getIntent().getParcelableArrayListExtra("personnel");
+        PersonalInformationModel personalInformationModel = new PersonalInformationModel(
+                personelList.get(0).getLastname(),
+                personelList.get(0).getFirstname(),
+                personelList.get(0).getSexe(),
+                personelList.get(0).getEmail(),
+                personelList.get(0).getPhone(),
+                personelList.get(0).getUsername(),
+                type
+        );
+       personelList.add(personalInformationModel);
+        intent.putParcelableArrayListExtra("personnel", (ArrayList<? extends Parcelable>) personelList);
         intent.putExtra("type", type);
+
         startActivity(intent);
     }
 }

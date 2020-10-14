@@ -35,7 +35,7 @@ import java.util.List;
 
 public class FreelancerListOnClickFragment extends Fragment{
     FreelancerOnclickActivity activity;
-     SimpleRatingBar mRatingBar;
+    SimpleRatingBar mRatingBar;
     ListView mListView;
     ArrayList mArrayList;
     InfoAcademicAdapter mAdapter;
@@ -54,8 +54,8 @@ public class FreelancerListOnClickFragment extends Fragment{
 
     RecyclerView recyclerView;
     RecyclerView academicRecyclerView;
-    ArrayList <UserModel> userModels;
-    UserModel singleUser;
+    ArrayList <FreelancerModel> userModels;
+    FreelancerModel singleUser;
 
     // Important when you have a listener with an interface
     @Override
@@ -84,7 +84,7 @@ public class FreelancerListOnClickFragment extends Fragment{
         userModels=results.getParcelableArrayList("freelancer");
         singleUser=userModels.get(0);
         String value = results.getString("firstname");
-        Toast.makeText(activity, value, Toast.LENGTH_SHORT).show();
+
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_freelancer_list_on_click, container, false);
@@ -151,7 +151,7 @@ public class FreelancerListOnClickFragment extends Fragment{
         }
 
 
-         adapter = new AvisAdapter();
+        adapter = new AvisAdapter();
         academicInformationAdapter= new AcademicInformationAdapter();
         readAvis(view);
         readAcademicInfo(view);
@@ -160,8 +160,6 @@ public class FreelancerListOnClickFragment extends Fragment{
 
     public void setInfoPerso(){
         try {
-            //Toast.makeText(activity, "Et oui ca marche: "+userModels.get(0).getPersonalInformationModel().getUsername(), Toast.LENGTH_SHORT).show();
-            // mFirstname.setText(results.getString("firstname"));
             mFirstname.setText(singleUser.getPersonalInformationModel().getFirstname());
             mLastname.setText(singleUser.getPersonalInformationModel().getLastname());
             mSexe.setText(singleUser.getPersonalInformationModel().getSexe());
@@ -169,7 +167,6 @@ public class FreelancerListOnClickFragment extends Fragment{
             url[0] = singleUser.getPersonalInformationModel().getImagelink();
             url[1] = singleUser.getPersonalInformationModel().getImagename();
             UrlImageModel urlImageModel = new UrlImageModel();
-            Toast.makeText(activity, "Image link: "+singleUser.getPersonalInformationModel().getImagename(), Toast.LENGTH_SHORT).show();
             urlImageModel.getUrlImage(url, mImageFreelancer);
         }catch (Exception e){
             System.out.println("There is something wrong in freelancerlistOnclickFragment setinfoperson method");
@@ -254,7 +251,7 @@ public class FreelancerListOnClickFragment extends Fragment{
 
 
     public interface onClickInfoFreelancer{
-         void redigerAvis();
-         void allAvis();
+        void redigerAvis();
+        void allAvis();
     }
 }

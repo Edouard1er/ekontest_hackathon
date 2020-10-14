@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserModel implements Parcelable {
@@ -32,6 +33,10 @@ public class UserModel implements Parcelable {
     private AcademicInformationModel academicInformationModel;
     private ProfilModel profilModel;
     private AvisModel avisModel;
+    private List<PersonalInformationModel> personalInformationModelListList = new ArrayList<>();
+    private List<AcademicInformationModel> academicInformationModelList = new ArrayList<>();
+    private List< ProfilModel> profilModelList = new ArrayList<>();
+    private List<AvisModel> avisModelList = new ArrayList<>();
     private String TAG ="Inside User Class";
 
     private  int mData;
@@ -89,22 +94,22 @@ public class UserModel implements Parcelable {
     }
     public void InsertUsers(final PersonalInformationModel pModel,
                             final List<AcademicInformationModel> aModel, ProfilModel profilModel){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user.getUid()!= null) {
-            UserModel model = new UserModel(user.getUid());
-            databaseReference.child(user.getUid()).setValue(model);
-            //Insert personnel data
-            PersonalInformationModel personal= new PersonalInformationModel();
-            personal.insertPersonalInformation(pModel);
-            //Insert academic data
-            AcademicInformationModel academic= new AcademicInformationModel();
-            academic.insertAcademicInformation(aModel);
 
-            //Insert profil
-            ProfilModel profilModel1 = new ProfilModel();
-            profilModel1.InsertProfil(profilModel);
-        }else{
-            //Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+        switch (pModel.getType()){
+            case "Student":
+                StudentModel studentModel = new StudentModel();
+                studentModel.InsertStudent(pModel);
+                break;
+            case "Freelancer":
+                FreelancerModel freelancerModel = new FreelancerModel();
+                freelancerModel.InsertFreelancer(pModel,aModel,profilModel);
+                break;
+            case "Professor":
+                ProfessorModel professorModel = new ProfessorModel();
+                professorModel.InsertProfessor(pModel, aModel, profilModel);
+                break;
+            default:
+                break;
         }
     }
 
@@ -148,7 +153,7 @@ public class UserModel implements Parcelable {
         this.personalInformationModel = personalInformationModel;
     }
 
-    public AcademicInformationModel getAcademicInformationModel() {
+  /*  public AcademicInformationModel getAcademicInformationModel() {
         return academicInformationModel;
     }
 
@@ -170,6 +175,39 @@ public class UserModel implements Parcelable {
 
     public void setAvisModel(AvisModel avisModel) {
         this.avisModel = avisModel;
+    }*/
+
+    public List<PersonalInformationModel> getPersonalInformationModelListList() {
+
+        return personalInformationModelListList;
+    }
+
+    public void setPersonalInformationModelListList(List<PersonalInformationModel> personalInformationModelListList) {
+        this.personalInformationModelListList = personalInformationModelListList;
+    }
+
+    public List<AcademicInformationModel> getAcademicInformationModelList() {
+        return academicInformationModelList;
+    }
+
+    public void setAcademicInformationModelList(List<AcademicInformationModel> academicInformationModelList) {
+        this.academicInformationModelList = academicInformationModelList;
+    }
+
+    public List<ProfilModel> getProfilModelList() {
+        return profilModelList;
+    }
+
+    public void setProfilModelList(List<ProfilModel> profilModelList) {
+        this.profilModelList = profilModelList;
+    }
+
+    public List<AvisModel> getAvisModelList() {
+        return avisModelList;
+    }
+
+    public void setAvisModelList(List<AvisModel> avisModelList) {
+        this.avisModelList = avisModelList;
     }
 
     @Override
@@ -181,23 +219,20 @@ public class UserModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeParcelable(this.personalInformationModel,flags);
-        dest.writeParcelable(this.academicInformationModel,flags);
-        dest.writeParcelable(this.profilModel,flags);
-        dest.writeParcelable(this.avisModel,flags);
+        //dest.writeParcelable(this.academicInformationModel,flags);
+        /*dest.writeParcelable(this.profilModel,flags);
+        dest.writeParcelable(this.avisModel,flags);*/
     }
 
     // example constructor that takes a Parcel and gives you an object populated with it's values
     private UserModel(Parcel in) {
-        PersonalInformationModel loaderPersonal= new PersonalInformationModel();
-        AcademicInformationModel loaderAcademic = new AcademicInformationModel();
-        ProfilModel loaderProfil = new ProfilModel();
-        AvisModel loaderAvis = new AvisModel();
 
         this.id = in.readString();
         this.personalInformationModel = in.readParcelable(getClass().getClassLoader());
-        this.academicInformationModel = in.readParcelable(getClass().getClassLoader());
-        this.profilModel = in.readParcelable(getClass().getClassLoader());
-        this.avisModel = in.readParcelable(getClass().getClassLoader());
+        //this.academicInformationModel = in.readParcelable(getClass().getClassLoader());
+        /*this.profilModel = in.readParcelable(getClass().getClassLoader());
+        this.avisModel = in.readParcelable(getClass().getClassLoader());*/
+        //this.personalInformationModelListList=in.readParcelableList()
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
