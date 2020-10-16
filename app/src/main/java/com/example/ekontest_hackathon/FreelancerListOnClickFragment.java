@@ -2,6 +2,7 @@ package com.example.ekontest_hackathon;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ekontest_hackathon.ui.NavDrawerActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +38,7 @@ import java.util.List;
 
 public class FreelancerListOnClickFragment extends Fragment{
     FreelancerOnclickActivity activity;
+    Bundle results;
     SimpleRatingBar mRatingBar;
     ListView mListView;
     ArrayList mArrayList;
@@ -44,7 +48,7 @@ public class FreelancerListOnClickFragment extends Fragment{
     ProgressBar progressBar1,progressBar2, progressBar3, progressBar4, progressBar5;
     RatingBar mRatingBar2;
     onClickInfoFreelancer listener;
-    Bundle results;
+    LinearLayout rateLayout;
     ImageView mImageFreelancer;
 
     AvisAdapter adapter;
@@ -56,6 +60,7 @@ public class FreelancerListOnClickFragment extends Fragment{
     RecyclerView academicRecyclerView;
     ArrayList <FreelancerModel> userModels;
     FreelancerModel singleUser;
+    FloatingActionButton sendFreelancerMessage;
 
     // Important when you have a listener with an interface
     @Override
@@ -93,13 +98,41 @@ public class FreelancerListOnClickFragment extends Fragment{
         mRatingValue = view.findViewById(R.id.rating_bar_value_freelancer);
         mRatingBar.setStarsSeparation(100,30);
         mRatingBar.setFillColor(R.color.bleu_fonce);
+        rateLayout=view.findViewById(R.id.rate_layout);
+
+        //Make rate layout invisible or visible
+        MyFreelancerModel myFreelancerModel = new MyFreelancerModel();
+       // myFreelancerModel.InsertMyFreelancer(singleUser.getId());
+        myFreelancerModel.MakeRatingOptionVisible(singleUser.getId(),rateLayout);
+
+        //Sending message to Freelancer
+        sendFreelancerMessage= view.findViewById(R.id.send_freelancer_message);
+        sendFreelancerMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(activity, "You want to send message to: "+ singleUser.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), DisplayMessageActivity.class);
+                intent.putExtra("receiver", singleUser.getId());
+                //Toast.makeText(DisplayUser.this, receiverId.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                v.getContext().startActivity(intent);
+            }
+        });
         AvisModel avisModel;
 
 
         mRatingBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.redigerAvis();
+                //listener.redigerAvis();
+                Toast.makeText(activity, "You want to rate: "+ singleUser.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), AvisFreelancerActivity.class);
+               // intent.putExtra("freelancer", singleUser.getId());
+                intent.putParcelableArrayListExtra("freelancer", userModels);
+
+                //Toast.makeText(DisplayUser.this, receiverId.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                v.getContext().startActivity(intent);
             }
         });
         mArrayList = new ArrayList<InfoAcademicModel>();

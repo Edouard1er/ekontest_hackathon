@@ -56,13 +56,13 @@ public class AvisModel  implements Parcelable  {
         .child(id).child("avisModel");
         //databaseReference.push().setValue(model);
 
-        String key = databaseReference.push().getKey();
+       // String key = databaseReference.push().getKey();
         Map<String,Object> avis= new HashMap<>();
         avis.put("idUser", cUser.getUid());
         avis.put("nStar", nStar);
         avis.put("comment", comment);
         avis.put("datetime", ServerValue.TIMESTAMP);
-        databaseReference.child(key).setValue(avis);
+        databaseReference.child(cUser.getUid()).setValue(avis);
     }
 
     public void InsertAvisForCourse(String idCours,String comment, int nStar){
@@ -70,13 +70,13 @@ public class AvisModel  implements Parcelable  {
                 .child("coursModel").child(idCours).child("avisModel");
         //databaseReference.push().setValue(model);
 
-        String key = databaseReference.push().getKey();
+        //String key = databaseReference.push().getKey();
         Map<String,Object> avis= new HashMap<>();
         avis.put("idUser", cUser.getUid());
         avis.put("nStar", nStar);
         avis.put("comment", comment);
         avis.put("datetime", ServerValue.TIMESTAMP);
-        databaseReference.child(key).setValue(avis);
+        databaseReference.child(cUser.getUid()).setValue(avis);
     }
 
 
@@ -217,12 +217,13 @@ public class AvisModel  implements Parcelable  {
 
                     float rate = (float) tStars[0]/tRate[0];
                     bar.setRating(rate);
-                    mRatingValue.setText(""+rate);
+                    mRatingValue.setText(""+arrondiRate(rate));
                     p1.setProgress(pV1);
                     p2.setProgress(pV2);
                     p3.setProgress(pV3);
                     p4.setProgress(pV4);
                     p5.setProgress(pV5);
+                   // double d = (double) Math.round(tonDouble * 100) / 100;
                     tot_avis.setText(""+tavis[0]);
 
                     // mRatingBar.setNumberOfStars(tStars[0]/tRate[0]);
@@ -245,6 +246,9 @@ public class AvisModel  implements Parcelable  {
         });
     }
 
+    public float arrondiRate (float rate ){
+        return (float)Math.round(rate*100)/100;
+    }
     public String getIdUser() {
         return idUser;
     }
@@ -321,6 +325,7 @@ public class AvisModel  implements Parcelable  {
         dest.writeString(this.idUser);
         dest.writeLong(this.datetime);
     }
+
 
     public AvisModel(Parcel in) {
         this.nStar = in.readInt();

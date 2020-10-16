@@ -199,41 +199,49 @@
                         android:text="35"
                         android:textColor="@color/black" />
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textView16"
+                <LinearLayout
+                    android:id="@+id/rate_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="serif"
-                    android:text="Noter ce freelancer"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="serif"
+                        android:text="Noter ce freelancer"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Donner votre avis aux utilisateurs"
+                        android:textColor="@color/cardview_dark_background" />
 
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Donner votre avis aux utilisateurs"
-                    android:textColor="@color/cardview_dark_background" />
-
-                <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                    android:id="@+id/id_rating_bar_freelancer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    app:srb_numberOfStars="5"
-                    app:srb_stepSize="1.0"
-                    android:layout_gravity="center"/>
+                    <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                        android:id="@+id/id_rating_bar_freelancer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:srb_numberOfStars="5"
+                        app:srb_stepSize="1.0"
+                        android:layout_gravity="center"/>
 
 
-                <TextView
-                    android:id="@+id/id_rediger_avis_freelancer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:text="Rediger un avis"
-                    android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/id_rediger_avis_freelancer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="Rediger un avis"
+                        android:textColor="@color/black" />
+
+
+
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/textView19"
@@ -430,7 +438,7 @@
         </LinearLayout>
     </ScrollView>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_freelancer"
+        android:id="@+id/send_freelancer_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".FreelancerOnclickActivity"></activity>
+        <activity android:name=".AvisFreelancerActivity"></activity>
+        <activity android:name=".FreelancerOnclickActivity" />
         <activity android:name=".PersonalInformationActivity" />
         <activity android:name=".ImageUploadActivity" />
         <activity android:name=".TypeAccount" />
