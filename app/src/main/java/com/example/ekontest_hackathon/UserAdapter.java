@@ -70,19 +70,23 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.UserHolder holder, int position) {
-        UserModel u=mUser.get(position);
-        holder.userName.setText(u.getPersonalInformationModel().getFirstname()+" "+u.getPersonalInformationModel().getLastname());
-        holder.userImage.setImageResource(R.drawable.username);
-        holder.userId.setText(u.getId());
-        getLastMessage(u.getId(), holder.lastMessage);
-        final String[] url = new String[2];
-        url[0] = u.getPersonalInformationModel().getImagelink();
-        url[1] = u.getPersonalInformationModel().getImagename();
-        //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
-        getUrlImage(url, holder.userImage);
+        try {
+            UserModel u = mUser.get(position);
+            holder.userName.setText(u.getPersonalInformationModel().getFirstname() + " " + u.getPersonalInformationModel().getLastname());
+            holder.userImage.setImageResource(R.drawable.username);
+            holder.userId.setText(u.getId());
+            getLastMessage(u.getId(), holder.lastMessage);
+            final String[] url = new String[2];
+            url[0] = u.getPersonalInformationModel().getImagelink();
+            url[1] = u.getPersonalInformationModel().getImagename();
+            //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
+            getUrlImage(url, holder.userImage);
 
-        //Toast.makeText(context, "The last message is: "+theLastMessage, Toast.LENGTH_SHORT).show();
-        holder.lastMessage.setText(theLastMessage);
+            //Toast.makeText(context, "The last message is: "+theLastMessage, Toast.LENGTH_SHORT).show();
+            holder.lastMessage.setText(theLastMessage);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         /*if(isChat){
             if(u.getStatus().equals("online")){
                 holder.online.setVisibility(View.GONE);
@@ -135,13 +139,17 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
 
         @Override
         public void onClick(View v) {
-            TextView receiverId = (TextView) v.findViewById(R.id.UserId);
+            try {
+                TextView receiverId = (TextView) v.findViewById(R.id.UserId);
 
-            Intent intent = new Intent(v.getContext(), DisplayMessageActivity.class);
-            intent.putExtra("receiver", receiverId.getText().toString());
-            //Toast.makeText(DisplayUser.this, receiverId.getText().toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), DisplayMessageActivity.class);
+                intent.putExtra("receiver", receiverId.getText().toString());
+                //Toast.makeText(DisplayUser.this, receiverId.getText().toString(), Toast.LENGTH_SHORT).show();
 
-            v.getContext().startActivity(intent);
+                v.getContext().startActivity(intent);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
 
         }

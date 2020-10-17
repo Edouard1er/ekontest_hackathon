@@ -66,16 +66,21 @@ public class AvisAdapter extends RecyclerView.Adapter <AvisAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull AvisAdapter.ViewHolder holder, int position) {
         AvisModel avisModel=mAvis.get(position);
 
-        //Setting image and name of User
-        UserModel userModel = new UserModel();
-        userModel.getUserNameAndImage(avisModel.getIdUser(),holder.userImage,holder.userName);
+        try{
+            //Setting image and name of User
+            UserModel userModel = new UserModel();
+            userModel.getUserNameAndImage(avisModel.getIdUser(),holder.userImage,holder.userName);
 
-       // holder.userName.setText("Amos Dorceus");
-        holder.comment.setText(avisModel.getComment());
-        holder.ratingBar.setRating(avisModel.getnStar());
-        //Setting the date of the comment
-        ConvertDateTimeModel convertDateTimeModel = new ConvertDateTimeModel();
-        holder.date.setText( convertDateTimeModel.getDateWithOutTime(avisModel.getDatetime()));
+            // holder.userName.setText("Amos Dorceus");
+            holder.comment.setText(avisModel.getComment());
+            holder.ratingBar.setRating(avisModel.getnStar());
+            //Setting the date of the comment
+            ConvertDateTimeModel convertDateTimeModel = new ConvertDateTimeModel();
+            holder.date.setText( convertDateTimeModel.getDateWithOutTime(avisModel.getDatetime()));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
     }

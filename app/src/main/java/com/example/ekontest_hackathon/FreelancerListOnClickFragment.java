@@ -85,10 +85,14 @@ public class FreelancerListOnClickFragment extends Fragment{
                              Bundle savedInstanceState) {
         //getting data from activity
         activity = (FreelancerOnclickActivity) getActivity();
-        results = activity.getFreelancerData();
-        userModels=results.getParcelableArrayList("freelancer");
-        singleUser=userModels.get(0);
-        String value = results.getString("firstname");
+        try{
+            results = activity.getFreelancerData();
+            userModels=results.getParcelableArrayList("freelancer");
+            singleUser=userModels.get(0);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
 
         // Inflate the layout for this fragment
@@ -101,21 +105,31 @@ public class FreelancerListOnClickFragment extends Fragment{
         rateLayout=view.findViewById(R.id.rate_layout);
 
         //Make rate layout invisible or visible
-        MyFreelancerModel myFreelancerModel = new MyFreelancerModel();
-       // myFreelancerModel.InsertMyFreelancer(singleUser.getId());
-        myFreelancerModel.MakeRatingOptionVisible(singleUser.getId(),rateLayout);
+        try{
+            MyFreelancerModel myFreelancerModel = new MyFreelancerModel();
+            // myFreelancerModel.InsertMyFreelancer(singleUser.getId());
+            myFreelancerModel.MakeRatingOptionVisible(singleUser.getId(),rateLayout);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
         //Sending message to Freelancer
         sendFreelancerMessage= view.findViewById(R.id.send_freelancer_message);
         sendFreelancerMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, "You want to send message to: "+ singleUser.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(), DisplayMessageActivity.class);
-                intent.putExtra("receiver", singleUser.getId());
-                //Toast.makeText(DisplayUser.this, receiverId.getText().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(activity, "You want to send message to: "+ singleUser.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
+                try {
+                    Intent intent = new Intent(v.getContext(), DisplayMessageActivity.class);
+                    intent.putExtra("receiver", singleUser.getId());
+                    //Toast.makeText(DisplayUser.this, receiverId.getText().toString(), Toast.LENGTH_SHORT).show();
 
-                v.getContext().startActivity(intent);
+                    v.getContext().startActivity(intent);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
             }
         });
         AvisModel avisModel;
@@ -125,14 +139,15 @@ public class FreelancerListOnClickFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 //listener.redigerAvis();
-                Toast.makeText(activity, "You want to rate: "+ singleUser.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(), AvisFreelancerActivity.class);
-               // intent.putExtra("freelancer", singleUser.getId());
-                intent.putParcelableArrayListExtra("freelancer", userModels);
-
-                //Toast.makeText(DisplayUser.this, receiverId.getText().toString(), Toast.LENGTH_SHORT).show();
-
-                v.getContext().startActivity(intent);
+                //Toast.makeText(activity, "You want to rate: "+ singleUser.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
+               try{
+                   Intent intent = new Intent(v.getContext(), AvisFreelancerActivity.class);
+                   // intent.putExtra("freelancer", singleUser.getId());
+                   intent.putParcelableArrayListExtra("freelancer", userModels);
+                   v.getContext().startActivity(intent);
+               }catch (Exception e){
+                   e.printStackTrace();
+               }
             }
         });
         mArrayList = new ArrayList<InfoAcademicModel>();
@@ -232,8 +247,8 @@ public class FreelancerListOnClickFragment extends Fragment{
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     AvisModel avis = dataSnapshot.getValue(AvisModel.class);
                     mAvis.add(avis);
-                    System.out.println("This is the text message :"+ avis.getComment());
-                    System.out.println("This is the text message :"+ mAvis.size());
+                    //System.out.println("This is the text message :"+ avis.getComment());
+                   // System.out.println("This is the text message :"+ mAvis.size());
 
                 }
 

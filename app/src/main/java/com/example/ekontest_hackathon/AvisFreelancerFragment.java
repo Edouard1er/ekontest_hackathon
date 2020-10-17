@@ -100,13 +100,17 @@ public class AvisFreelancerFragment extends Fragment implements InterfaceAvis {
         return view;
     }
     public void InsertAvis(View v){
-        AvisModel avisModel = new AvisModel();
-        avisModel.InsertAvis(singleUser.getId(),mComment.getText().toString(),(int)mRatingBar.getRating());
-        Intent intent = new Intent(v.getContext(), FreelancerOnclickActivity.class);
-        ArrayList<UserModel> userArray= new ArrayList<>();
-        userArray.add(singleUser);
-        intent.putParcelableArrayListExtra("freelancer",userArray);
-        v.getContext().startActivity(intent);
+        try {
+            AvisModel avisModel = new AvisModel();
+            avisModel.InsertAvis(singleUser.getId(), mComment.getText().toString(), (int) mRatingBar.getRating());
+            Intent intent = new Intent(v.getContext(), FreelancerOnclickActivity.class);
+            ArrayList<UserModel> userArray = new ArrayList<>();
+            userArray.add(singleUser);
+            intent.putParcelableArrayListExtra("freelancer", userArray);
+            v.getContext().startActivity(intent);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -122,8 +126,13 @@ public class AvisFreelancerFragment extends Fragment implements InterfaceAvis {
 
     @Override
     public void InsertAvis(String id, String comment, int rate) {
-        AvisModel avisModel = new AvisModel();
-        avisModel.InsertAvis(id,comment,rate);
+        try {
+            AvisModel avisModel = new AvisModel();
+            avisModel.InsertAvis(id,comment,rate);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 

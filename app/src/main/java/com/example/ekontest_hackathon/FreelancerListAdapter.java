@@ -70,18 +70,27 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
 
         final FreelancerModel model=  mFreelancer.get(position);
         final String[] url = new String[2];
-        url[0] = model.getPersonalInformationModel().getImagelink();
-        url[1] = model.getPersonalInformationModel().getImagename();
+        try {
+            url[0] = model.getPersonalInformationModel().getImagelink();
+            url[1] = model.getPersonalInformationModel().getImagename();
+            UserAdapter userAdapter= new UserAdapter();
+            //   userAdapter.getUrlImage(model.getPersonalInformationModel().getImagelink(),imageFreelancer);
+            userAdapter.getUrlImage(url,imageFreelancer);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        UserAdapter userAdapter= new UserAdapter();
-        //   userAdapter.getUrlImage(model.getPersonalInformationModel().getImagelink(),imageFreelancer);
-        userAdapter.getUrlImage(url,imageFreelancer);
-        String firstname=model.getPersonalInformationModel().getFirstname().toLowerCase();
-        firstname = firstname.substring(0,1).toUpperCase() + firstname.substring(1);
+        try{
+            String firstname=model.getPersonalInformationModel().getFirstname().toLowerCase();
+            firstname = firstname.substring(0,1).toUpperCase() + firstname.substring(1);
 
-        String lastname=model.getPersonalInformationModel().getLastname().toLowerCase();
-        lastname = lastname.substring(0,1).toUpperCase() + lastname.substring(1);
-        nameFreelancer.setText(firstname+" "+lastname);
+            String lastname=model.getPersonalInformationModel().getLastname().toLowerCase();
+            lastname = lastname.substring(0,1).toUpperCase() + lastname.substring(1);
+            nameFreelancer.setText(firstname+" "+lastname);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         try {
             nbrCoursFreelancer.setText("Cours : "+model.getProfilModel().getnCours());
             nbrEtudiantFreelancer.setText("Etudiants : "+model.getProfilModel().getnEtudiant());
@@ -89,15 +98,18 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
 
         }
 
+        try{
+            AvisModel fl = new AvisModel();
+            fl.setInfoAvis(model.getId(), mRatingBar);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        AvisModel fl = new AvisModel();
-        fl.setInfoAvis(model.getId(), mRatingBar);
         //ONITECLICK
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,model.getPersonalInformationModel().getFirstname(),Toast.LENGTH_SHORT).show();
-                String nom = model.getPersonalInformationModel().getFirstname();
+                //Toast.makeText(context,model.getPersonalInformationModel().getFirstname(),Toast.LENGTH_SHORT).show();
                 //Intent intent = new Intent(v.getContext(), FreelancerOnclickActivity.class);
                 Intent intent = new Intent(v.getContext(), FreelancerOnclickActivity.class);
                 ArrayList<FreelancerModel> userArray= new ArrayList<>();

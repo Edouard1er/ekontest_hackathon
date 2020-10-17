@@ -114,15 +114,19 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        UserModel model = snapshot.getValue(UserModel.class);
-                        final String[] url = new String[2];
-                        url[0] = model.getPersonalInformationModel().getImagelink();
-                        url[1] = model.getPersonalInformationModel().getImagename();
-                        //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
-                        UrlImageModel urlImageModel= new UrlImageModel();
-                        urlImageModel.getUrlImage(url,profile_image);
-                        profile_name.setText(model.getPersonalInformationModel().getUsername());
-                        profile_type.setText(model.getPersonalInformationModel().getType());
+                        try {
+                            UserModel model = snapshot.getValue(UserModel.class);
+                            final String[] url = new String[2];
+                            url[0] = model.getPersonalInformationModel().getImagelink();
+                            url[1] = model.getPersonalInformationModel().getImagename();
+                            //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
+                            UrlImageModel urlImageModel = new UrlImageModel();
+                            urlImageModel.getUrlImage(url, profile_image);
+                            profile_name.setText(model.getPersonalInformationModel().getUsername());
+                            profile_type.setText(model.getPersonalInformationModel().getType());
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override

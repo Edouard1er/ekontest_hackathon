@@ -25,12 +25,17 @@ public class FreelancerOnclickActivity extends AppCompatActivity {
 
     }
     public Bundle getFreelancerData(){
+        Bundle fd=new Bundle();
         ArrayList <FreelancerModel> userModels;
-        userModels=getIntent().getParcelableArrayListExtra("freelancer");
+        try {
+            userModels = getIntent().getParcelableArrayListExtra("freelancer");
+            fd.putParcelableArrayList("freelancer", userModels);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
        // Toast.makeText(this, "Trying something :"+userModels.get(0).getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
 
-        Bundle fd = new Bundle();
-        fd.putParcelableArrayList("freelancer", userModels);
+
 
         return fd;
     }
