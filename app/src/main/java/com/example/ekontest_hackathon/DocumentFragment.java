@@ -16,12 +16,13 @@ import com.google.android.material.tabs.TabLayout;
 public class DocumentFragment extends Fragment {
     ViewPager mViewPager;
     TabLayout mTabLayout;
-    TabItem mUpload;
+    //TabItem mUpload;
     TabItem mAvailable;
     TabItem mPurshase;
     PagerAdapter mPagerAdapter;
     // declaration of the listener
     onFragmentBtnSelected listener;
+    String user = "freelancer";
 
     // Important when you have a listener with an interface
     @Override
@@ -41,10 +42,16 @@ public class DocumentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_document, container,false);
+        View view=null;
+        if(user=="student"){
+            view = inflater.inflate(R.layout.fragment_document_student, container,false);
+        }
+        else{
+            view = inflater.inflate(R.layout.fragment_document, container,false);
+        }
         mViewPager = view.findViewById(R.id.id_viewpager_tab);
         mTabLayout = view.findViewById(R.id.id_tab_layout);
-        mUpload = view.findViewById(R.id.id_upload_tab);
+       // mUpload = view.findViewById(R.id.id_upload_tab);
         mPurshase = view.findViewById(R.id.id_purshased_tab);
         mAvailable = view.findViewById(R.id.id_available_tab);
         mPagerAdapter = new PagerAdapter(getChildFragmentManager(),
