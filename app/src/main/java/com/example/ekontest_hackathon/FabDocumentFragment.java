@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class FabDocumentFragment extends Fragment implements PopupMenu.OnMenuItemClickListener{
     FloatingActionButton mFloatingActionButton;
+    String user="teacher";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,7 +26,12 @@ public class FabDocumentFragment extends Fragment implements PopupMenu.OnMenuIte
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFab_available_document(v);
+                if(user=="student"){
+                    Toast.makeText(getContext(), "Buy a document", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    setFab_available_document(v);
+                }
             }
         });
         return view;
@@ -33,7 +39,12 @@ public class FabDocumentFragment extends Fragment implements PopupMenu.OnMenuIte
     public void setFab_available_document(View view){
         PopupMenu popupMenu = new PopupMenu(getContext(), view);
         popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.inflate(R.menu.menu_fab_document);
+        if(user=="freelancer"){
+            popupMenu.inflate(R.menu.menu_fab_document_freelancer);
+        }
+        else if (user=="teacher"){
+            popupMenu.inflate(R.menu.menu_fab_document);
+        }
         popupMenu.show();
     }
 
