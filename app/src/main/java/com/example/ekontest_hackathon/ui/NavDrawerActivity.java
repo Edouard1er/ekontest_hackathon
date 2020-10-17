@@ -22,13 +22,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.example.ekontest_hackathon.AboutActivity;
+import com.example.ekontest_hackathon.AccountActivity;
 import com.example.ekontest_hackathon.AvisDisplayFreelancerFragment;
 import com.example.ekontest_hackathon.AvisFreelancerFragment;
 import com.example.ekontest_hackathon.DocumentFragment;
+import com.example.ekontest_hackathon.FavoriteActivity;
 import com.example.ekontest_hackathon.FreelancerListFragment;
 import com.example.ekontest_hackathon.FreelancerListOnClickFragment;
+import com.example.ekontest_hackathon.HelpCommentActivity;
+import com.example.ekontest_hackathon.PaymentMethodActivity;
 import com.example.ekontest_hackathon.PersonalInformationModel;
 import com.example.ekontest_hackathon.R;
+import com.example.ekontest_hackathon.SettingActivity;
 import com.example.ekontest_hackathon.UrlImageModel;
 import com.example.ekontest_hackathon.UserAdapter;
 import com.example.ekontest_hackathon.UserModel;
@@ -177,19 +183,31 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
             setFragmentChange("Homepage", new HomeFragment());
         }
         if (menuItem.getItemId() == R.id.nav_favorite) {
-            setFragmentChange("Favorite", new FavoriteFragment());
+            //setFragmentChange("Favorite", new FavoriteFragment());
+            Intent intent = new Intent(this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();
         }
         switch (menuItem.getItemId()) {
             case R.id.nav_compte: {
-                setFragmentChange("Account", new AccountFragment());
+                //setFragmentChange("Account", new AccountFragment());
+                Intent intent = new Intent(this, AccountActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             }
             case R.id.nav_about_us: {
-                setFragmentChange("About PwòfPam", new AboutUsFragment());
+              //  setFragmentChange("About PwòfPam", new AboutUsFragment());
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             }
             case R.id.nav_help_comment: {
-                setFragmentChange("Help and Comments", new HelpCommentFragment());
+          //      setFragmentChange("Help and Comments", new HelpCommentFragment());
+                Intent intent = new Intent(this, HelpCommentActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             }
             case R.id.nav_quit: {
@@ -197,11 +215,17 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                 break;
             }
             case R.id.nav_modepaiment: {
-                setFragmentChange("Method of Payment", new PaymentMethodFragment());
+               // setFragmentChange("Method of Payment", new PaymentMethodFragment());
+                Intent intent = new Intent(this, PaymentMethodActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             }
             case R.id.nav_setting: {
-                setFragmentChange("Setting", new SettingFragment());
+             //   setFragmentChange("Setting", new SettingFragment());
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             }
         }
