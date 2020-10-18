@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/bottom_search_fl"
-        android:icon="@drawable/search_icon"
-        android:title="Search" />
+        android:id="@+id/bottom_home_fl"
+        android:icon="@drawable/home_blue"
+        android:title="Home" />
     <item
         android:id="@+id/bottom_freelancer_fl"
         android:icon="@drawable/list"
@@ -20,5 +20,9 @@
         android:id="@+id/bottom_document_fl"
         android:icon="@drawable/file_explorer"
         android:title="Documents" />
+    <item
+        android:id="@+id/bottom_search_fl"
+        android:icon="@drawable/search_icon"
+        android:title="Search" />
 
 </menu>

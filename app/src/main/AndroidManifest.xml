@@ -14,7 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".AvisFreelancerActivity"></activity>
+        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".HelpCommentActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".PaymentMethodActivity" />
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".FavoriteActivity" />
+        <activity android:name=".AvisFreelancerActivity" />
         <activity android:name=".FreelancerOnclickActivity" />
         <activity android:name=".PersonalInformationActivity" />
         <activity android:name=".ImageUploadActivity" />

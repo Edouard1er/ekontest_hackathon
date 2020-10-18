@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/upload_payed_document"
+        android:title="Upload a payed document"
+        android:icon="@drawable/home_blue"/>
+    <item
+        android:id="@+id/buy_document"
+        android:title="Buy a document"
+        android:icon="@drawable/home_blue"/>
+</menu>
