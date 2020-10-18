@@ -16,8 +16,20 @@
             android:layout_marginLeft="30sp"
             android:layout_weight="1"
             android:text="Formation 1"
-            android:textStyle="italic"
+            android:textStyle="italic|bold"
             />
+        <TextView
+            android:id="@+id/deleteAcademic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:layout_weight="1"
+            android:text="Delete"
+            android:textStyle="normal"
+            android:layout_gravity="end"
+            android:textAlignment="textEnd"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout
@@ -156,6 +168,15 @@
             android:layout_marginLeft="20sp"
             android:layout_weight="1"
             android:text="-" />
+
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp">
+        <View style="@style/Divider"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>

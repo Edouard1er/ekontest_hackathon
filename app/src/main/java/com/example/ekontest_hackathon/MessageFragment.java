@@ -141,9 +141,14 @@ public class MessageFragment extends Fragment {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     UserModel user = dataSnapshot.getValue(UserModel.class);
                     for(String id : listStringIdUser ){
-                        if(user.getId().equals(id)){
-                            mUsers.add(user);
+                        try {
+                            if(user.getId().equals(id)){
+                                mUsers.add(user);
+                            }
+                        }catch (Exception e){
+
                         }
+
                     }
 
                 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,7 +35,15 @@ public class AcademicInformationAdapter extends RecyclerView.Adapter <AcademicIn
 
     @Override
     public void onBindViewHolder(@NonNull AcademicInformationAdapter.ViewHolder holder, int position) {
-        AcademicInformationModel academicModel=mAcademic.get(position);
+        final AcademicInformationModel academicModel=mAcademic.get(position);
+        try {
+            if(academicModel.getId().length()!=0){
+                holder.deleteAcademic.setVisibility(View.VISIBLE);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         int val =position+1;
         holder.nFormation.setText("Formation "+val);
         holder.level.setText(academicModel.getLevel());
@@ -43,12 +52,23 @@ public class AcademicInformationAdapter extends RecyclerView.Adapter <AcademicIn
         holder.degree.setText(academicModel.getDegree());
         holder.startDate.setText(academicModel.getStartDate());
         holder.endDate.setText(academicModel.getEndDate());
+        holder.deleteAcademic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Toast.makeText(context, "You want to delete :" + academicModel.getId(), Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(context, "You cant delete it :", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
     }
     @Override
     public int getItemCount() { return mAcademic.size();}
     class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener, View.OnLongClickListener{
 
-        TextView nFormation,level,institution , faculte,degree,startDate,endDate ;
+        TextView nFormation,level,institution , faculte,degree,startDate,endDate,deleteAcademic ;
 
         public  ViewHolder(View itemView){
             super(itemView);
@@ -63,6 +83,7 @@ public class AcademicInformationAdapter extends RecyclerView.Adapter <AcademicIn
             degree= itemView.findViewById(R.id.tv_degree);
             startDate=itemView.findViewById(R.id.tv_start_year);
             endDate=itemView.findViewById(R.id.tv_end_year);
+            deleteAcademic=itemView.findViewById(R.id.deleteAcademic);
 
         }
         @Override

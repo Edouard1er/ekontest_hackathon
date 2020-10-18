@@ -9,10 +9,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AcademicInformationModel  implements Parcelable {
+    private String id;
     private String level;
     private String institution;
     private String faculte;
@@ -22,6 +26,17 @@ public class AcademicInformationModel  implements Parcelable {
     private DatabaseReference databaseReference;
     private FirebaseUser firebaseUser;
 
+    public AcademicInformationModel(String id,String level, String institution, String faculte,
+
+                                  String degree, String startDate, String endDate) {
+        this.id=id;
+        this.level = level;
+        this.institution = institution;
+        this.faculte = faculte;
+        this.degree = degree;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
     public AcademicInformationModel(String level, String institution, String faculte,
 
                                     String degree, String startDate, String endDate) {
@@ -39,9 +54,20 @@ public class AcademicInformationModel  implements Parcelable {
 
     public void insertAcademicInformation(List<AcademicInformationModel> model){
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(firebaseUser.getUid()).child("academicInformationModel");
         for(int i=0; i<model.size(); i++) {
-            databaseReference.child(firebaseUser.getUid()).child("academicInformationModel").push().setValue(model.get(i))
+            String key = databaseReference.push().getKey();
+            Map<String,Object> academic= new HashMap<>();
+            academic.put("id",key);
+            academic.put("level", model.get(i).level);
+            academic.put("institution", model.get(i).institution);
+            academic.put("faculte", model.get(i).faculte);
+            academic.put("degree", model.get(i).degree);
+            academic.put("startDate", model.get(i).startDate);
+            academic.put("endDate",model.get(i).endDate );
+
+            databaseReference.child(key).setValue(academic)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -49,6 +75,7 @@ public class AcademicInformationModel  implements Parcelable {
                     });
         }
     }
+
     public void insertAcademicInformation(AcademicInformationModel model){
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -61,6 +88,14 @@ public class AcademicInformationModel  implements Parcelable {
 
 
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getLevel() {
@@ -118,6 +153,7 @@ public class AcademicInformationModel  implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
         dest.writeString(this.level);
         dest.writeString(this.institution);
         dest.writeString(this.faculte);
@@ -126,6 +162,7 @@ public class AcademicInformationModel  implements Parcelable {
         dest.writeString(this.endDate);
     }
     public AcademicInformationModel(Parcel in) {
+        this.id = in.readString();
         this.level = in.readString();
         this.institution = in.readString();
         this.faculte = in.readString();
