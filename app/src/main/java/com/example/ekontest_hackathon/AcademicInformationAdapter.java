@@ -56,9 +56,11 @@ public class AcademicInformationAdapter extends RecyclerView.Adapter <AcademicIn
             @Override
             public void onClick(View v) {
                 try {
-                    Toast.makeText(context, "You want to delete :" + academicModel.getId(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "You want to delete :" + academicModel.getId(), Toast.LENGTH_SHORT).show();
+                    AcademicInformationModel model = new AcademicInformationModel();
+                    model.removeAcademicInformation(academicModel.getId());
                 }catch (Exception e){
-                    Toast.makeText(context, "You cant delete it :", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "You cant delete it ", Toast.LENGTH_SHORT).show();
 
                 }
             }

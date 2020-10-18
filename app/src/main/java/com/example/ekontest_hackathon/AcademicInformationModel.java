@@ -89,6 +89,12 @@ public class AcademicInformationModel  implements Parcelable {
 
 
     }
+    public void removeAcademicInformation(String id){
+        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(firebaseUser.getUid()).child("academicInformationModel").child(id);
+        databaseReference.removeValue();
+    }
 
     public String getId() {
         return id;

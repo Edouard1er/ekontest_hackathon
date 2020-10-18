@@ -13,14 +13,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class TypeAccount extends AppCompatActivity {
 
-    Button next;
+    Button next,save;
     RadioGroup radioGroup;
     List<PersonalInformationModel> personelList;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,12 @@ public class TypeAccount extends AppCompatActivity {
         setContentView(R.layout.activity_type_account);
 
         next = (Button) findViewById(R.id.next_button);
+        save=findViewById(R.id.save_type);
+        if(getIntent().getStringExtra("idUser").equals(user.getUid())){
+            save.setVisibility(View.VISIBLE);
+        }else{
+            next.setVisibility(View.VISIBLE);
+        }
         radioGroup = (RadioGroup) findViewById(R.id.typeGroup);
         personelList = new ArrayList<>();
 
@@ -72,5 +83,15 @@ public class TypeAccount extends AppCompatActivity {
         intent.putExtra("type", type);
 
         startActivity(intent);
+    }
+    public void saveType(View view){
+        int selectedId = radioGroup.getCheckedRadioButtonId();
+        RadioButton radioButton = (RadioButton)radioGroup.findViewById(selectedId);
+        String type = (String) radioButton.getText();
+        PersonalInformationModel personalInformationModel = new PersonalInformationModel();
+        personalInformationModel.updateType(type);
+        Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

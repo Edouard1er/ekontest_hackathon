@@ -20,6 +20,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,14 +30,17 @@ import java.util.List;
 
 public class AcademicActivity extends AppCompatActivity {
 
-    Button next;
+    Button next,save;
     EditText faculty, institution;
     Spinner level, degree, start, end;
     ArrayList<AcademicInformationModel> academicList;
     List<PersonalInformationModel> personelList;
     AcademicInformationAdapter adapter;
     RecyclerView recyclerView;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+
+    //button Visibility
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,13 @@ public class AcademicActivity extends AppCompatActivity {
 
 
         next = (Button) findViewById(R.id.next_button);
+        save = findViewById(R.id.save_button);
+        //button visibility
+        if(getIntent().getStringExtra("idUser").equals(user.getUid())){
+            save.setVisibility(View.VISIBLE);
+        }else{
+            next.setVisibility(View.VISIBLE);
+        }
         level = (Spinner) findViewById(R.id.spinnerLevel);
         faculty = (EditText) findViewById(R.id.editTextTextFaculty);
         degree = (Spinner) findViewById(R.id.spinnerDegree);
@@ -114,43 +127,28 @@ public class AcademicActivity extends AppCompatActivity {
         EmptyField fields = new EmptyField(collectionEditText);
 
         if(fields.isAllFieldFilled()) {
-            String level_ = level.getSelectedItem().toString();
-            String faculty_ = String.valueOf(faculty.getText());
-            String degree_ = degree.getSelectedItem().toString();
-            String institution_ = String.valueOf(institution.getText());
-            String start_ = start.getSelectedItem().toString();
-            String end_ = end.getSelectedItem().toString();
-            //testing output
-            //sending data to next actitvity
-            Intent intent = new Intent(getApplicationContext(), ImageUploadActivity.class);
-            intent.putExtra("personnel",getIntent().getParcelableArrayListExtra("personnel"));
+            if(getIntent().getStringExtra("idUser").equals(user.getUid())){
+                AcademicInformationModel academic = new AcademicInformationModel();
+                if(academicList.size()!=0){
+                    academic.insertAcademicInformation(academicList);
+                    Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
 
+            }else{
+                //sending data to next actitvity
+                Intent intent = new Intent(getApplicationContext(), ImageUploadActivity.class);
+                intent.putExtra("personnel",getIntent().getParcelableArrayListExtra("personnel"));
+                //intent.putExtra("academic", (Serializable) academicList);
+                personelList=getIntent().getParcelableArrayListExtra("personnel");
+                intent.putParcelableArrayListExtra("personnel", (ArrayList<? extends Parcelable>) personelList);
+                intent.putParcelableArrayListExtra("academic", (ArrayList<? extends Parcelable>) academicList);
+                intent.putExtra("type", getIntent().getStringExtra("type"));
 
+                startActivity(intent);
+            }
 
-
-          /*  intent.putExtra("nom", getIntent().getStringExtra("nom"));
-            intent.putExtra("prenom", getIntent().getStringExtra("prenom"));
-            intent.putExtra("email", getIntent().getStringExtra("email"));
-            intent.putExtra("phone", getIntent().getStringExtra("phone"));
-            intent.putExtra("username", getIntent().getStringExtra("username"));
-            intent.putExtra("sexe", getIntent().getStringExtra("sexe"));
-            intent.putExtra("type", getIntent().getStringExtra("type"));
-*/
-/*
-            intent.putExtra("level", level_);
-            intent.putExtra("faculty", faculty_);
-            intent.putExtra("degree", degree_);
-            intent.putExtra("institution", institution_);
-            intent.putExtra("start", start_);
-            intent.putExtra("end", end_);*/
-
-            //intent.putExtra("academic", (Serializable) academicList);
-            personelList=getIntent().getParcelableArrayListExtra("personnel");
-            intent.putParcelableArrayListExtra("personnel", (ArrayList<? extends Parcelable>) personelList);
-            intent.putParcelableArrayListExtra("academic", (ArrayList<? extends Parcelable>) academicList);
-            intent.putExtra("type", getIntent().getStringExtra("type"));
-
-            startActivity(intent);
         } else {
             Toast.makeText(getApplicationContext(), "Some information are required", Toast.LENGTH_SHORT).show();
         }

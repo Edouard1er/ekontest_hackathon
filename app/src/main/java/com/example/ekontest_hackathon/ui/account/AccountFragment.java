@@ -76,7 +76,6 @@ public class AccountFragment extends Fragment {
         }
     }
     private AcademicInformationAdapter adapter;
-
     List<AcademicInformationModel> mAcademic=new ArrayList<>();
     AcademicInformationModel academicInformationModel;
     RecyclerView recyclerView;
