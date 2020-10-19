@@ -85,7 +85,7 @@ public class PersonalInformationModel  implements Parcelable {
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.child(firebaseUser.getUid()).child("personalInformationModel")
-                .child(type).setValue(type)
+                .child("type").setValue(type)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

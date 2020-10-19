@@ -25,6 +25,7 @@ public class TypeAccount extends AppCompatActivity {
     RadioGroup radioGroup;
     List<PersonalInformationModel> personelList;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String type;
 
 
     @Override
@@ -46,7 +47,7 @@ public class TypeAccount extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton radioButton = (RadioButton) findViewById(checkedId);
-                String type = (String) radioButton.getText();
+                 type = (String) radioButton.getText();
                 Toast.makeText(getApplicationContext(), type, Toast.LENGTH_SHORT).show();
             }
         });
@@ -86,8 +87,7 @@ public class TypeAccount extends AppCompatActivity {
     }
     public void saveType(View view){
         int selectedId = radioGroup.getCheckedRadioButtonId();
-        RadioButton radioButton = (RadioButton)radioGroup.findViewById(selectedId);
-        String type = (String) radioButton.getText();
+
         PersonalInformationModel personalInformationModel = new PersonalInformationModel();
         personalInformationModel.updateType(type);
         Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
