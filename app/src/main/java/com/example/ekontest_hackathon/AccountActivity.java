@@ -25,6 +25,8 @@ import java.util.List;
 public class AccountActivity extends AppCompatActivity {
     private AcademicInformationAdapter adapter;
     List<AcademicInformationModel> mAcademic=new ArrayList<>();
+    ArrayList<PersonalInformationModel> personelList;
+
     AcademicInformationModel academicInformationModel;
     RecyclerView recyclerView;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
@@ -41,6 +43,7 @@ public class AccountActivity extends AppCompatActivity {
         phone = (TextView) findViewById(R.id.textViewPhone);
         username = (TextView) findViewById(R.id.textViewUsername);
         account = (TextView) findViewById(R.id.textViewAccountType);
+        personelList=new ArrayList<>();
         getAcademicData();
         getPersonalData();
     }
@@ -53,6 +56,7 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 PersonalInformationModel model = snapshot.getValue(PersonalInformationModel.class);
+                personelList.add(model);
                 try {
                     nom.setText(model.getFirstname());
                     prenom.setText(model.getLastname());
@@ -111,7 +115,6 @@ public class AccountActivity extends AppCompatActivity {
     }
     public void addAcademicFormation(View view){
         Intent intent = new Intent(getApplicationContext(), AcademicActivity.class);
-
         intent.putExtra("idUser",user.getUid());
         // intent.putExtra("model",(Parcelable) model);
          startActivity(intent);
@@ -119,6 +122,14 @@ public class AccountActivity extends AppCompatActivity {
     public void editType(View view){
         Intent intent = new Intent(getApplicationContext(), TypeAccount.class);
 
+        intent.putExtra("idUser",user.getUid());
+        // intent.putExtra("model",(Parcelable) model);
+        startActivity(intent);
+    }
+    public void updatePersonalData(View view){
+        Intent intent = new Intent(getApplicationContext(), PersonalInformationActivity.class);
+
+        intent.putParcelableArrayListExtra("personnel",personelList);
         intent.putExtra("idUser",user.getUid());
         // intent.putExtra("model",(Parcelable) model);
         startActivity(intent);

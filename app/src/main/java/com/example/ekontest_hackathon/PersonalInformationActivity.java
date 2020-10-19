@@ -24,12 +24,14 @@ import java.util.ArrayList;
 
 public class PersonalInformationActivity extends AppCompatActivity {
 
-    Button next;
+    Button next,save;
     RadioGroup radioGroup;
     EditText nom, prenom, email, phone, username;
 
     FirebaseUser user ;
     ArrayList<PersonalInformationModel> infoPersoList;
+    ArrayList <PersonalInformationModel> models =new ArrayList<>();
+
 
 
     @Override
@@ -40,7 +42,6 @@ public class PersonalInformationActivity extends AppCompatActivity {
         user= FirebaseAuth.getInstance().getCurrentUser();
 
 
-        next = (Button) findViewById(R.id.next_button);
         radioGroup = (RadioGroup) findViewById(R.id.sexeGroup);
         nom = (EditText) findViewById(R.id.editTextNom);
         prenom = (EditText) findViewById(R.id.editTextPrenom);
@@ -49,21 +50,41 @@ public class PersonalInformationActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.editTextTextUsername);
         infoPersoList = new ArrayList<>();
        // signOut();
-        String provider = user.getProviderId();
 
+        next = (Button) findViewById(R.id.next_button);
+        save = (Button) findViewById(R.id.save_button);
 
-        if(user.getDisplayName()!= null){
-            String[] fullname = user.getDisplayName().split(" ");
-            nom.setText(fullname[0]);
-            prenom.setText(fullname[1]);
+        //button visibility
+        if(getIntent().getStringExtra("idUser").equals(user.getUid())){
+            models=getIntent().getParcelableArrayListExtra("personnel");
+            nom.setText(models.get(0).getFirstname());
+            prenom.setText(models.get(0).getLastname());
+            phone.setText(models.get(0).getPhone());
+            email.setText(models.get(0).getEmail());
+            username.setText(models.get(0).getUsername());
+           /* RadioButton radioButton = (RadioButton)radioGroup.findViewById(1);
+            radioButton.setSaveEnabled(true);            */
+            save.setVisibility(View.VISIBLE);
+
+        }else{
+            next.setVisibility(View.VISIBLE);
+            if(user.getDisplayName()!= null){
+                String[] fullname = user.getDisplayName().split(" ");
+                nom.setText(fullname[0]);
+                prenom.setText(fullname[1]);
+
+            }
+
+            if(user.getPhoneNumber() != null){
+                phone.setText(user.getPhoneNumber());
+            }
+            if(user.getEmail() != null){
+                email.setText(user.getEmail());
+            }
         }
 
-        if(user.getPhoneNumber() != null){
-            phone.setText(user.getPhoneNumber());
-        }
-        if(user.getEmail() != null){
-            email.setText(user.getEmail());
-        }
+
+
 
       /*
 
@@ -116,6 +137,54 @@ public class PersonalInformationActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             Toast.makeText(PersonalInformationActivity.this, "All the information are required", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void updateData(View view) {
+        //let's check if all the field are filled
+        ArrayList<EditText> collectionEditText = new ArrayList<EditText>();
+        collectionEditText.add(nom);
+        collectionEditText.add(prenom);
+        collectionEditText.add(email);
+        collectionEditText.add(phone);
+        collectionEditText.add(username);
+        EmptyField fields = new EmptyField(collectionEditText);
+
+        if (fields.isAllFieldFilled()) {
+            //Let's get the text in all the field
+            String nom_ = String.valueOf(nom.getText());
+            String prenom_ = String.valueOf(prenom.getText());
+            String email_ = String.valueOf(email.getText());
+            String phone_ = String.valueOf(phone.getText());
+            String username_ = String.valueOf(username.getText());
+            //for radio button
+            int selectedId = radioGroup.getCheckedRadioButtonId();
+            RadioButton radioButton = (RadioButton) radioGroup.findViewById(selectedId);
+            String sexe_ = (String) radioButton.getText();
+           /* //testing output
+            System.out.println("Nom: " + nom_);
+            System.out.println("Prenom: " + prenom_);
+            System.out.println("email: " + email_);
+            System.out.println("phone: " + phone_);
+            System.out.println("username: " + username_);
+            System.out.println("sexe: " + sexe_);*/
+            //let's save all the information, we need to send them to the next intent
+            //check some information against firebase here
+            PersonalInformationModel personalInformationModel = new PersonalInformationModel(
+                    nom_,
+                    prenom_,
+                    sexe_,
+                    email_,
+                    phone_,
+                    username_,
+                    models.get(0).getType()
+            );
+            personalInformationModel.insertPersonalInformation(personalInformationModel);
+            Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
+            startActivity(intent);
+            finish();
+
+
         }
     }
     public void signOut(){
