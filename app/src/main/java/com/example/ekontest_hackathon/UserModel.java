@@ -140,6 +140,15 @@ public class UserModel implements Parcelable {
             }
         });
     }
+    public void UpdateImageUser(String path, String val){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(user.getUid())
+                .child("personalInformationModel")
+                .child(val);
+        databaseReference.setValue(path);
+
+    }
     //Getter and Setter
     public String getId() {
         return id;
