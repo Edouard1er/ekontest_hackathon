@@ -7,14 +7,15 @@
 
     <application
         android:allowBackup="true"
-        android:hardwareAccelerated="false"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".AvisDisplayAllActivity"></activity>
+        <activity android:name=".AboutActivity" />
         <activity android:name=".HelpCommentActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".PaymentMethodActivity" />
@@ -29,7 +30,9 @@
         <activity android:name=".ReviewActivity" />
         <activity android:name=".DisplayMessageActivity" />
         <activity android:name=".Authentication" />
-        <activity android:name=".ui.NavDrawerActivity" />
+        <activity
+            android:name=".ui.NavDrawerActivity"
+            android:windowSoftInputMode="stateAlwaysVisible" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

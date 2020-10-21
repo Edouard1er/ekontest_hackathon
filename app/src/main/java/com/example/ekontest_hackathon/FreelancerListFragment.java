@@ -29,9 +29,10 @@ import java.util.List;
 
 
 public class FreelancerListFragment extends Fragment {
-    GridView mGridView;
+
     freelancerInterface listener;
     ArrayList<CustomFreelancerModel>mArrayList;
+    GridView mGridView;
     FreelancerListAdapter adapter;
     SearchView searchFreelancer;
     // Important when you have a listener with an interface

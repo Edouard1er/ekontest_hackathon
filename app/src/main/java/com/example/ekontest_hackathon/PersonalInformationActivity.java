@@ -54,24 +54,16 @@ public class PersonalInformationActivity extends AppCompatActivity {
         next = (Button) findViewById(R.id.next_button);
         save = (Button) findViewById(R.id.save_button);
 
-        //button visibility
-        if(getIntent().getStringExtra("idUser").equals(user.getUid())){
-            models=getIntent().getParcelableArrayListExtra("personnel");
-            nom.setText(models.get(0).getFirstname());
-            prenom.setText(models.get(0).getLastname());
-            phone.setText(models.get(0).getPhone());
-            email.setText(models.get(0).getEmail());
-            username.setText(models.get(0).getUsername());
-           /* RadioButton radioButton = (RadioButton)radioGroup.findViewById(1);
-            radioButton.setSaveEnabled(true);            */
-            save.setVisibility(View.VISIBLE);
 
-        }else{
             next.setVisibility(View.VISIBLE);
             if(user.getDisplayName()!= null){
-                String[] fullname = user.getDisplayName().split(" ");
-                nom.setText(fullname[0]);
-                prenom.setText(fullname[1]);
+                try {
+                    String[] fullname = user.getDisplayName().split(" ");
+                    nom.setText(fullname[0]);
+                    prenom.setText(fullname[1]);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
             }
 
@@ -81,15 +73,16 @@ public class PersonalInformationActivity extends AppCompatActivity {
             if(user.getEmail() != null){
                 email.setText(user.getEmail());
             }
-        }
 
 
 
+            try{
+               setData();
+            }catch (Exception e){
+                e.printStackTrace();
+                next.setVisibility(View.VISIBLE);
 
-      /*
-
-
-       */
+            }
 
     }
 
@@ -171,6 +164,8 @@ public class PersonalInformationActivity extends AppCompatActivity {
             //let's save all the information, we need to send them to the next intent
             //check some information against firebase here
             PersonalInformationModel personalInformationModel = new PersonalInformationModel(
+                    models.get(0).getImagelink(),
+                    models.get(0).getImagename(),
                     nom_,
                     prenom_,
                     sexe_,
@@ -187,6 +182,21 @@ public class PersonalInformationActivity extends AppCompatActivity {
 
         }
     }
+    public void setData(){
+            models=getIntent().getParcelableArrayListExtra("personnel");
+            nom.setText(models.get(0).getFirstname());
+            prenom.setText(models.get(0).getLastname());
+            phone.setText(models.get(0).getPhone());
+            email.setText(models.get(0).getEmail());
+            username.setText(models.get(0).getUsername());
+           /* RadioButton radioButton = (RadioButton)radioGroup.findViewById(1);
+            radioButton.setSaveEnabled(true);            */
+            save.setVisibility(View.VISIBLE);
+
+
+
+    }
+
     public void signOut(){
         AuthUI.getInstance()
                 .signOut(this)

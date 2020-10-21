@@ -56,9 +56,13 @@ public class AcademicActivity extends AppCompatActivity {
         next = (Button) findViewById(R.id.next_button);
         save = findViewById(R.id.save_button);
         //button visibility
-        if(getIntent().getStringExtra("idUser").equals(user.getUid())){
-            save.setVisibility(View.VISIBLE);
-        }else{
+        try {
+            if (getIntent().getStringExtra("idUser").equals(user.getUid())) {
+                save.setVisibility(View.VISIBLE);
+            } else {
+                next.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){
             next.setVisibility(View.VISIBLE);
         }
         level = (Spinner) findViewById(R.id.spinnerLevel);
@@ -127,21 +131,25 @@ public class AcademicActivity extends AppCompatActivity {
         EmptyField fields = new EmptyField(collectionEditText);
 
         if(fields.isAllFieldFilled()) {
-            if(getIntent().getStringExtra("idUser").equals(user.getUid())){
-                AcademicInformationModel academic = new AcademicInformationModel();
-                if(academicList.size()!=0){
-                    academic.insertAcademicInformation(academicList);
-                    Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+            try {
+                if (getIntent().getStringExtra("idUser").equals(user.getUid())) {
+                    AcademicInformationModel academic = new AcademicInformationModel();
+                    if (academicList.size() != 0) {
+                        academic.insertAcademicInformation(academicList);
+                        Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
 
-            }else{
+                } else {
+
+                }
+            }catch (Exception e){
                 //sending data to next actitvity
                 Intent intent = new Intent(getApplicationContext(), ImageUploadActivity.class);
-                intent.putExtra("personnel",getIntent().getParcelableArrayListExtra("personnel"));
+                intent.putExtra("personnel", getIntent().getParcelableArrayListExtra("personnel"));
                 //intent.putExtra("academic", (Serializable) academicList);
-                personelList=getIntent().getParcelableArrayListExtra("personnel");
+                personelList = getIntent().getParcelableArrayListExtra("personnel");
                 intent.putParcelableArrayListExtra("personnel", (ArrayList<? extends Parcelable>) personelList);
                 intent.putParcelableArrayListExtra("academic", (ArrayList<? extends Parcelable>) academicList);
                 intent.putExtra("type", getIntent().getStringExtra("type"));

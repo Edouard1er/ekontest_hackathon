@@ -17,6 +17,7 @@ public class UrlImageModel {
         final String[] url = new String[1];
         final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
 
+
         if(imageSource[0].contains("firebasestorage.googleapis.com")){
             final StorageReference fileReference= mStorageRef.child("Images").child(imageSource[1]+"_200x200");
             fileReference.getDownloadUrl()

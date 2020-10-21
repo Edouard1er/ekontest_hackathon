@@ -127,7 +127,11 @@ public class UserModel implements Parcelable {
                 url[0] = model.getPersonalInformationModel().getImagelink();
                 url[1] = model.getPersonalInformationModel().getImagename();
                 UrlImageModel urlImageModel = new UrlImageModel();
-                urlImageModel.getUrlImage(url,imageUser);
+                try {
+                    urlImageModel.getUrlImage(url,imageUser);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
             }
             @Override

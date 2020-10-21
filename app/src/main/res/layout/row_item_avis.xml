@@ -107,6 +107,8 @@
             android:padding="10dp"
             android:text="Non" />
     </LinearLayout>
+    <View style="@style/Divider"/>
+
 
 
 </LinearLayout>

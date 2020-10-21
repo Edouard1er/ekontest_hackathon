@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:overScrollMode="always">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -417,22 +417,28 @@
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/list_avis_on_click"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-
-
-                <TextView
-                    android:id="@+id/avisDisplayFreelancer"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_height="wrap_content"
-                    android:text="Afficher tous les avis"
-                    android:textColor="@color/black" />
+                    android:orientation="vertical">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_avis_on_click"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/avisDisplayFreelancer"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_height="wrap_content"
+                        android:text="Afficher tous les avis"
+                        android:textColor="@color/black"
+                      />
+
+
+                </LinearLayout>
+
 
             </LinearLayout>
         </LinearLayout>

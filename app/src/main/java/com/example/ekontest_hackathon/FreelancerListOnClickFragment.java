@@ -163,10 +163,19 @@ public class FreelancerListOnClickFragment extends Fragment{
             }
         });
         avisDisplayFreelancer= view.findViewById(R.id.avisDisplayFreelancer);
+     /*   if(mAvis.size()<1){
+            avisDisplayFreelancer.setVisibility(View.GONE);
+        }else{
+            avisDisplayFreelancer.setVisibility(View.VISIBLE);
+        }*/
         avisDisplayFreelancer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.allAvis();
+                //listener.allAvis();
+                Intent intent = new Intent(getContext(), AvisDisplayAllActivity.class);
+                intent.putExtra("idUser",singleUser.getId());
+                // intent.putExtra("model",(Parcelable) model);
+                v.getContext().startActivity(intent);
             }
         });
 
@@ -252,10 +261,39 @@ public class FreelancerListOnClickFragment extends Fragment{
 
                 }
 
+                ArrayList<AvisModel> mAvis2= new ArrayList<>();
+                try{
+
+                    mAvis2.add(mAvis.get(0));
+
+                }catch (Exception e){
+
+                }
+                try{
+                    mAvis2.add(mAvis.get(1));
+
+
+                }catch (Exception e){
+
+                }
+                try{
+                    mAvis2.add(mAvis.get(2));
+
+                }catch (Exception e){
+
+                }
+                try{
+                    mAvis2.add(mAvis.get(3));
+
+
+                }catch (Exception e){
+
+                }
+
 
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                adapter=new AvisAdapter(getContext(), mAvis);
+                adapter=new AvisAdapter(getContext(), mAvis2);
                 recyclerView.setAdapter(adapter);
             }
             @Override
@@ -294,9 +332,9 @@ public class FreelancerListOnClickFragment extends Fragment{
             }
         });
     }
+    private void goToSeeAllAvis(View view){
 
-
-
+    }
 
     public interface onClickInfoFreelancer{
         void redigerAvis();

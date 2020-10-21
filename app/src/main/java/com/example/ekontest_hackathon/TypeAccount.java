@@ -35,9 +35,13 @@ public class TypeAccount extends AppCompatActivity {
 
         next = (Button) findViewById(R.id.next_button);
         save=findViewById(R.id.save_type);
-        if(getIntent().getStringExtra("idUser").equals(user.getUid())){
-            save.setVisibility(View.VISIBLE);
-        }else{
+        try {
+            if (getIntent().getStringExtra("idUser").equals(user.getUid())) {
+                save.setVisibility(View.VISIBLE);
+            } else {
+                next.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){
             next.setVisibility(View.VISIBLE);
         }
         radioGroup = (RadioGroup) findViewById(R.id.typeGroup);
