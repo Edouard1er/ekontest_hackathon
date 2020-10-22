@@ -20,6 +20,7 @@ import com.example.ekontest_hackathon.FreelancerListOnClickFragment;
 import com.example.ekontest_hackathon.HomePageFragment;
 import com.example.ekontest_hackathon.MessageFragment;
 import com.example.ekontest_hackathon.R;
+import com.example.ekontest_hackathon.SearchFragment;
 import com.example.ekontest_hackathon.ui.NavDrawerActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -81,6 +82,7 @@ public class HomeFragment extends Fragment implements FreelancerListFragment.fre
                     case R.id.bottom_search:{
                         listener.toolBarTitle("Search");
                         item.setChecked(true);
+                        getChildFragmentManager().beginTransaction().replace(R.id.home_container_layout, new SearchFragment()).commit();
                         break;
                     }
                     case R.id.bottom_home:{
