@@ -69,7 +69,7 @@ public class AvisAdapter extends RecyclerView.Adapter <AvisAdapter.ViewHolder> {
         try{
             //Setting image and name of User
             UserModel userModel = new UserModel();
-            userModel.getUserNameAndImage(avisModel.getIdUser(),holder.userImage,holder.userName);
+            userModel.getUserNameAndImage(avisModel.getIdUser(),holder.userImage,holder.userName,context);
 
             // holder.userName.setText("Amos Dorceus");
             holder.comment.setText(avisModel.getComment());

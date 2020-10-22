@@ -15,10 +15,13 @@ import java.util.List;
 public class AcademicInformationAdapter extends RecyclerView.Adapter <AcademicInformationAdapter.ViewHolder> {
     private Context context;
     List<AcademicInformationModel> mAcademic;
+    private  Boolean hideDelete;
 
-    public AcademicInformationAdapter(Context context, List <AcademicInformationModel> mAcademic) {
+
+    public AcademicInformationAdapter(Context context, List <AcademicInformationModel> mAcademic,Boolean hideDelete) {
         this.context=context;
         this.mAcademic=mAcademic;
+        this.hideDelete=hideDelete;
     }
 
     public AcademicInformationAdapter (){
@@ -37,8 +40,11 @@ public class AcademicInformationAdapter extends RecyclerView.Adapter <AcademicIn
     public void onBindViewHolder(@NonNull AcademicInformationAdapter.ViewHolder holder, int position) {
         final AcademicInformationModel academicModel=mAcademic.get(position);
         try {
-            if(academicModel.getId().length()!=0){
+            if(academicModel.getId().length()!=0 && hideDelete==true){
                 holder.deleteAcademic.setVisibility(View.VISIBLE);
+            }else {
+                holder.deleteAcademic.setVisibility(View.GONE);
+
             }
 
         }catch (Exception e){

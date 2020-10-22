@@ -120,7 +120,8 @@ public class AccountActivity extends AppCompatActivity {
                             url[1] = model.getPersonalInformationModel().getImagename();
                             //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
                             UrlImageModel urlImageModel = new UrlImageModel();
-                            urlImageModel.getUrlImage(url,  imageUpload);
+                            //urlImageModel.getUrlImage(url,  imageUpload);
+                            getUrlImage(url, imageUpload);
 
                         }catch (Exception e){
                             e.printStackTrace();
@@ -193,7 +194,7 @@ public class AccountActivity extends AppCompatActivity {
                     mAcademic.add(academicInformationModel);
 
                 }
-                adapter =new AcademicInformationAdapter(getApplicationContext(),mAcademic);
+                adapter =new AcademicInformationAdapter(getApplicationContext(),mAcademic,true);
                 recyclerView.setAdapter(adapter);
             }
 
@@ -302,6 +303,46 @@ public class AccountActivity extends AppCompatActivity {
 
 
     }
+    public String getUrlImage(String[] imageSource, final ImageView imageUser){
+        final String[] url = new String[1];
+        final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
+
+        try{
+            if(imageSource[0].contains("firebasestorage.googleapis.com")){
+                final StorageReference fileReference= mStorageRef.child("Images").child(imageSource[1]+"_500x500");
+                fileReference.getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri2) {
+                                url[0] =String.valueOf(uri2);
+                                Glide.with(getApplicationContext())
+                                        .load(uri2)
+                                        .centerCrop()
+                                        .into(imageUser);
+                                //     .apply(new RequestOptions().override(200,90))
+
+
+
+                            }
+                        });
+                return url[0];
+            }else{
+                url[0] =imageSource[0];
+                Glide.with(imageUser)
+                        .load(url[0])
+                        //  .apply(new RequestOptions().override(120,90))
+                        .centerCrop()
+                        .into(imageUser);
+
+                return url[0];
+            }
+        }catch (Exception e){
+            return url[0];
+        }
+
+
+    }
+
 
     @Override
     public void onBackPressed() {

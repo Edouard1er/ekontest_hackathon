@@ -127,7 +127,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                             url[1] = model.getPersonalInformationModel().getImagename();
                             //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
                             UrlImageModel urlImageModel = new UrlImageModel();
-                            urlImageModel.getUrlImage(url, profile_image);
+                            urlImageModel.getUrlImage(url, profile_image, getApplicationContext());
                             profile_name.setText(model.getPersonalInformationModel().getUsername());
                             profile_type.setText(model.getPersonalInformationModel().getType());
                         }catch (Exception e){

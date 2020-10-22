@@ -1,5 +1,6 @@
 package com.example.ekontest_hackathon;
 
+import android.content.Context;
 import android.net.Uri;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class UrlImageModel {
 
     public UrlImageModel() {
     }
-    public String getUrlImage(String[] imageSource, final ImageView imageUser){
+    public String getUrlImage(String[] imageSource, final ImageView imageUser, final Context context){
         final String[] url = new String[1];
         final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
 
@@ -44,7 +45,7 @@ public class UrlImageModel {
                             @Override
                             public void onSuccess(Uri uri2) {
                                 url[0] =String.valueOf(uri2);
-                                Glide.with(imageUser)
+                                Glide.with(context)
                                         .load(uri2)
                                         .centerCrop()
                                         .into(imageUser);

@@ -138,7 +138,7 @@ public class ReviewActivity extends AppCompatActivity {
 
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            adapter=new AcademicInformationAdapter(this, academicList);
+            adapter=new AcademicInformationAdapter(this, academicList,false);
             recyclerView.setAdapter(adapter);
         }
 

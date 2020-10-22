@@ -153,7 +153,7 @@ public class AccountFragment extends Fragment {
                     mAcademic.add(academicInformationModel);
 
                 }
-                adapter =new AcademicInformationAdapter(getContext(),mAcademic);
+                adapter =new AcademicInformationAdapter(getContext(),mAcademic,false);
                 recyclerView.setAdapter(adapter);
             }
 

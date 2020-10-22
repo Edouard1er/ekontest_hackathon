@@ -2,6 +2,7 @@ package com.example.ekontest_hackathon;
 
 
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -114,7 +115,7 @@ public class UserModel implements Parcelable {
     }
 
 
-    public void getUserNameAndImage(String id, final ImageView imageUser, final TextView name){
+    public void getUserNameAndImage(String id, final ImageView imageUser, final TextView name,final  Context context){
         DatabaseReference avisRef = FirebaseDatabase.getInstance().getReference("Users")
                 .child(id);
 
@@ -128,7 +129,7 @@ public class UserModel implements Parcelable {
                 url[1] = model.getPersonalInformationModel().getImagename();
                 UrlImageModel urlImageModel = new UrlImageModel();
                 try {
-                    urlImageModel.getUrlImage(url,imageUser);
+                    urlImageModel.getUrlImage(url,imageUser,context);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

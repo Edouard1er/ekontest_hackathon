@@ -224,7 +224,7 @@ public class FreelancerListOnClickFragment extends Fragment{
             url[0] = singleUser.getPersonalInformationModel().getImagelink();
             url[1] = singleUser.getPersonalInformationModel().getImagename();
             UrlImageModel urlImageModel = new UrlImageModel();
-            urlImageModel.getUrlImage(url, mImageFreelancer);
+            urlImageModel.getUrlImage(url, mImageFreelancer,getContext());
         }catch (Exception e){
             System.out.println("There is something wrong in freelancerlistOnclickFragment setinfoperson method");
         }
@@ -323,7 +323,7 @@ public class FreelancerListOnClickFragment extends Fragment{
 
                 academicRecyclerView.setHasFixedSize(true);
                 academicRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                academicInformationAdapter=new AcademicInformationAdapter(getContext(), mAcademics);
+                academicInformationAdapter=new AcademicInformationAdapter(getContext(), mAcademics,false);
                 academicRecyclerView.setAdapter(academicInformationAdapter);
             }
             @Override
