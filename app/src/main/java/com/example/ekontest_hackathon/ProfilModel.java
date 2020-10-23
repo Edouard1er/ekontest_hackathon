@@ -2,6 +2,7 @@ package com.example.ekontest_hackathon;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -9,8 +10,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class ProfilModel  implements Parcelable {
-    private int nCours=0;
+public class ProfilModel  {
+    public ProfilModel(){}
+    public void setProfilModel(String idUser, TextView freeDoc,TextView paidDoc,TextView etudiant )
+    {
+        FreelancerModel model=new FreelancerModel();
+        model.getFreelancerStudentQuantity(idUser,etudiant);
+
+        DocumentModel model1 = new DocumentModel();
+        model1.getPaidDocumentQuantity(idUser,paidDoc);
+        model1.getFreeDocumentQuantity(idUser,freeDoc);
+
+    }    /*private int nCours=0;
     private int nEtudiant=0;
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
@@ -74,5 +85,14 @@ public class ProfilModel  implements Parcelable {
         public ProfilModel[] newArray(int size) {
             return new ProfilModel[size];
         }
-    };
+    };*/
+    public void setProfilModel(String idUser, TextView doc,TextView etudiant )
+    {
+        FreelancerModel model=new FreelancerModel();
+        model.getFreelancerStudentQuantity(idUser,etudiant);
+
+        DocumentModel model1 = new DocumentModel();
+        model1.getDocumentQuantity(idUser,doc);
+
+    }
 }

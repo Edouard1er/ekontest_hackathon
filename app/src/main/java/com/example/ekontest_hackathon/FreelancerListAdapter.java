@@ -63,8 +63,11 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
         ImageView imageFreelancer= convertView.findViewById(R.id.image_freelancer);
         TextView nameFreelancer= (TextView) convertView.findViewById(R.id.name_freelancer);
         RatingBar mRatingBar=convertView.findViewById(R.id.rating_bar_item_freelancer);
-        TextView nbrCoursFreelancer= (TextView) convertView.findViewById(R.id.nbr_cours_freelancer);
+        TextView nbrDocument= (TextView) convertView.findViewById(R.id.nbr_cours_freelancer);
         TextView nbrEtudiantFreelancer= (TextView) convertView.findViewById(R.id.nbr_etudiant_freelancer);
+        ImageView remove_favorite= convertView.findViewById(R.id.remove_favorite);
+        ImageView add_favorite= convertView.findViewById(R.id.add_favorite);
+
 
 
 
@@ -76,6 +79,7 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
             UserAdapter userAdapter= new UserAdapter();
             //   userAdapter.getUrlImage(model.getPersonalInformationModel().getImagelink(),imageFreelancer);
             userAdapter.getUrlImage(url,imageFreelancer);
+            model.loadFavoritePicture(model.getId(),add_favorite,remove_favorite,context);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -92,8 +96,8 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
         }
 
         try {
-            nbrCoursFreelancer.setText("Cours : "+model.getProfilModel().getnCours());
-            nbrEtudiantFreelancer.setText("Etudiants : "+model.getProfilModel().getnEtudiant());
+            ProfilModel profilModel = new ProfilModel();
+            profilModel.setProfilModel(model.getId(), nbrDocument,nbrEtudiantFreelancer);
         }catch (Exception e){
 
         }
@@ -104,6 +108,23 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
         }catch (Exception e){
             e.printStackTrace();
         }
+        remove_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FreelancerModel mod=new FreelancerModel();
+                mod.removeFreelancerToFavorite(model.getId());
+
+            }
+        });
+
+        add_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FreelancerModel mod=new FreelancerModel();
+                mod.addFreelancerToFavorite(model.getId());
+            }
+        });
+
 
         //ONITECLICK
         convertView.setOnClickListener(new View.OnClickListener() {

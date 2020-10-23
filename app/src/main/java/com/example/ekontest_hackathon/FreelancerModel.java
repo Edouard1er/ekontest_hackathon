@@ -1,12 +1,23 @@
 package com.example.ekontest_hackathon;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -14,15 +25,13 @@ public class FreelancerModel extends StudentModel implements Parcelable {
     private String id;
     private PersonalInformationModel personalInformationModel;
     private AcademicInformationModel academicInformationModel;
-    private ProfilModel profilModel;
     private AvisModel avisModel;
-    private DatabaseReference databaseReference =FirebaseDatabase.getInstance().getReference("Users");;
+    private DatabaseReference databaseReference ;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-    public FreelancerModel(ProfilModel profilModel, AvisModel avisModel,AcademicInformationModel academicInformationModel) {
+    public FreelancerModel(AvisModel avisModel,AcademicInformationModel academicInformationModel) {
         super();
         this.academicInformationModel= academicInformationModel;
-        this.profilModel = profilModel;
         this.avisModel = avisModel;
     }
 
@@ -32,7 +41,7 @@ public class FreelancerModel extends StudentModel implements Parcelable {
     }
 
     public void InsertFreelancer(final PersonalInformationModel pModel,
-                            final List<AcademicInformationModel> aModel, ProfilModel profilModel){
+                            final List<AcademicInformationModel> aModel){
         if(user.getUid()!= null) {
             UserModel model = new UserModel(user.getUid());
             databaseReference.child(user.getUid()).setValue(model);
@@ -44,8 +53,8 @@ public class FreelancerModel extends StudentModel implements Parcelable {
             academic.insertAcademicInformation(aModel);
 
             //Insert profil
-            ProfilModel profilModel1 = new ProfilModel();
-            profilModel1.InsertProfil(profilModel);
+           // ProfilModel profilModel1 = new ProfilModel();
+            //profilModel1.InsertProfil(profilModel);
         }else{
             //Toast.makeText(, "", Toast.LENGTH_SHORT).show();
         }
@@ -59,13 +68,7 @@ public class FreelancerModel extends StudentModel implements Parcelable {
         this.academicInformationModel = academicInformationModel;
     }
 
-    public ProfilModel getProfilModel() {
-        return profilModel;
-    }
 
-    public void setProfilModel(ProfilModel profilModel) {
-        this.profilModel = profilModel;
-    }
 
     public AvisModel getAvisModel() {
         return avisModel;
@@ -73,6 +76,91 @@ public class FreelancerModel extends StudentModel implements Parcelable {
 
     public void setAvisModel(AvisModel avisModel) {
         this.avisModel = avisModel;
+    }
+    public void addFreelancerStudent(String idStudent){
+        databaseReference =FirebaseDatabase.getInstance().getReference("Users")
+        .child(user.getUid()).child("Students");
+        databaseReference.child(idStudent).setValue(idStudent);
+    }
+    public void getFreelancerStudentQuantity(String idFreelancer, final TextView textView){
+        databaseReference =FirebaseDatabase.getInstance().getReference("Users")
+                .child(idFreelancer).child("Students");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int countId=0;
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                    countId+=1;
+
+                }
+                textView.setText(""+countId);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void addFreelancerToFavorite(String idFreelancer){
+        databaseReference =FirebaseDatabase.getInstance().getReference("Users")
+                .child(user.getUid())
+                .child("FavoriteFreelancer");
+        databaseReference.child(idFreelancer).setValue(idFreelancer);
+    }
+    public void removeFreelancerToFavorite(String idFreelancer){
+        databaseReference =FirebaseDatabase.getInstance().getReference("Users")
+                .child(user.getUid())
+                .child("FavoriteFreelancer");
+        databaseReference.child(idFreelancer).removeValue();
+    }
+    public void loadFavoritePicture(String idFreelancer, final ImageView add, final ImageView remove, final Context context){
+        databaseReference =FirebaseDatabase.getInstance().getReference("Users")
+                .child(user.getUid())
+                .child("FavoriteFreelancer");
+        databaseReference.child(idFreelancer)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            //Toast.makeText(context, "What is wrong", Toast.LENGTH_SHORT).show();
+                            add.setVisibility(View.GONE);
+                            remove.setVisibility(View.VISIBLE);
+                            try{
+                                Glide.with(context)
+                                        .load(R.drawable.ic_remove_fav)
+                                        .centerCrop()
+                                        .into(remove);
+                            }catch(Exception e){
+
+                            }
+
+
+
+                        }else{
+                            add.setVisibility(View.VISIBLE);
+                            remove.setVisibility(View.GONE);
+                            try{
+                                Glide.with(context)
+                                        .load(R.drawable.ic_add_fav)
+                                        .centerCrop()
+                                        .into(add);
+                            }catch(Exception e){
+
+                            }
+
+
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
 
@@ -107,7 +195,7 @@ public class FreelancerModel extends StudentModel implements Parcelable {
         dest.writeString(this.id);
         dest.writeParcelable(this.personalInformationModel,flags);
         dest.writeParcelable(this.academicInformationModel,flags);
-        dest.writeParcelable(this.profilModel,flags);
+       // dest.writeParcelable(this.profilModel,flags);
         dest.writeParcelable(this.avisModel,flags);
     }
 
@@ -116,7 +204,7 @@ public class FreelancerModel extends StudentModel implements Parcelable {
         this.id= in.readString();
         this.personalInformationModel = in.readParcelable(getClass().getClassLoader());
         this.academicInformationModel = in.readParcelable(getClass().getClassLoader());
-        this.profilModel = in.readParcelable(getClass().getClassLoader());
+        //this.profilModel = in.readParcelable(getClass().getClassLoader());
         this.avisModel = in.readParcelable(getClass().getClassLoader());
 
 

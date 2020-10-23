@@ -164,11 +164,33 @@
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Cours:"
+                        android:text="Free Document:"
                         android:textColor="@color/black" />
 
                     <TextView
-                        android:id="@+id/cours_freelancer"
+                        android:id="@+id/free_document"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="15"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="30dp">
+
+                    <TextView
+                        android:id="@+id/textView123"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Paid Document:"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/paid_document"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

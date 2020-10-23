@@ -59,7 +59,7 @@ public class ReviewActivity extends AppCompatActivity {
     ImageView imagePhoto;
     List<AcademicInformationModel> academicList;
     List<PersonalInformationModel> personelList;
-    ProfilModel profilModel;
+    ProfilModel pofilModel;
     ListView mListView;
     ArrayList mArrayList;
    // InfoAcademicAdapter mAdapter;
@@ -84,7 +84,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         academicList = new ArrayList<>();
         personelList= new ArrayList<>();
-        profilModel= new ProfilModel(0,0);
+      //  profilModel= new ProfilModel(0,0);
         mStorageRef= FirebaseStorage.getInstance().getReference();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -282,7 +282,7 @@ public class ReviewActivity extends AppCompatActivity {
               //  AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
                 UserModel userModel = new UserModel();
                 //userModel.InsertUsers(pInfo,aInfo);
-                userModel.InsertUsers(pInfo,academicList,profilModel);
+                userModel.InsertUsers(pInfo,academicList);
                 goToNavDrawerActivity();
 
             }else{
@@ -302,7 +302,7 @@ public class ReviewActivity extends AppCompatActivity {
 
 
                                                 UserModel userModel = new UserModel();
-                                                userModel.InsertUsers(pInfo,academicList,profilModel);
+                                                userModel.InsertUsers(pInfo,academicList);
 
                                                 goToNavDrawerActivity();
                                             }
@@ -340,7 +340,7 @@ public class ReviewActivity extends AppCompatActivity {
             PersonalInformationModel pInfo= toSaveUserInformation("","",mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
 
             UserModel userModel = new UserModel();
-            userModel.InsertUsers(pInfo,academicList,profilModel);
+            userModel.InsertUsers(pInfo,academicList);
 
             goToNavDrawerActivity();
         }

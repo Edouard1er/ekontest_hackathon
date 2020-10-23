@@ -94,7 +94,7 @@ public class UserModel implements Parcelable {
         }
     }
     public void InsertUsers(final PersonalInformationModel pModel,
-                            final List<AcademicInformationModel> aModel, ProfilModel profilModel){
+                            final List<AcademicInformationModel> aModel){
 
         switch (pModel.getType()){
             case "Student":
@@ -103,11 +103,11 @@ public class UserModel implements Parcelable {
                 break;
             case "Freelancer":
                 FreelancerModel freelancerModel = new FreelancerModel();
-                freelancerModel.InsertFreelancer(pModel,aModel,profilModel);
+                //freelancerModel.InsertFreelancer(pModel,aModel,profilModel);
                 break;
             case "Professor":
                 ProfessorModel professorModel = new ProfessorModel();
-                professorModel.InsertProfessor(pModel, aModel, profilModel);
+                //professorModel.InsertProfessor(pModel, aModel, profilModel);
                 break;
             default:
                 break;

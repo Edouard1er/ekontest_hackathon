@@ -117,4 +117,44 @@ public class UrlImageModel {
 
 
     }
+    public String loadFavoriteImage(String[] imageSource, final ImageView imageUser, final Context context){
+        final String[] url = new String[1];
+        final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
+
+        try{
+            if(imageSource[0].contains("firebasestorage.googleapis.com")){
+                final StorageReference fileReference= mStorageRef.child("Images").child(imageSource[1]+"_500x500");
+                fileReference.getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri2) {
+                                url[0] =String.valueOf(uri2);
+                                Glide.with(context)
+                                        .load(uri2)
+                                        .centerCrop()
+                                        .into(imageUser);
+                                //     .apply(new RequestOptions().override(200,90))
+
+
+
+                            }
+                        });
+                return url[0];
+            }else{
+                url[0] =imageSource[0];
+                Glide.with(imageUser)
+                        .load(url[0])
+                        //  .apply(new RequestOptions().override(120,90))
+                        .centerCrop()
+                        .into(imageUser);
+
+                return url[0];
+            }
+        }catch (Exception e){
+            return url[0];
+        }
+
+
+    }
+
 }

@@ -13,7 +13,6 @@ public class ProfessorModel extends FreelancerModel implements Parcelable {
     private String id;
     private PersonalInformationModel personalInformationModel;
     private AcademicInformationModel academicInformationModel;
-    private ProfilModel profilModel;
     private AvisModel avisModel;
     private DatabaseReference databaseReference;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -35,7 +34,7 @@ public class ProfessorModel extends FreelancerModel implements Parcelable {
 
             //Insert profil
             ProfilModel profilModel1 = new ProfilModel();
-            profilModel1.InsertProfil(profilModel);
+            //profilModel1.InsertProfil(profilModel);
         }else{
             //Toast.makeText(, "", Toast.LENGTH_SHORT).show();
         }
@@ -71,15 +70,7 @@ public class ProfessorModel extends FreelancerModel implements Parcelable {
         this.academicInformationModel = academicInformationModel;
     }
 
-    @Override
-    public ProfilModel getProfilModel() {
-        return profilModel;
-    }
 
-    @Override
-    public void setProfilModel(ProfilModel profilModel) {
-        this.profilModel = profilModel;
-    }
 
     @Override
     public AvisModel getAvisModel() {
@@ -101,7 +92,7 @@ public class ProfessorModel extends FreelancerModel implements Parcelable {
         dest.writeString(this.id);
         dest.writeParcelable(this.personalInformationModel,flags);
         dest.writeParcelable(this.academicInformationModel,flags);
-        dest.writeParcelable(this.profilModel,flags);
+       // dest.writeParcelable(this.profilModel,flags);
         dest.writeParcelable(this.avisModel,flags);
     }
 
@@ -110,7 +101,7 @@ public class ProfessorModel extends FreelancerModel implements Parcelable {
         this.id= in.readString();
         this.personalInformationModel = in.readParcelable(getClass().getClassLoader());
         this.academicInformationModel = in.readParcelable(getClass().getClassLoader());
-        this.profilModel = in.readParcelable(getClass().getClassLoader());
+       // this.profilModel = in.readParcelable(getClass().getClassLoader());
         this.avisModel = in.readParcelable(getClass().getClassLoader());
 
     }

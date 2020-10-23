@@ -44,7 +44,7 @@ public class FreelancerListOnClickFragment extends Fragment{
     ArrayList mArrayList;
     InfoAcademicAdapter mAdapter;
     TextView redigerAvis, avisDisplayFreelancer, mFirstname,
-            mLastname, mSexe, mCoursFreelancer,mEtudiantFreelancer, mRatingValue, totalAvis;
+            mLastname, mSexe, mFreeDocument,mPaidDocument,mEtudiantFreelancer, mRatingValue, totalAvis;
     ProgressBar progressBar1,progressBar2, progressBar3, progressBar4, progressBar5;
     RatingBar mRatingBar2;
     onClickInfoFreelancer listener;
@@ -93,7 +93,8 @@ public class FreelancerListOnClickFragment extends Fragment{
             e.printStackTrace();
         }
 
-
+        FreelancerModel m = new FreelancerModel();
+        m.addFreelancerStudent(singleUser.getId());
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_freelancer_list_on_click, container, false);
@@ -140,14 +141,14 @@ public class FreelancerListOnClickFragment extends Fragment{
             public void onClick(View v) {
                 //listener.redigerAvis();
                 //Toast.makeText(activity, "You want to rate: "+ singleUser.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
-               try{
-                   Intent intent = new Intent(v.getContext(), AvisFreelancerActivity.class);
-                   // intent.putExtra("freelancer", singleUser.getId());
-                   intent.putParcelableArrayListExtra("freelancer", userModels);
-                   v.getContext().startActivity(intent);
-               }catch (Exception e){
-                   e.printStackTrace();
-               }
+                try{
+                    Intent intent = new Intent(v.getContext(), AvisFreelancerActivity.class);
+                    // intent.putExtra("freelancer", singleUser.getId());
+                    intent.putParcelableArrayListExtra("freelancer", userModels);
+                    v.getContext().startActivity(intent);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
         mArrayList = new ArrayList<InfoAcademicModel>();
@@ -191,7 +192,9 @@ public class FreelancerListOnClickFragment extends Fragment{
         mLastname = view.findViewById(R.id.nom_freelancer);
         mSexe = view.findViewById(R.id.sexe_freelancer);
         mImageFreelancer = view.findViewById(R.id.image_freelancer);
-        mCoursFreelancer = view.findViewById(R.id.cours_freelancer);
+        mPaidDocument = view.findViewById(R.id.paid_document);
+        mFreeDocument = view.findViewById(R.id.free_document);
+
         mEtudiantFreelancer = view.findViewById(R.id.etudiants_freelancer);
         recyclerView = view.findViewById(R.id.list_avis_on_click);
         academicRecyclerView= view.findViewById(R.id.list_info_academic_freelancer);
@@ -212,6 +215,10 @@ public class FreelancerListOnClickFragment extends Fragment{
         academicInformationAdapter= new AcademicInformationAdapter();
         readAvis(view);
         readAcademicInfo(view);
+         DocumentModel model = new DocumentModel();
+       //  model.InsertDocument("Fiscalite",20);
+        //model.InsertDocument("OTI",20);
+
         return view;
     }
 
@@ -234,8 +241,8 @@ public class FreelancerListOnClickFragment extends Fragment{
     public void setInfoProfil(){
 
         try {
-            mCoursFreelancer.setText(""+singleUser.getProfilModel().getnCours());
-            mEtudiantFreelancer.setText(""+singleUser.getProfilModel().getnEtudiant());
+            ProfilModel model = new ProfilModel();
+            model.setProfilModel(singleUser.getId(), mFreeDocument,mPaidDocument,mEtudiantFreelancer);
         }catch (Exception e){
             System.out.println("There is something wrong in freelancerlistOnclickFragment setinfoprofil method");
 
@@ -257,7 +264,7 @@ public class FreelancerListOnClickFragment extends Fragment{
                     AvisModel avis = dataSnapshot.getValue(AvisModel.class);
                     mAvis.add(avis);
                     //System.out.println("This is the text message :"+ avis.getComment());
-                   // System.out.println("This is the text message :"+ mAvis.size());
+                    // System.out.println("This is the text message :"+ mAvis.size());
 
                 }
 

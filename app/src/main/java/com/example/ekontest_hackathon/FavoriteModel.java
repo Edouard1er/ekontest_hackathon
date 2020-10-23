@@ -1,15 +1,11 @@
 package com.example.ekontest_hackathon;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.example.ekontest_hackathon.ui.NavDrawerActivity;
+import androidx.annotation.NonNull;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,25 +17,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteActivity extends AppCompatActivity {
-    GridView mGridView;
-    FreelancerListAdapter adapterGrid;
-    private DatabaseReference ref ;
+public class FavoriteModel {
+    private DatabaseReference databaseReference ;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     List<FreelancerModel> mUsers=new ArrayList<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorite);
-        mGridView = findViewById(R.id.freelancer_gridview);
-        /*FavoriteModel favoriteModel = new FavoriteModel();
-        favoriteModel.getFavoriteFreelancer(mGridView,this);*/
-        getFavoriteFreelancer();
+    public FavoriteModel() {
     }
 
-    public void getFavoriteFreelancer(){
-         ref = FirebaseDatabase.getInstance().getReference("Users")
+    public void getFavoriteFreelancer(final GridView mGridView, final Context context){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users")
                 .child(user.getUid())
                 .child("FavoriteFreelancer");
 
@@ -56,7 +43,7 @@ public class FavoriteActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             FreelancerModel userModel1=snapshot.getValue(FreelancerModel.class);
                             mUsers.add(userModel1);
-                            //Toast.makeText(getApplicationContext(), "Testing:"+userModel1.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Testing", Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -70,8 +57,8 @@ public class FavoriteActivity extends AppCompatActivity {
 
 
                 }
-                adapterGrid= new FreelancerListAdapter(getApplicationContext(), mUsers);
-                adapterGrid.notifyDataSetChanged();
+                FreelancerListAdapter adapterGrid;
+                adapterGrid= new FreelancerListAdapter(context, mUsers);
                 mGridView.setAdapter(adapterGrid);
             }
 
@@ -84,12 +71,4 @@ public class FavoriteActivity extends AppCompatActivity {
 
     }
 
-    // retour
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, NavDrawerActivity.class);
-        startActivity(intent);
-        finish();
-    }
 }
