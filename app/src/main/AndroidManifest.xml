@@ -30,6 +30,7 @@
         <activity android:name=".ReviewActivity" />
         <activity android:name=".DisplayMessageActivity" />
         <activity android:name=".Authentication" />
+        <activity android:name=".UploadNormalDocument" />
         <activity
             android:name=".ui.NavDrawerActivity"
             android:windowSoftInputMode="stateAlwaysVisible" />

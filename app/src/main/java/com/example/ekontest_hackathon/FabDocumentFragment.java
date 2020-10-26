@@ -1,5 +1,6 @@
 package com.example.ekontest_hackathon;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -54,6 +55,8 @@ public class FabDocumentFragment extends Fragment implements PopupMenu.OnMenuIte
         switch (item.getItemId()) {
             case R.id.upload_free_document: {
                 Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getContext(), UploadNormalDocument.class);
+                startActivity(intent);
                 return true;
             }
             case R.id.upload_payed_document: {
