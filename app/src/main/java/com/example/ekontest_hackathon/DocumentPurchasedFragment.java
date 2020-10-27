@@ -34,23 +34,8 @@ public class DocumentPurchasedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_document_purchased, container,false);
         mArrayList = new ArrayList<CustomDocumentModel>();
         mListView = (ListView) view.findViewById(R.id.purshased_list_document);
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020"));
+        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020", "", "Accepted"));
+
         mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
         mListView.setAdapter(mAdapter);
         return view;

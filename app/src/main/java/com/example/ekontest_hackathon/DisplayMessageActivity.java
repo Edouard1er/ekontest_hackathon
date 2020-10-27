@@ -2,16 +2,21 @@ package com.example.ekontest_hackathon;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -72,8 +77,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
         //Creating Api service
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
-
-
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -97,6 +102,26 @@ public class DisplayMessageActivity extends AppCompatActivity {
         });
 
         setDisplayMessage(receiver,user.getUid());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.message_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.invoice_menu:
+                Toast.makeText(getApplicationContext(), "Invoice selected", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, CreateInvoice.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void sendingMessage(final String receiver, String sender, String mes){

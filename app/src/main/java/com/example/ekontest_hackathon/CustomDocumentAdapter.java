@@ -40,6 +40,7 @@ class CustomDocumentAdapter extends ArrayAdapter  implements  PopupMenu.OnMenuIt
         final MyViewHolder myViewHolder = new MyViewHolder(convertView);
         myViewHolder.documentName.setText(mArrayList.get(position).getDocumentName());
         myViewHolder.documentTime.setText(""+mArrayList.get(position).getTimeUploadedDocument());
+        myViewHolder.documentStatus.setText(""+mArrayList.get(position).getDocumentStatus());
        // myViewHolder.mImageView.setImageResource(mArrayList.get(position).getIcon());
         myViewHolder.mDate.setText(mArrayList.get(position).getDateUploadedDocument());
         View view = layoutInflater.inflate(R.layout.fragment_document, parent,false);

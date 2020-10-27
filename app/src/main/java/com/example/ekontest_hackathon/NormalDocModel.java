@@ -6,6 +6,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class NormalDocModel {
+    private String idDocument;
     private String idUser;
     private String fileName;
     private String dateAdded;
@@ -28,13 +29,10 @@ public class NormalDocModel {
 
     public void insertNormalDoc(NormalDocModel model) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        database.useEmulator("10.0.2.2", 9000);
         databaseReference = database.getReference("Documents").child("NormalDoc");
         String key = databaseReference.push().getKey();
         model.setIdDocument(key);
         databaseReference.child(key).setValue(model);
-//        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child("NormalDoc");
-//        databaseReference.push().setValue(model);
     }
 
     public String getUrl() {
@@ -76,8 +74,6 @@ public class NormalDocModel {
     public void setOriginalName(String originalName) {
         this.originalName = originalName;
     }
-
-    private String idDocument;
 
     public String getIdDocument() { return idDocument; }
 

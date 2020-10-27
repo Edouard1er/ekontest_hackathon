@@ -61,6 +61,9 @@ public class FabDocumentFragment extends Fragment implements PopupMenu.OnMenuIte
             }
             case R.id.upload_payed_document: {
                 Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getContext(), UploadPaidDocument.class);
+                startActivity(intent);
                 return true;
             }
             case R.id.buy_document: {

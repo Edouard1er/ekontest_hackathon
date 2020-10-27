@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,8 +37,16 @@ public class DocumentUploadedFragment extends Fragment {
         mArrayList = new ArrayList<CustomDocumentModel>();
         mListView = (ListView) view.findViewById(R.id.uploaded_list_document);
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int position = i;
+                CustomDocumentModel value = (CustomDocumentModel) mArrayList.get(position);
+                Toast.makeText(getContext(), position + "- Id: " + value.getId(), Toast.LENGTH_LONG).show();
+            }
+        });
+
         databaseReference = FirebaseDatabase.getInstance().getReference("Documents").child("NormalDoc");
-//        Query query = databaseReference.equalTo(user.getUid(),"idUser");
         System.out.println("Getting data...");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -55,7 +65,7 @@ public class DocumentUploadedFragment extends Fragment {
                     String time_ = parts[1];
                     System.out.println("Date: " + parts[0]);
                     System.out.println("Time: " + parts[1]);
-                    mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_));
+                    mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_, model.getIdDocument(), "Accepted"));
                 }
                 mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
                 mListView.setAdapter(mAdapter);

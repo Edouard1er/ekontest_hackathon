@@ -42,8 +42,8 @@ public class DocumentAvailableFragment extends Fragment implements PopupMenu.OnM
         mListView = (ListView) view.findViewById(R.id.available_list_document);
 
 
-        mArrayList.add(new CustomDocumentModel("Théorie des physiques et des mathematiques.pdf","20:00", "15/08/2020"));
-        mArrayList.add(new CustomDocumentModel("Théorie des physiques et de la chimie.pdf","20:00", "15/08/2020"));
+        mArrayList.add(new CustomDocumentModel("Théorie des physiques et des mathematiques.pdf","20:00", "15/08/2020", "", "Accepted"));
+        mArrayList.add(new CustomDocumentModel("Théorie des physiques et de la chimie.pdf","20:00", "15/08/2020", "", "Accepted"));
 
         mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
         mListView.setAdapter(mAdapter);

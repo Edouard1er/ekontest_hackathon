@@ -18,6 +18,7 @@ class MyViewHolder implements  View.OnClickListener{
     TextView documentName;
     TextView documentTime;
     TextView mDate;
+    TextView documentStatus;
     ClickListener mClickListener;
     Context cc;
     ImageView contextMenuImg;
@@ -26,7 +27,9 @@ class MyViewHolder implements  View.OnClickListener{
          mImageView = v.findViewById(R.id.document_icon);
          documentName = v.findViewById(R.id.documentName);
          documentTime = v.findViewById(R.id.documentId);
+         documentStatus = v.findViewById(R.id.documentStatus);
          mDate = v.findViewById(R.id.documentDate);
+
          contextMenuImg = v.findViewById(R.id.context_image_menu);
         // contextMenuImg.setOnClickListener(this);
        //  contextMenuImg.setOnCreateContextMenuListener(this);
