@@ -37,6 +37,10 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    //moncash
+    implementation files('libs/sdk-moncash-api-1.0.4-SNAPSHOT.jar')
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.56'
+    implementation 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
 
     //Authentication ui
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'

@@ -33,6 +33,8 @@
         <activity android:name=".Authentication" />
         <activity android:name=".UploadNormalDocument" />
         <activity android:name=".UploadPaidDocument" />
+        <activity android:name=".MonCash" />
+        <activity android:name=".MoncashGateway" />
         <activity
             android:name=".ui.NavDrawerActivity"
             android:windowSoftInputMode="stateAlwaysVisible" />

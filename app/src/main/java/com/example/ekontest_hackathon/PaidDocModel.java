@@ -18,6 +18,8 @@ public class PaidDocModel {
     private float price;
     private DatabaseReference databaseReference;
 
+    public  PaidDocModel() {}
+
     public PaidDocModel(String fileName, String dateAdded, String title,
                         String originalName, String status, String sharingCode,
                         String url, float price, String scanId, String scanResultId,

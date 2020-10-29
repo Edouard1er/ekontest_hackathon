@@ -27,6 +27,7 @@ import com.example.ekontest_hackathon.Notifications.Data;
 import com.example.ekontest_hackathon.Notifications.MyResponse;
 import com.example.ekontest_hackathon.Notifications.Sender;
 import com.example.ekontest_hackathon.Notifications.Token;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,6 +58,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
     DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chats");
     TextView message ;
+    FloatingActionButton fab;
     ImageButton send;
     String receiver;
 
@@ -83,13 +85,54 @@ public class DisplayMessageActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             receiver = extras.getString("receiver");
-
             //The key argument here must match that used in the other activity
         }
+
+        fab = findViewById(R.id.floatingActionButtonInvoice);
+
+        fab.setVisibility(View.GONE);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         message = findViewById(R.id.textMessage);
         send = findViewById(R.id.btnSend);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Invoice");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("other id: " + receiver);
+                System.out.println("connected id: " + user.getUid());
+                System.out.println(snapshot);
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    final InvoiceModel invoice = dataSnapshot.getValue(InvoiceModel.class);
+                    if((invoice.getSenderId().equals(user.getUid()) && invoice.getReceiverId().equals(receiver)) ||
+                            (invoice.getSenderId().equals(receiver) && invoice.getReceiverId().equals(user.getUid()))) {
+                        System.out.println("Invoice Id ---: " + invoice.getInvoiceId());
+                        if(invoice.getStatus().equals("New")) {
+                            System.out.println("Invoice Id: " + invoice.getInvoiceId());
+                            fab.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Toast.makeText(getApplicationContext(), "Reading invoice", Toast.LENGTH_LONG).show();
+                                    Intent intent_1 = new Intent(getApplicationContext(), MonCash.class);
+                                    intent_1.putExtra("receiver", receiver);
+                                    intent_1.putExtra("sender", invoice.getSenderId());
+                                    intent_1.putExtra("invoiceId", invoice.getInvoiceId());
+                                    intent_1.putExtra("transaction", "freelance");
+                                    startActivity(intent_1);
+                                }
+                            });
+                            fab.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        Toast.makeText(getApplicationContext(), "user id: " + user.getEmail(), Toast.LENGTH_LONG).show();
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,18 +148,37 @@ public class DisplayMessageActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.message_menu, menu);
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        final MenuInflater inflater = getMenuInflater();
+
+        //show invoice button if it's a freelancer or teacher
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("personalInformationModel");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                System.out.println(snapshot);
+                PersonalInformationModel connectedUser = snapshot.getValue(PersonalInformationModel.class);
+                if(connectedUser.getType().equals("Freelancer") || connectedUser.getType().equals("Teacher")) {
+                    inflater.inflate(R.menu.message_menu, menu);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.invoice_menu:
                 Toast.makeText(getApplicationContext(), "Invoice selected", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, CreateInvoice.class);
+                intent.putExtra("receiver", receiver);
                 startActivity(intent);
                 return true;
             default:
@@ -207,6 +269,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
             }
         });
     }
+
     private void setDisplayMessage(final String receiver, final String sender) {
         recyclerView = findViewById(R.id.displayMessage);
         recyclerView.setHasFixedSize(true);
@@ -249,6 +312,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         return currenTimeZone;
     }
+
     public void userStatus(String status){
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
@@ -259,7 +323,9 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
     }
 
+    public void openInvoice(View view) {
 
+    }
 
     @Override
     protected void onResume() {
