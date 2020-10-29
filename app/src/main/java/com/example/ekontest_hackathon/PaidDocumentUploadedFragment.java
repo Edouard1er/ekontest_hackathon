@@ -7,58 +7,47 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PaidDocumentUploadedFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class PaidDocumentUploadedFragment extends Fragment {
+    ArrayList mArrayList;
+    ListView mListView;
+    CustomDocumentAdapter mAdapter;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public PaidDocumentUploadedFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FreeDocumentUploadedFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PaidDocumentUploadedFragment newInstance(String param1, String param2) {
-        PaidDocumentUploadedFragment fragment = new PaidDocumentUploadedFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_paid_document_uploaded, container, false);
+        View view= inflater.inflate(R.layout.fragment_paid_document_uploaded, container, false);
+        mArrayList = new ArrayList<CustomDocumentModel>();
+       // model.getTitle(),date_, time_, model.getIdDocument(), "Accepted")
+        mListView = (ListView) view.findViewById(R.id.uploaded_list_paid_document);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int position = i;
+                CustomDocumentModel value = (CustomDocumentModel) mArrayList.get(position);
+                Toast.makeText(getContext(), position + "- Id: " + value.getId(), Toast.LENGTH_LONG).show();
+            }
+        });
+        mArrayList.add(new CustomDocumentModel("math.pdf","12:00", "22/10/2020"
+        ,"2","Refused"));
+        mArrayList.add(new CustomDocumentModel("math.pdf","12:00", "22/10/2020"
+                ,"3","Accepted"));
+        mArrayList.add(new CustomDocumentModel("math.pdf","12:00", "22/10/2020"
+                ,"4","Refused"));
+        mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
+        mListView.setAdapter(mAdapter);
+        return view;
     }
 }

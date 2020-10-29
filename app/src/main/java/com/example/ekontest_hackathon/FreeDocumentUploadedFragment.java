@@ -35,7 +35,7 @@ public class FreeDocumentUploadedFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_free_document_uploaded, container, false);
         mArrayList = new ArrayList<CustomDocumentModel>();
-        mListView = (ListView) view.findViewById(R.id.uploaded_list_document);
+        mListView = (ListView) view.findViewById(R.id.uploaded_list_free_document);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

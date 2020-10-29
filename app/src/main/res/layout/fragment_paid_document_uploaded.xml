@@ -5,10 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".PaidDocumentUploadedFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/uploaded_list_paid_document"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" />
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.example.ekontest_hackathon.FabDocumentFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        tools:layout="@layout/fragment_fab_document" />
 
 </FrameLayout>
