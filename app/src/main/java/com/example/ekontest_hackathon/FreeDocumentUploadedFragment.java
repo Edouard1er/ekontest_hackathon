@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class DocumentUploadedFragment extends Fragment {
+public class FreeDocumentUploadedFragment extends Fragment {
     ListView mListView;
     CustomDocumentAdapter mAdapter;
     ArrayList mArrayList;
@@ -33,7 +33,7 @@ public class DocumentUploadedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_document_uploaded, container, false);
+        View view= inflater.inflate(R.layout.fragment_free_document_uploaded, container, false);
         mArrayList = new ArrayList<CustomDocumentModel>();
         mListView = (ListView) view.findViewById(R.id.uploaded_list_document);
 

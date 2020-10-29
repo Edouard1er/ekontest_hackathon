@@ -35,10 +35,15 @@
             android:text="Available" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/id_upload_tab"
+            android:id="@+id/id_upload_free_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Uploaded" />
+            android:text="Free docs" />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/id_paid_uploaded_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paid docs" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager

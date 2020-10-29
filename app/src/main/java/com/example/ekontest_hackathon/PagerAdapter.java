@@ -22,7 +22,10 @@ class PagerAdapter extends FragmentPagerAdapter {
                 return new DocumentAvailableFragment();
             }
             case 2:{
-                return new DocumentUploadedFragment();
+                return new FreeDocumentUploadedFragment();
+            }
+            case 3:{
+                return new PaidDocumentUploadedFragment();
             }
             default:{
                 return null;
