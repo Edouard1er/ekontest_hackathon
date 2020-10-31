@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -135,14 +137,40 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), "user id: " + user.getEmail(), Toast.LENGTH_LONG).show();
 
-        message.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+        message.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Toast.makeText(DisplayMessageActivity.this,v.getText().toString(), Toast.LENGTH_SHORT).show();
-                return false;
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                if(s.toString().trim().length()!=0){
+                    send.setVisibility(View.VISIBLE);
+                }else{
+                    send.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(s.toString().trim().length()!=0){
+                    send.setVisibility(View.VISIBLE);
+                }else{
+                    send.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().trim().length()!=0){
+                    send.setVisibility(View.VISIBLE);
+                }else{
+                    send.setVisibility(View.GONE);
+                }
+
             }
         });
-
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

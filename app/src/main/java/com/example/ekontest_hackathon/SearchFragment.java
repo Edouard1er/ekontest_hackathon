@@ -175,6 +175,8 @@ public class SearchFragment extends Fragment {
 
     }
     public void getUserMatchingtheSearchTerm(final String tag){
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tags").child(tag);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -188,7 +190,10 @@ public class SearchFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 FreelancerModel userModel1=snapshot.getValue(FreelancerModel.class);
-                                mUsers.add(userModel1);
+                                if(!userModel1.getId().equals(user.getUid())){
+                                    mUsers.add(userModel1);
+
+                                }
                             }
 
                             @Override
