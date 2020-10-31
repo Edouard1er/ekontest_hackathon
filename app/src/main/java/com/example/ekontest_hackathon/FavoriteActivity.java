@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -26,19 +27,23 @@ public class FavoriteActivity extends AppCompatActivity {
     FreelancerListAdapter adapterGrid;
     private DatabaseReference ref ;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    List<FreelancerModel> mUsers=new ArrayList<>();
+    List<FreelancerModel> mUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
-        mGridView = findViewById(R.id.freelancer_gridview);
+
         /*FavoriteModel favoriteModel = new FavoriteModel();
         favoriteModel.getFavoriteFreelancer(mGridView,this);*/
+
+
         getFavoriteFreelancer();
     }
 
     public void getFavoriteFreelancer(){
+        mGridView = findViewById(R.id.freelancer_gridview);
+        mUsers=new ArrayList<>();
          ref = FirebaseDatabase.getInstance().getReference("Users")
                 .child(user.getUid())
                 .child("FavoriteFreelancer");
@@ -48,30 +53,27 @@ public class FavoriteActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUsers.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    if(!dataSnapshot.getKey().equals(user.getUid())){
+                        DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("Users")
+                                .child(dataSnapshot.getKey());
+                        refUser.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                FreelancerModel userModel1=snapshot.getValue(FreelancerModel.class);
+                                mUsers.add(userModel1);
+                                //Toast.makeText(getApplicationContext(), "Testing:"+userModel1.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
 
-                    DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("Users")
-                            .child(dataSnapshot.getKey());
-                    refUser.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            FreelancerModel userModel1=snapshot.getValue(FreelancerModel.class);
-                            mUsers.add(userModel1);
-                            //Toast.makeText(getApplicationContext(), "Testing:"+userModel1.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
+                            }
 
-                        }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-
-
-
+                            }
+                        });
+                    }
                 }
                 adapterGrid= new FreelancerListAdapter(getApplicationContext(), mUsers);
-                adapterGrid.notifyDataSetChanged();
+                //adapterGrid.notifyDataSetChanged();
                 mGridView.setAdapter(adapterGrid);
             }
 

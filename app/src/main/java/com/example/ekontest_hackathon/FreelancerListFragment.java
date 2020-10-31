@@ -115,16 +115,17 @@ public class FreelancerListFragment extends Fragment {
                 mFreelancers.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     FreelancerModel model = dataSnapshot.getValue(FreelancerModel.class);
-                    try {
-                        if(model.getPersonalInformationModel().getType().equals("Freelancer")){
-                            mFreelancers.add(model);
+                    if(!model.getId().equals(user.getUid())){
+                        try {
+                            if(model.getPersonalInformationModel().getType().equals("Freelancer")){
+                                mFreelancers.add(model);
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
-                    }catch (Exception e){
-                        e.printStackTrace();
                     }
 
-
-                    //Toast.makeText(getContext(), model.getId()+" "+ model.getPersonalInformationModel().getType(), Toast.LENGTH_SHORT).show();
+                     //Toast.makeText(getContext(), model.getId()+" "+ model.getPersonalInformationModel().getType(), Toast.LENGTH_SHORT).show();
 
 
                 }

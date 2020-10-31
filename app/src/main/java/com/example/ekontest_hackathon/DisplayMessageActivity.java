@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -133,6 +134,14 @@ public class DisplayMessageActivity extends AppCompatActivity {
         });
 
         Toast.makeText(getApplicationContext(), "user id: " + user.getEmail(), Toast.LENGTH_LONG).show();
+
+        message.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                Toast.makeText(DisplayMessageActivity.this,v.getText().toString(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
