@@ -206,6 +206,20 @@ public class MonCash extends AppCompatActivity {
 
         if (transaction.equals("document")) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference docs = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased");
+            docs.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        String doc = (String) snapshot.getValue();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
             FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased").push().setValue(idDocument);
         }
     }
