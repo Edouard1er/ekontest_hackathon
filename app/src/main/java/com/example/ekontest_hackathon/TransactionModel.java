@@ -2,6 +2,9 @@ package com.example.ekontest_hackathon;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,11 +16,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class TransactionModel {
     String idTransaction;
     String orderId;
     String transactionKey;
     private DatabaseReference databaseReference;
+
+    public TransactionModel() {}
 
     public TransactionModel(String orderId, String transactionKey, String idTransaction) {
         this.orderId = orderId;
@@ -44,8 +51,17 @@ public class TransactionModel {
                 if(tModel.getTransactionKey().isEmpty()) {
                     System.out.println("First creation");
                 } else {
-//                    MoncashGateway.MG.finish();
+                    System.out.println("Should be closed");
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            MoncashGateway.MG.finish();
+                        }
+                    }, 3000);
                     try {
+                        MonCash.MC.finish();
+                        MonCash.MC.startActivity(MonCash.MC.getIntent());
                         MonCash.successPaymentMessage();
                     } catch (MonCashRestException e) {
                         e.printStackTrace();

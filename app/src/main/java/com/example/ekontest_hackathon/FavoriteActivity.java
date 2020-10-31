@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -24,21 +25,27 @@ import java.util.List;
 public class FavoriteActivity extends AppCompatActivity {
     GridView mGridView;
     FreelancerListAdapter adapterGrid;
-    private DatabaseReference ref ;
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    List<FreelancerModel> mUsers=new ArrayList<>();
+     DatabaseReference ref ;
+     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    List<FreelancerModel> mUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
         mGridView = findViewById(R.id.freelancer_gridview);
+        mUsers=new ArrayList<>();
+
         /*FavoriteModel favoriteModel = new FavoriteModel();
         favoriteModel.getFavoriteFreelancer(mGridView,this);*/
+
+
         getFavoriteFreelancer();
     }
 
+
     public void getFavoriteFreelancer(){
+
          ref = FirebaseDatabase.getInstance().getReference("Users")
                 .child(user.getUid())
                 .child("FavoriteFreelancer");
@@ -48,31 +55,31 @@ public class FavoriteActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUsers.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    if(!dataSnapshot.getKey().equals(user.getUid())){
+                        DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("Users")
+                                .child(dataSnapshot.getKey());
+                        refUser.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                FreelancerModel userModel1=snapshot.getValue(FreelancerModel.class);
+                                mUsers.add(userModel1);
+                                adapterGrid= new FreelancerListAdapter(getApplicationContext(), mUsers);
+                                adapterGrid.notifyDataSetChanged();
+                                mGridView.setAdapter(adapterGrid);
+                               // Toast.makeText(FavoriteActivity.this, userModel1.getPersonalInformationModel().getUsername(), Toast.LENGTH_SHORT).show();
 
-                    DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("Users")
-                            .child(dataSnapshot.getKey());
-                    refUser.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            FreelancerModel userModel1=snapshot.getValue(FreelancerModel.class);
-                            mUsers.add(userModel1);
-                            //Toast.makeText(getApplicationContext(), "Testing:"+userModel1.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), "Testing:"+userModel1.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-
-
-
+                            }
+                        });
+                    }
                 }
-                adapterGrid= new FreelancerListAdapter(getApplicationContext(), mUsers);
-                adapterGrid.notifyDataSetChanged();
-                mGridView.setAdapter(adapterGrid);
+                //Toast.makeText(FavoriteActivity.this, "What is wrong", Toast.LENGTH_SHORT).show();
+
+
             }
 
             @Override

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
@@ -18,7 +19,7 @@ public class DocumentFragment extends Fragment {
     //TabItem mUpload;
     TabItem mAvailable;
     TabItem mPurshase;
-    PagerAdapterDocument mPagerAdapterDocument;
+    PagerAdapter mPagerAdapter;
     // declaration of the listener
     onFragmentBtnSelected listener;
     String user = "freelancer";
@@ -53,10 +54,10 @@ public class DocumentFragment extends Fragment {
        // mUpload = view.findViewById(R.id.id_upload_tab);
         mPurshase = view.findViewById(R.id.id_purshased_tab);
         mAvailable = view.findViewById(R.id.id_available_tab);
-        mPagerAdapterDocument = new PagerAdapterDocument(getChildFragmentManager(),
+        mPagerAdapter = new PagerAdapter(getChildFragmentManager(),
                 FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
                 mTabLayout.getTabCount());
-        mViewPager.setAdapter(mPagerAdapterDocument);
+        mViewPager.setAdapter(mPagerAdapter);
 
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -69,6 +70,23 @@ public class DocumentFragment extends Fragment {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        FirebaseUser user_ = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(user_.getUid()).child("personalInformationModel");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PersonalInformationModel model = snapshot.getValue(PersonalInformationModel.class);
+                if(model.getType().equals("Student")) {
+                    mTabLayout.removeTabAt(2);
+                    mTabLayout.removeTabAt(2);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         return  view;
     }
 }

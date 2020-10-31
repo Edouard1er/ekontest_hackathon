@@ -89,4 +89,8 @@ public class InvoiceModel {
     public void setFreelanceName(String freelanceName) {
         this.freelanceName = freelanceName;
     }
+
+//    public static void unsetInvoice(String idInvoice) {
+
+//    }
 }

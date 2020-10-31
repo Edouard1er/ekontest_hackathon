@@ -81,14 +81,6 @@ public class PaidDocumentUploadedFragment extends Fragment {
 
             }
         });
-//        mArrayList.add(new CustomDocumentModel("math.pdf","12:00", "22/10/2020"
-//        ,"2","Refused"));
-//        mArrayList.add(new CustomDocumentModel("math.pdf","12:00", "22/10/2020"
-//                ,"3","Accepted"));
-//        mArrayList.add(new CustomDocumentModel("math.pdf","12:00", "22/10/2020"
-//                ,"4","Refused"));
-//        mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
-//        mListView.setAdapter(mAdapter);
         return view;
     }
 }
