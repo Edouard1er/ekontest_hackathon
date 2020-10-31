@@ -100,7 +100,7 @@
                                 android:gravity="end"
                                 android:text="$600.00"
                                 android:textAlignment="textEnd"
-                                android:textColor="#f5a622"
+                                android:textColor="#f37a21"
                                 android:textSize="24sp"
                                 android:textStyle="bold" />
 
@@ -176,17 +176,17 @@
                             android:layout_weight="40"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
+                                android:gravity="end"
                                 android:text="$560.00"
                                 android:textAlignment="textEnd"
+                                android:textColor="#f37a21"
                                 android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="#f5a622"
-                                android:gravity="end"
-                                />
+                                android:textStyle="bold" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -260,17 +260,17 @@
                             android:layout_weight="40"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
+                                android:gravity="end"
                                 android:text="$450.00"
                                 android:textAlignment="textEnd"
+                                android:textColor="#f37a21"
                                 android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="#f5a622"
-                                android:gravity="end"
-                                />
+                                android:textStyle="bold" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -344,16 +344,17 @@
                             android:layout_weight="40"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
+                                android:gravity="end"
                                 android:text="$375.00"
                                 android:textAlignment="textEnd"
+                                android:textColor="#f37a21"
                                 android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="#f5a622"
-                                android:gravity="end" />
+                                android:textStyle="bold" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -427,16 +428,17 @@
                             android:layout_weight="40"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
+                                android:gravity="end"
                                 android:text="$700.00"
                                 android:textAlignment="textEnd"
+                                android:textColor="#f37a21"
                                 android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="#f5a622"
-                                android:gravity="end" />
+                                android:textStyle="bold" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
