@@ -75,6 +75,8 @@ public class TransactionModel {
         transaction.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final int[] i = {1};
+                System.out.println("iteration: " + i[0]);
                 System.out.println("Value Change...");
                 System.out.println(snapshot);
                 TransactionModel tModel = snapshot.getValue(TransactionModel.class);
@@ -88,15 +90,19 @@ public class TransactionModel {
                         @Override
                         public void run() {
                             MoncashGateway.MG.finish();
+                            try {
+                                if(i[0] == 2) {
+
+                                }
+                                MonCash.MC.finish();
+                                MonCash.MC.startActivity(MonCash.MC.getIntent());
+                                MonCash.successPaymentMessage();
+                                i[0] += 1;
+                            } catch (MonCashRestException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }, 3000);
-                    try {
-                        MonCash.MC.finish();
-                        MonCash.MC.startActivity(MonCash.MC.getIntent());
-                        MonCash.successPaymentMessage();
-                    } catch (MonCashRestException e) {
-                        e.printStackTrace();
-                    }
+                    }, 1000);
                 }
             }
 
