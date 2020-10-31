@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentListFragment">
+    android:paddingBottom="50dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listDisplayUser"
+    tools:context=".StudentListFragment"
+    android:orientation="vertical">
+
+    <SearchView
+        android:id="@+id/search_student"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search a student"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
-</FrameLayout>
+    </SearchView>
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/student_gridview"
+        android:numColumns="2"
+        android:layout_margin="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        >
+    </GridView>
 
 
+
+</LinearLayout>

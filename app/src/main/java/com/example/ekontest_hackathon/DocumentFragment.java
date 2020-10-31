@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
@@ -19,7 +18,7 @@ public class DocumentFragment extends Fragment {
     //TabItem mUpload;
     TabItem mAvailable;
     TabItem mPurshase;
-    PagerAdapter mPagerAdapter;
+    PagerAdapterDocument mPagerAdapterDocument;
     // declaration of the listener
     onFragmentBtnSelected listener;
     String user = "freelancer";
@@ -54,10 +53,10 @@ public class DocumentFragment extends Fragment {
        // mUpload = view.findViewById(R.id.id_upload_tab);
         mPurshase = view.findViewById(R.id.id_purshased_tab);
         mAvailable = view.findViewById(R.id.id_available_tab);
-        mPagerAdapter = new PagerAdapter(getChildFragmentManager(),
+        mPagerAdapterDocument = new PagerAdapterDocument(getChildFragmentManager(),
                 FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
                 mTabLayout.getTabCount());
-        mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setAdapter(mPagerAdapterDocument);
 
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

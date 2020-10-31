@@ -20,6 +20,7 @@ import com.example.ekontest_hackathon.FreelancerListOnClickFragment;
 import com.example.ekontest_hackathon.HomePageFragment;
 import com.example.ekontest_hackathon.MessageFragment;
 import com.example.ekontest_hackathon.R;
+import com.example.ekontest_hackathon.RelationFragment;
 import com.example.ekontest_hackathon.SearchFragment;
 import com.example.ekontest_hackathon.ui.NavDrawerActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,8 +52,8 @@ public class HomeFragment extends Fragment implements FreelancerListFragment.fre
         // perfom ItemSelectedListener
         getChildFragmentManager().beginTransaction().replace(R.id.home_container_layout, new HomePageFragment()).commit();
         switch (NavDrawerActivity.bottomMenu){
-            case "My Freelancers":{
-                menuItemClick(new FreelancerListFragment(), "My Freelancers");
+            case "My Relations":{
+                menuItemClick(new FreelancerListFragment(), "My Relations");
                 mBottomNavigationView.setSelectedItemId(R.id.bottom_freelancer);
                 break;
             }
@@ -62,9 +63,9 @@ public class HomeFragment extends Fragment implements FreelancerListFragment.fre
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.bottom_freelancer:{
-                        listener.toolBarTitle("My Freelancers");
+                        listener.toolBarTitle("My Relations");
                         item.setChecked(true);
-                        getChildFragmentManager().beginTransaction().replace(R.id.home_container_layout, new FreelancerListFragment()).commit();
+                        getChildFragmentManager().beginTransaction().replace(R.id.home_container_layout, new RelationFragment()).commit();
                         break;
                     }
                     case R.id.bottom_document:{

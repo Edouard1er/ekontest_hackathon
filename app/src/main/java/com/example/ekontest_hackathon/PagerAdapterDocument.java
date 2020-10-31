@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-class PagerAdapter extends FragmentPagerAdapter {
+class PagerAdapterDocument extends FragmentPagerAdapter {
     private int tabsNumber;
-    public PagerAdapter(@NonNull FragmentManager fm, int behavior, int tabs) {
+    public PagerAdapterDocument(@NonNull FragmentManager fm, int behavior, int tabs) {
         super(fm, behavior);
         this.tabsNumber = tabs;
     }
@@ -28,7 +28,7 @@ class PagerAdapter extends FragmentPagerAdapter {
                 return new PaidDocumentUploadedFragment();
             }
             default:{
-                return null;
+                return new DocumentPurchasedFragment();
             }
         }
     }
