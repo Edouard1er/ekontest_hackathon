@@ -39,7 +39,7 @@
 
         <activity
             android:name=".ui.NavDrawerActivity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
