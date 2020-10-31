@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -107,13 +108,23 @@ public class FreelancerModel extends StudentModel implements Parcelable {
         databaseReference =FirebaseDatabase.getInstance().getReference("Users")
                 .child(user.getUid())
                 .child("FavoriteFreelancer");
-        databaseReference.child(idFreelancer).setValue(idFreelancer);
+        databaseReference.child(idFreelancer).setValue(idFreelancer).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+            }
+        });
     }
     public void removeFreelancerToFavorite(String idFreelancer){
         databaseReference =FirebaseDatabase.getInstance().getReference("Users")
                 .child(user.getUid())
                 .child("FavoriteFreelancer");
-        databaseReference.child(idFreelancer).removeValue();
+        databaseReference.child(idFreelancer).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+            }
+        });
     }
     public void loadFavoritePicture(String idFreelancer, final ImageView add, final ImageView remove, final Context context){
         databaseReference =FirebaseDatabase.getInstance().getReference("Users")

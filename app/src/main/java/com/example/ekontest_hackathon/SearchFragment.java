@@ -200,7 +200,7 @@ public class SearchFragment extends Fragment {
                     }
                 }
                 adapterGrid= new FreelancerListAdapter(getContext(), mUsers);
-                adapterGrid.notifyDataSetChanged();
+                //adapterGrid.notifyDataSetChanged();
 
 
                 mGridView.setAdapter(adapterGrid);
