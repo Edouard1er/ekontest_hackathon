@@ -41,27 +41,78 @@ public class FabDocumentFragment extends Fragment implements PopupMenu.OnMenuIte
         mFloatingActionButton=view.findViewById(R.id.fab_document);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if(userType=="student"){
-                    Toast.makeText(getContext(), "Buy a document", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    setFab_available_document(v);
-                }
+            public void onClick(final View v) {
+                FirebaseUser user_ = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(user_.getUid()).child("personalInformationModel");
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        PersonalInformationModel model = snapshot.getValue(PersonalInformationModel.class);
+                        if(model.getType().equals("Student")) {
+                            Toast.makeText(getContext(), "Buy a document", Toast.LENGTH_LONG).show();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setTitle("Type the document code");
+
+                            // Set up the input
+                            final EditText input = new EditText(getContext());
+                            // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                            input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
+                            builder.setView(input);
+
+                            // Set up the buttons
+                            builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    m_Text = input.getText().toString();
+                                    submitDocumentSearch(m_Text);
+                                }
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            builder.show();
+                        } else {
+                            setFab_available_document(v);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
         return view;
     }
     public void setFab_available_document(View view){
-        PopupMenu popupMenu = new PopupMenu(getContext(), view);
+        final PopupMenu popupMenu = new PopupMenu(getContext(), view);
         popupMenu.setOnMenuItemClickListener(this);
-        if(userType=="freelancer"){
-            popupMenu.inflate(R.menu.menu_fab_document_freelancer);
-        }
-        else if (userType=="teacher"){
-            popupMenu.inflate(R.menu.menu_fab_document);
-        }
-        popupMenu.show();
+
+        FirebaseUser user_ = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(user_.getUid()).child("personalInformationModel");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PersonalInformationModel model = snapshot.getValue(PersonalInformationModel.class);
+                if(model.getType().equals("Freelancer")) {
+                    popupMenu.inflate(R.menu.menu_fab_document_freelancer);
+                }
+                if(model.getType().equals("Teacher")) {
+                    popupMenu.inflate(R.menu.menu_fab_document);
+                }
+                popupMenu.show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

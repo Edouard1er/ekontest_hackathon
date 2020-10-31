@@ -35,6 +35,9 @@ public class MonCash extends AppCompatActivity {
     static TextView textViewSuccess;
     static String transaction;
     static String invoiceId;
+    static  String idDocument;
+    String receiver;
+    String sender;
     MonCashPayment payment;
     static public ProgressBar progressBar;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -55,16 +58,19 @@ public class MonCash extends AppCompatActivity {
         textViewProductPrice = (TextView) findViewById(R.id.product_price);
         textViewSuccess = (TextView) findViewById(R.id.textViewSuccess);
 
-        submitButton.setVisibility(View.VISIBLE);
-        textViewSuccess.setVisibility(View.VISIBLE);
-
         Intent data = getIntent();
         transaction = data.getStringExtra("transaction");
-        String receiver = data.getStringExtra("receiver");
-        String sender = data.getStringExtra("sender");
+        receiver = data.getStringExtra("receiver");
+        sender = data.getStringExtra("sender");
+
+        submitButton.setVisibility(View.VISIBLE);
+        textViewSuccess.setVisibility(View.GONE);
 
 
         if(transaction.equals("freelance")) {
+            submitButton.setVisibility(View.VISIBLE);
+            textViewSuccess.setVisibility(View.VISIBLE);
+
             invoiceId = data.getStringExtra("invoiceId");
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Invoice").child(invoiceId);
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -87,11 +93,6 @@ public class MonCash extends AppCompatActivity {
                         textViewSuccess.setVisibility(View.VISIBLE);
                         submitButton.setVisibility(View.GONE);
                     }
-
-//                    if(invoice.getStatus().equals("Paid")) {
-//                        textViewSuccess.setVisibility(View.VISIBLE);
-//                        submitButton.setVisibility(View.GONE);
-//                    }
 
                     final DatabaseReference provider = FirebaseDatabase.getInstance().getReference("Users").child(invoice.getSenderId()).child("personalInformationModel");
                     provider.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -119,7 +120,7 @@ public class MonCash extends AppCompatActivity {
         }
 
         if(transaction.equals("document")) {
-            final String idDocument = data.getStringExtra("idDocument");
+            idDocument = data.getStringExtra("idDocument");
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Documents").child("PaidDoc").child(idDocument);
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -144,7 +145,6 @@ public class MonCash extends AppCompatActivity {
 
                         }
                     });
-
                 }
 
                 @Override
@@ -167,7 +167,7 @@ public class MonCash extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                HashMap<String, String> createdPayment = payment.createPayment(amount);
+                HashMap<String, String> createdPayment = payment.createPayment(amount, sender, receiver, transaction);
                 final String text = "Payment status: " + createdPayment.get("status") + "\n" +
                         "Return URL: " + createdPayment.get("message");
                 System.out.println(text);
@@ -187,7 +187,6 @@ public class MonCash extends AppCompatActivity {
         submitButton.setVisibility(View.GONE);
         textViewSuccess.setVisibility(View.VISIBLE);
         if(transaction.equals("freelance")) {
-//            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();getCurrentUser
             FirebaseDatabase.getInstance().getReference("Invoice").child(invoiceId).child("status").setValue("Paid");
             DatabaseReference db = FirebaseDatabase.getInstance().getReference("Invoice").child(invoiceId);
             db.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -203,6 +202,11 @@ public class MonCash extends AppCompatActivity {
 
                 }
             });
+        }
+
+        if (transaction.equals("document")) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased").push().setValue(idDocument);
         }
     }
 }

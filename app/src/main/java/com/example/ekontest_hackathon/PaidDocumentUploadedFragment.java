@@ -70,7 +70,9 @@ public class PaidDocumentUploadedFragment extends Fragment {
                     String time_ = parts[1];
                     System.out.println("Date: " + parts[0]);
                     System.out.println("Time: " + parts[1]);
-                    mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_, model.getIdDocument(), model.getStatus()));
+                    if(model.getIdUser().equals(user.getUid())) {
+                        mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_, model.getIdDocument(), model.getStatus()));
+                    }
                 }
                 mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
                 mListView.setAdapter(mAdapter);

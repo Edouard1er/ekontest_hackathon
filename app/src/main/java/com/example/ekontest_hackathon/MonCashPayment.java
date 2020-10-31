@@ -27,7 +27,7 @@ public class MonCashPayment {
         this.apiContext = new APIContext(clientID, clientSecret, Constants.LIVE);
     }
 
-    public HashMap<String, String> createPayment(int amount) {
+    public HashMap<String, String> createPayment(int amount, String payer, String buyer, String transaction) {
         //creating of payment
         HashMap<String, String> arrayList = new HashMap<String, String>();
         PaymentCreator paymentCreator = new PaymentCreator();
@@ -38,7 +38,7 @@ public class MonCashPayment {
         PaymentCreator creator  = null;
 
         //here we create the transaction in firebase
-        TransactionModel model = new TransactionModel(orderId, "", "");
+        TransactionModel model = new TransactionModel(orderId, "", "", payer, buyer, transaction);
         model.insertTransaction(model);
 
         try {

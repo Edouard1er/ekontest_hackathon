@@ -25,6 +25,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DocumentAvailableFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     ListView mListView;
@@ -41,12 +42,54 @@ public class DocumentAvailableFragment extends Fragment implements PopupMenu.OnM
         mArrayList = new ArrayList<CustomDocumentModel>();
         mListView = (ListView) view.findViewById(R.id.available_list_document);
 
+        final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docAvailable");
+        // Query query = freelancerRef.equalTo("personalInformationModel").equalTo("Student","type");
+        freelancerRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mArrayList.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                    FreelancerModel model = dataSnapshot.getValue(FreelancerModel.class);
+                    System.out.println(dataSnapshot);
+//                    UserModel usrModel= dataSnapshot.getValue(UserModel.class);
+                    String idDoc = (String) dataSnapshot.getValue();
+                    System.out.println("id doc: " + dataSnapshot.getValue());
+                    System.out.println("id doc__: " + idDoc);
+                    DatabaseReference docs = FirebaseDatabase.getInstance().getReference("Documents").child("NormalDoc").child(idDoc);
+                    docs.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            NormalDocModel model = snapshot.getValue(NormalDocModel.class);
+                            System.out.println(snapshot);
 
-        mArrayList.add(new CustomDocumentModel("Théorie des physiques et des mathematiques.pdf","20:00", "15/08/2020", "", "Accepted"));
-        mArrayList.add(new CustomDocumentModel("Théorie des physiques et de la chimie.pdf","20:00", "15/08/2020", "", "Accepted"));
+                            String date = model.getDateAdded();
+                            String[] parts = date.split(" ");
+                            String date_ = parts[0];
+                            String time_ = parts[1];
 
-        mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
-        mListView.setAdapter(mAdapter);
+                            mArrayList.add(new CustomDocumentModel(model.getTitle(),time_, time_, model.getIdDocument(), date_));
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+                mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
+                mListView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+//        mArrayList.add(new CustomDocumentModel("Théorie des physiques et des mathematiques.pdf","20:00", "15/08/2020", "", "Accepted"));
+//        mArrayList.add(new CustomDocumentModel("Théorie des physiques et de la chimie.pdf","20:00", "15/08/2020", "", "Accepted"));
         return view;
     }
 

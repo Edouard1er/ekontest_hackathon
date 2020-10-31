@@ -124,7 +124,7 @@ public class FreelancerListFragment extends Fragment {
 //                    UserModel usrModel= dataSnapshot.getValue(UserModel.class);
                    // System.out.println("id user: " + dataSnapshot.getValue());
                        // System.out.println("id user__: " + obj.get("idUser"));
-                        DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child(dataSnapshot.getKey());
+                        DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child((String) dataSnapshot.getValue());
                         user.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {

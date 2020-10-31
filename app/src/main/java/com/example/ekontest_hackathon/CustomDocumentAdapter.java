@@ -1,12 +1,16 @@
 package com.example.ekontest_hackathon;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -16,6 +20,11 @@ import androidx.annotation.RequiresApi;
 
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -71,7 +80,34 @@ class CustomDocumentAdapter extends ArrayAdapter  implements  PopupMenu.OnMenuIt
                 return true;
             }
             case R.id.info_document: {
-                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                System.out.println("detail: " + tabPosition);
+                CustomDocumentModel model = mArrayList.get(tabPosition);
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Documents").child("PaidDoc").child(model.getId());
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        PaidDocModel mod = snapshot.getValue(PaidDocModel.class);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setTitle("Type the document code");
+
+                        builder.setMessage("Document code: " + mod.getSharingCode());
+
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        builder.show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
                 return true;
             }
 

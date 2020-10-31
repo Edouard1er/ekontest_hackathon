@@ -18,6 +18,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.ekontest_hackathon.ui.NavDrawerActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,10 +41,53 @@ public class DocumentPurchasedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_document_purchased, container,false);
         mArrayList = new ArrayList<CustomDocumentModel>();
         mListView = (ListView) view.findViewById(R.id.purshased_list_document);
-        mArrayList.add(new CustomDocumentModel("Théorie des mathématiques.pdf","14:00", "15/08/2020", "", "Accepted"));
 
-        mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
-        mListView.setAdapter(mAdapter);
+        final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased");
+        // Query query = freelancerRef.equalTo("personalInformationModel").equalTo("Student","type");
+        freelancerRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mArrayList.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                    FreelancerModel model = dataSnapshot.getValue(FreelancerModel.class);
+                    System.out.println(dataSnapshot);
+//                    UserModel usrModel= dataSnapshot.getValue(UserModel.class);
+                    String idDoc = (String) dataSnapshot.getValue();
+                    System.out.println("id doc: " + dataSnapshot.getValue());
+                    System.out.println("id doc__: " + idDoc);
+                    DatabaseReference docs = FirebaseDatabase.getInstance().getReference("Documents").child("PaidDoc").child(idDoc);
+                    docs.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            PaidDocModel model = snapshot.getValue(PaidDocModel.class);
+                            System.out.println(snapshot);
+
+                            String date = model.getDateAdded();
+                            String[] parts = date.split(" ");
+                            String date_ = parts[0];
+                            String time_ = parts[1];
+
+                            mArrayList.add(new CustomDocumentModel(model.getTitle(),time_, time_, model.getIdDocument(), date_));
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+                mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
+                mListView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         return view;
     }
   }

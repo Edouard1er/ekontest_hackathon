@@ -22,14 +22,45 @@ public class TransactionModel {
     String idTransaction;
     String orderId;
     String transactionKey;
+    String payer;
+    String buyer;
+    String type;
+
+    public String getPayer() {
+        return payer;
+    }
+
+    public void setPayer(String payer) {
+        this.payer = payer;
+    }
+
+    public String getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(String buyer) {
+        this.buyer = buyer;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     private DatabaseReference databaseReference;
 
     public TransactionModel() {}
 
-    public TransactionModel(String orderId, String transactionKey, String idTransaction) {
+    public TransactionModel(String orderId, String transactionKey, String idTransaction, String payer, String buyer, String type) {
         this.orderId = orderId;
         this.transactionKey = transactionKey;
         this.idTransaction = idTransaction;
+        this.payer = payer;
+        this.buyer = buyer;
+        this.type = type;
     }
 
     public void insertTransaction(TransactionModel model) {
