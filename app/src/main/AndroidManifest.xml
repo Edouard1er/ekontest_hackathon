@@ -35,6 +35,8 @@
         <activity android:name=".UploadPaidDocument" />
         <activity android:name=".MonCash" />
         <activity android:name=".MoncashGateway" />
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
         <activity
             android:name=".ui.NavDrawerActivity"
             android:windowSoftInputMode="stateAlwaysVisible" />

@@ -24,7 +24,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.Query;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -107,21 +111,40 @@ public class FreelancerListFragment extends Fragment {
         //recyclerView.setHasFixedSize(true);
         //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("myFreelancers");
         // Query query = freelancerRef.equalTo("personalInformationModel").equalTo("Student","type");
         freelancerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mFreelancers.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    FreelancerModel model = dataSnapshot.getValue(FreelancerModel.class);
-                    try {
-                        if(model.getPersonalInformationModel().getType().equals("Freelancer")){
-                            mFreelancers.add(model);
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+//                    FreelancerModel model = dataSnapshot.getValue(FreelancerModel.class);
+                    System.out.println(dataSnapshot);
+                    HashMap<String, String> obj = (HashMap<String, String>) snapshot.getValue();
+//                    UserModel usrModel= dataSnapshot.getValue(UserModel.class);
+                    System.out.println("id user: " + dataSnapshot.getValue());
+                        System.out.println("id user__: " + obj.get("idUser"));
+                        DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child(obj.get("idUser"));
+                        user.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                FreelancerModel model = snapshot.getValue(FreelancerModel.class);
+                                System.out.println(snapshot);
+                                                    try {
+                                                        if(model.getPersonalInformationModel().getType().equals("Freelancer")){
+                                                            mFreelancers.add(model);
+                                                            adapter.notifyDataSetChanged();
+                                                        }
+                                                    }catch (Exception e){
+                                                        e.printStackTrace();
+                                                    }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
 
                     //Toast.makeText(getContext(), model.getId()+" "+ model.getPersonalInformationModel().getType(), Toast.LENGTH_SHORT).show();

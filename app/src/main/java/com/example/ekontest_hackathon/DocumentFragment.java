@@ -12,6 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class DocumentFragment extends Fragment {
     ViewPager mViewPager;
@@ -19,6 +26,8 @@ public class DocumentFragment extends Fragment {
     //TabItem mUpload;
     TabItem mAvailable;
     TabItem mPurshase;
+    TabItem mUpload;
+    TabItem mPaid;
     PagerAdapter mPagerAdapter;
     // declaration of the listener
     onFragmentBtnSelected listener;
@@ -43,15 +52,13 @@ public class DocumentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=null;
-        if(user=="student"){
-            view = inflater.inflate(R.layout.fragment_document_student, container,false);
-        }
-        else{
-            view = inflater.inflate(R.layout.fragment_document, container,false);
-        }
+        view = inflater.inflate(R.layout.fragment_document, container,false);
         mViewPager = view.findViewById(R.id.id_viewpager_tab);
         mTabLayout = view.findViewById(R.id.id_tab_layout);
-       // mUpload = view.findViewById(R.id.id_upload_tab);
+
+        mUpload = view.findViewById(R.id.id_upload_free_tab);
+        mPaid = view.findViewById(R.id.id_paid_uploaded_tab);
+
         mPurshase = view.findViewById(R.id.id_purshased_tab);
         mAvailable = view.findViewById(R.id.id_available_tab);
         mPagerAdapter = new PagerAdapter(getChildFragmentManager(),
@@ -70,6 +77,23 @@ public class DocumentFragment extends Fragment {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        FirebaseUser user_ = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(user_.getUid()).child("personalInformationModel");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PersonalInformationModel model = snapshot.getValue(PersonalInformationModel.class);
+                if(model.getType().equals("Student")) {
+                    mTabLayout.removeTabAt(2);
+                    mTabLayout.removeTabAt(2);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         return  view;
     }
 }

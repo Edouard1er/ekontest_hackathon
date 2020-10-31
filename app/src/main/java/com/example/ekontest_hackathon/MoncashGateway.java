@@ -83,8 +83,4 @@ public class MoncashGateway extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }
     }
-
-    public static void  finishActivityy() {
-        MG.finish();
-    }
 }

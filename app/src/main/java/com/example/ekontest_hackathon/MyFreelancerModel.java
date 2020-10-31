@@ -22,15 +22,15 @@ import java.util.Map;
 
 public class MyFreelancerModel implements Parcelable {
     private String freelancerId;
-    DatabaseReference databaseReference;
-    FirebaseUser cUser= FirebaseAuth.getInstance().getCurrentUser();
+    static DatabaseReference databaseReference;
+    static FirebaseUser cUser= FirebaseAuth.getInstance().getCurrentUser();
 
     public MyFreelancerModel(String freelancerId) {
         this.freelancerId = freelancerId;
     }
 
 
-    public void InsertMyFreelancer(String id){
+    public static void InsertMyFreelancer(String id){
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
                 .child(cUser.getUid()).child("myFreelancers");
         //databaseReference.push().setValue(model);
