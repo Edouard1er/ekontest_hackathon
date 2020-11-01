@@ -77,7 +77,11 @@ public class PersonalInformationActivity extends AppCompatActivity {
 
 
             try{
-               setData();
+                if(getIntent().getStringExtra("idUser")!=null){
+                    next.setVisibility(View.GONE);
+
+                    setData();
+                }
             }catch (Exception e){
                 e.printStackTrace();
                 next.setVisibility(View.VISIBLE);

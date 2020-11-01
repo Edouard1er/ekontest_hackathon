@@ -1,16 +1,23 @@
 package com.example.ekontest_hackathon;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 
 public class MoncashGateway extends AppCompatActivity {
@@ -30,6 +37,8 @@ public class MoncashGateway extends AppCompatActivity {
         this.setProgressBarVisibility(true);
 
         MG = this;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         webview = findViewById(R.id.webview);
         progressBar = findViewById(R.id.progressBar);
@@ -42,6 +51,25 @@ public class MoncashGateway extends AppCompatActivity {
         webview.getSettings().setPluginState(WebSettings.PluginState.ON);
         webview.setWebViewClient(new WebViewClient());
         webview.loadUrl(url);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.payment_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.invoice_payment:
+                Toast.makeText(getApplicationContext(), "payment selected", Toast.LENGTH_LONG).show();
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

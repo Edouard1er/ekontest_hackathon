@@ -83,18 +83,17 @@ public class UserModel implements Parcelable {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
     }
 
-    public void InsertUsers(final PersonalInformationModel pModel,
-                            final AcademicInformationModel aModel){
+    public void InsertUsers(final PersonalInformationModel pModel){
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user.getUid()!= null) {
-            UserModel model = new UserModel(user.getUid(), pModel, aModel);
-            databaseReference.child(user.getUid()).setValue(model);
+            databaseReference.child(user.getUid()).child("personalInformationModel").setValue(pModel);
+            databaseReference.child(user.getUid()).child("id").setValue(user.getUid());
         }else{
             //Toast.makeText(, "", Toast.LENGTH_SHORT).show();
         }
     }
-    public void InsertUsers(final PersonalInformationModel pModel,
-                            final List<AcademicInformationModel> aModel){
+    /*public void InsertUsers(final PersonalInformationModel pModel){
 
         switch (pModel.getType()){
             case "Student":
@@ -112,7 +111,7 @@ public class UserModel implements Parcelable {
             default:
                 break;
         }
-    }
+    }*/
 
 
     public void getUserNameAndImage(String id, final ImageView imageUser, final TextView name,final  Context context){
