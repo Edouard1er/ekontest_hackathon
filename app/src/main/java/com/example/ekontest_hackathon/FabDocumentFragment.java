@@ -102,7 +102,7 @@ public class FabDocumentFragment extends Fragment implements PopupMenu.OnMenuIte
                 if(model.getType().equals("Freelancer")) {
                     popupMenu.inflate(R.menu.menu_fab_document_freelancer);
                 }
-                if(model.getType().equals("Teacher")) {
+                if(model.getType().equals("Professor")) {
                     popupMenu.inflate(R.menu.menu_fab_document);
                 }
                 popupMenu.show();

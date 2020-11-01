@@ -21,17 +21,10 @@
 
     </SearchView>
 
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/student_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/student_gridview"
-        android:numColumns="2"
-        android:layout_margin="10dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        >
-    </GridView>
-
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

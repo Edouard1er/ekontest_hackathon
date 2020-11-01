@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/bottom_home"
-        android:icon="@drawable/home_blue"
+        android:icon="@drawable/homeb"
         android:title="Home" />
     <item
         android:id="@+id/bottom_freelancer"
@@ -11,7 +11,7 @@
         android:title="Relations" />
     <item
         android:id="@+id/bottom_message"
-        android:icon="@drawable/message"
+        android:icon="@drawable/speechbubble"
         android:title="Message" />
     <item
         android:id="@+id/bottom_document"
@@ -19,6 +19,6 @@
         android:title="Documents" />
     <item
         android:id="@+id/bottom_search"
-        android:icon="@drawable/search_icon"
+        android:icon="@drawable/search_"
         android:title="Search" />
 </menu>

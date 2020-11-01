@@ -63,7 +63,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="9:00AM - 12:30PM"
+                                android:text="12/08/2020 - 12/10/2020"
                                 android:textColor="#000000"
                                 android:textStyle="bold" />
 
@@ -73,7 +73,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:fontFamily="@font/calibri"
-                                android:text="Expo bus service"
+                                android:text="Edouard Chevenslove"
                                 android:textColor="#4b4b4b"
                                 android:textStyle="bold" />
 
@@ -81,7 +81,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="A/C Sleeper (2+2)"
+                                android:text="Mathematiques"
                                 android:textColor="#8a8a8a" />
 
                         </LinearLayout>
@@ -98,9 +98,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
                                 android:gravity="end"
-                                android:text="$600.00"
+                                android:text="HTG 3600.00"
                                 android:textAlignment="textEnd"
-                                android:textColor="#f5a622"
+                                android:textColor="@color/orange"
                                 android:textSize="24sp"
                                 android:textStyle="bold" />
 
@@ -111,7 +111,7 @@
                                 android:layout_marginBottom="4dp"
                                 android:fontFamily="@font/calibri"
                                 android:gravity="end"
-                                android:text="3.30 Hour"
+                                android:text="HTG 330 /Hour"
                                 android:textAlignment="textEnd"
                                 android:textColor="#b3b3b3" />
                         </LinearLayout>
@@ -146,27 +146,26 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="10:00AM - 2:00PM"
-                                android:textStyle="bold"
+                                android:text="12/08/2020 - 02/10/2020"
                                 android:textColor="#000000"
-                                />
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/calibri"
-                                android:text="Red Bus service"
-                                android:textStyle="bold"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/calibri"
+                                android:text="Osson Sergio"
                                 android:textColor="#4b4b4b"
-                                />
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="A/C Sleeper (2+2)"
-                                android:textColor="#8a8a8a"
-                                />
+                                android:text="Physiques"
+                                android:textColor="#8a8a8a" />
 
                         </LinearLayout>
 
@@ -176,28 +175,28 @@
                             android:layout_weight="40"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="$560.00"
-                                android:textAlignment="textEnd"
-                                android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="#f5a622"
                                 android:gravity="end"
-                                />
+                                android:text="HTG 2560.00"
+                                android:textAlignment="textEnd"
+                                android:textColor="#f37a21"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/calibri"
-                                android:text="4 Hour"
-                                android:textAlignment="textEnd"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
-                                android:textColor="#b3b3b3"
+                                android:fontFamily="@font/calibri"
                                 android:gravity="end"
-                                />
+                                android:text="HTG 330 /Hour"
+                                android:textAlignment="textEnd"
+                                android:textColor="#b3b3b3" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -230,27 +229,26 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="12:15PM - 3:30PM"
-                                android:textStyle="bold"
+                                android:text="12/08/2020 - 17/09/2020"
                                 android:textColor="#000000"
-                                />
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/calibri"
-                                android:text="Start service"
-                                android:textStyle="bold"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/calibri"
+                                android:text="Dorceus Amos"
                                 android:textColor="#4b4b4b"
-                                />
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="A/C Sleeper (2+2)"
-                                android:textColor="#8a8a8a"
-                                />
+                                android:text="Chimie"
+                                android:textColor="#8a8a8a" />
 
                         </LinearLayout>
 
@@ -260,28 +258,28 @@
                             android:layout_weight="40"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="$450.00"
-                                android:textAlignment="textEnd"
-                                android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="#f5a622"
                                 android:gravity="end"
-                                />
+                                android:text="HTG 2450.00"
+                                android:textAlignment="textEnd"
+                                android:textColor="#f37a21"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/calibri"
-                                android:text="3.15 Hour"
-                                android:textAlignment="textEnd"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
-                                android:textColor="#b3b3b3"
+                                android:fontFamily="@font/calibri"
                                 android:gravity="end"
-                                />
+                                android:text="HTG 315 / Hour"
+                                android:textAlignment="textEnd"
+                                android:textColor="#b3b3b3" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -314,27 +312,26 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="3:00PM - 5:45PM"
-                                android:textStyle="bold"
+                                android:text="07/09/2020 - 12/10/2020"
                                 android:textColor="#000000"
-                                />
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/calibri"
-                                android:text="Travelo service"
-                                android:textStyle="bold"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/calibri"
+                                android:text="Romulus Ronick"
                                 android:textColor="#4b4b4b"
-                                />
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="A/C Sleeper (2+2)"
-                                android:textColor="#8a8a8a"
-                                />
+                                android:text="Dissertation"
+                                android:textColor="#8a8a8a" />
 
                         </LinearLayout>
 
@@ -344,27 +341,28 @@
                             android:layout_weight="40"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="$375.00"
+                                android:gravity="end"
+                                android:text="HTG 4375.00"
                                 android:textAlignment="textEnd"
+                                android:textColor="#f37a21"
                                 android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="#f5a622"
-                                android:gravity="end" />
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/calibri"
-                                android:text="2.45 Hour"
-                                android:textAlignment="textEnd"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
-                                android:textColor="#b3b3b3"
+                                android:fontFamily="@font/calibri"
                                 android:gravity="end"
-                                />
+                                android:text="HTG 245 / Hour"
+                                android:textAlignment="textEnd"
+                                android:textColor="#b3b3b3" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -397,27 +395,26 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="7:00PM - 10:00PM"
-                                android:textStyle="bold"
+                                android:text="12/06/2020 - 12/11/2020"
                                 android:textColor="#000000"
-                                />
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/calibri"
-                                android:text="Shuttle bus service"
-                                android:textStyle="bold"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/calibri"
+                                android:text="Mizaine Valens"
                                 android:textColor="#4b4b4b"
-                                />
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="A/C Sleeper (2+2)"
-                                android:textColor="#8a8a8a"
-                                />
+                                android:text="Francais"
+                                android:textColor="#8a8a8a" />
 
                         </LinearLayout>
 
@@ -427,26 +424,28 @@
                             android:layout_weight="40"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/calibri"
-                                android:text="$700.00"
+                                android:gravity="end"
+                                android:text="HTG 6700.00"
                                 android:textAlignment="textEnd"
+                                android:textColor="#f37a21"
                                 android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="#f5a622"
-                                android:gravity="end" />
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/calibri"
-                                android:text="3.00 Hour"
-                                android:textAlignment="textEnd"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
-                                android:textColor="#b3b3b3"
-                                android:gravity="end" />
+                                android:fontFamily="@font/calibri"
+                                android:gravity="end"
+                                android:text="HTG 500 / Hour "
+                                android:textAlignment="textEnd"
+                                android:textColor="#b3b3b3" />
                         </LinearLayout>
 
                     </LinearLayout>
