@@ -1,4 +1,4 @@
-package com.example.ekontest_hackathon.ui.home;
+package com.example.ekontest_hackathon;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.example.ekontest_hackathon.CustomHomePageModel;
 import com.example.ekontest_hackathon.DocumentFragment;
 import com.example.ekontest_hackathon.FreelancerListFragment;
 import com.example.ekontest_hackathon.FreelancerListOnClickFragment;
@@ -25,10 +27,14 @@ import com.example.ekontest_hackathon.SearchFragment;
 import com.example.ekontest_hackathon.ui.NavDrawerActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 
 public class HomeFragment extends Fragment implements FreelancerListFragment.freelancerInterface {
     BottomNavigationView mBottomNavigationView;
     onItemBottomMenuSelected listener;
+    ListView homePageListView;
+    ArrayList<CustomHomePageModel> mArrayList;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -47,6 +53,7 @@ public class HomeFragment extends Fragment implements FreelancerListFragment.fre
         View view=inflater.inflate(R.layout.fragment_home, container, false);
         // Initialize and assign variable
         mBottomNavigationView= view.findViewById(R.id.bottom_navigation);
+
         // set Home selected
 
         // perfom ItemSelectedListener
