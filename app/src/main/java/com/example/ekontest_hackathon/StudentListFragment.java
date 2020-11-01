@@ -1,15 +1,19 @@
 package com.example.ekontest_hackathon;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,88 +22,109 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.Query;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StudentListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class StudentListFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    GridView mGridView;
+    StudentListAdapter adapter;
+    SearchView searchStudent;
+    // Important when you have a listener with an interface
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public StudentListFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StudentListFragment newInstance(String param1, String param2) {
-        StudentListFragment fragment = new StudentListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
-    private DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
-
-    private UserAdapter adapter;
-    List<UserModel> mUsers=new ArrayList<>();
-    RecyclerView recyclerView;
-    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-    @Override
+    List<StudentModel> mStudents;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_list, container, false);
+        View view =inflater.inflate(R.layout.fragment_student_list, container, false);
+        searchStudent = (SearchView) view.findViewById(R.id.search_student);
+
+
+        mStudents=new ArrayList<>();
+        setDisplayUsers(view);
+        searchStudent.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                // Log.e("Main"," data search: "+newText);
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        return  view;
     }
 
+
     private void setDisplayUsers(View v){
+        mGridView = v.findViewById(R.id.student_gridview);
 
-        recyclerView = v.findViewById(R.id.listDisplayUser);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        userRef.addValueEventListener(new ValueEventListener() {
+        final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("Students");
+        // Query query = freelancerRef.equalTo("personalInformationModel").equalTo("Student","type");
+        freelancerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mUsers.clear();
+                mStudents.clear();
+
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    UserModel model = dataSnapshot.getValue(UserModel.class);
-                    if(!model.getId().equals(user.getUid())){
-                        mUsers.add(model);
-                    }
+//
+                    DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child(dataSnapshot.getKey());
+                    user.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            StudentModel model = snapshot.getValue(StudentModel.class);
+                            System.out.println(snapshot);
+                           // Toast.makeText(getContext(), "Inside Display user:"+model.getPersonalInformationModel().getLastname(), Toast.LENGTH_SHORT).show();
+
+                            try {
+
+                                    mStudents.add(model);
+
+                                Toast.makeText(getContext(), model.getId(), Toast.LENGTH_SHORT).show();
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            adapter= new StudentListAdapter(getContext(), mStudents);
+                            adapter.notifyDataSetChanged();
+                            mGridView.setAdapter(adapter);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                    //Toast.makeText(getContext(), model.getId()+" "+ model.getPersonalInformationModel().getType(), Toast.LENGTH_SHORT).show();
+
+
                 }
-                adapter= new UserAdapter(getContext(), mUsers,false);
-                recyclerView.setAdapter(adapter);
+
             }
 
             @Override

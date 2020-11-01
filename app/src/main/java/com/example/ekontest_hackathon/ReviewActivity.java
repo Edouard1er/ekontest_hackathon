@@ -57,7 +57,7 @@ public class ReviewActivity extends AppCompatActivity {
     String mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount,
             mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd;
     ImageView imagePhoto;
-    List<AcademicInformationModel> academicList;
+    List<AcademicInformationModel> academiList;
     List<PersonalInformationModel> personelList;
     ProfilModel pofilModel;
     ListView mListView;
@@ -82,7 +82,7 @@ public class ReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_review);
 
 
-        academicList = new ArrayList<>();
+       // academicList = new ArrayList<>();
         personelList= new ArrayList<>();
       //  profilModel= new ProfilModel(0,0);
         mStorageRef= FirebaseStorage.getInstance().getReference();
@@ -96,23 +96,6 @@ public class ReviewActivity extends AppCompatActivity {
         phone = (TextView) findViewById(R.id.textViewPhone);
         username = (TextView) findViewById(R.id.textViewUsername);
         account = (TextView) findViewById(R.id.textViewAccountType);
-
-
-       /* mNom=getIntent().getStringExtra("nom");
-        mPrenom=getIntent().getStringExtra("prenom");
-        mSexe=getIntent().getStringExtra("sexe");
-        mEmail=getIntent().getStringExtra("email");
-        mPhone=getIntent().getStringExtra("phone");
-        mUsername=getIntent().getStringExtra("username");
-        mAccount=getIntent().getStringExtra("type");
-
-        mLevel=getIntent().getStringExtra("level");
-        mInstitution=getIntent().getStringExtra("institution");
-        mFaculty=getIntent().getStringExtra("faculty");
-        mDegree=getIntent().getStringExtra("degree");
-        mStart=getIntent().getStringExtra("start");
-        mEnd=getIntent().getStringExtra("end");*/
-
 
         personelList=getIntent().getParcelableArrayListExtra("personnel");
 
@@ -131,7 +114,7 @@ public class ReviewActivity extends AppCompatActivity {
         //Get array list academic
         if(getIntent().getStringExtra("type").equals("Student")) {
         }
-        if(getIntent().getStringExtra("type").equals("Freelancer") ||
+        /*if(getIntent().getStringExtra("type").equals("Freelancer") ||
                 getIntent().getStringExtra("type").equals("Professor") ) {
             academicList=getIntent().getParcelableArrayListExtra("academic");
             recyclerView= findViewById(R.id.list_info_academic);
@@ -140,7 +123,7 @@ public class ReviewActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             adapter=new AcademicInformationAdapter(this, academicList,false);
             recyclerView.setAdapter(adapter);
-        }
+        }*/
 
 
         //Setting value
@@ -154,15 +137,8 @@ public class ReviewActivity extends AppCompatActivity {
 
         Toast.makeText(this, "The name of the array personnel :" + personelList.get(0).getLastname(), Toast.LENGTH_SHORT).show();
 
-       /* level = (TextView) findViewById(R.id.textViewLevel);
-        institution = (TextView) findViewById(R.id.textViewInstitution);
-        faculty = (TextView) findViewById(R.id.textViewFaculty);
-        degree = (TextView) findViewById(R.id.textViewDegree);
-        start = (TextView) findViewById(R.id.textViewStart);
-        end = (TextView) findViewById(R.id.textViewEnd);
 
-       */
-        try {
+       /* try {
 
             if(getIntent().hasExtra("photo")) {
                 Glide.with(imagePhoto)
@@ -181,6 +157,18 @@ public class ReviewActivity extends AppCompatActivity {
             }
         } catch (NullPointerException e) {
             e.getStackTrace();
+        }*/
+        
+        try{
+            if(user.getPhotoUrl()!= null){
+                uri = Uri.parse(user.getPhotoUrl().toString());
+                Glide.with(imagePhoto)
+                        .load(getIntent().getStringExtra("photo"))
+                        .into(imagePhoto);
+            }
+
+        }catch (Exception e){
+
         }
        /* try {
             if(getIntent().hasExtra("level"))
@@ -281,7 +269,7 @@ public class ReviewActivity extends AppCompatActivity {
               //  AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
                 UserModel userModel = new UserModel();
                 //userModel.InsertUsers(pInfo,aInfo);
-                userModel.InsertUsers(pInfo,academicList);
+                userModel.InsertUsers(pInfo);
                 goToNavDrawerActivity();
 
             }else{
@@ -301,7 +289,7 @@ public class ReviewActivity extends AppCompatActivity {
 
 
                                                 UserModel userModel = new UserModel();
-                                                userModel.InsertUsers(pInfo,academicList);
+                                                userModel.InsertUsers(pInfo);
 
                                                 goToNavDrawerActivity();
                                             }
@@ -339,7 +327,7 @@ public class ReviewActivity extends AppCompatActivity {
             PersonalInformationModel pInfo= toSaveUserInformation("","",mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
 
             UserModel userModel = new UserModel();
-            userModel.InsertUsers(pInfo,academicList);
+            userModel.InsertUsers(pInfo);
 
             goToNavDrawerActivity();
         }

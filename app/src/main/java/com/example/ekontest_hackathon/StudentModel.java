@@ -11,6 +11,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 public class StudentModel extends UserModel implements Parcelable {
+    private String id;
+    private PersonalInformationModel personalInformationModel;
+    private AcademicInformationModel academicInformationModel;
 
 
 
@@ -34,6 +37,26 @@ public class StudentModel extends UserModel implements Parcelable {
             //Toast.makeText(, "", Toast.LENGTH_SHORT).show();
         }
     }
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public PersonalInformationModel getPersonalInformationModel() {
+        return personalInformationModel;
+    }
+
+    @Override
+    public void setPersonalInformationModel(PersonalInformationModel personalInformationModel) {
+        this.personalInformationModel = personalInformationModel;
+    }
+
     @Override
     public int describeContents() {
         return 0;

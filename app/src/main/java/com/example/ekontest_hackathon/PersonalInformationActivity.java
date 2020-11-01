@@ -183,6 +183,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
         }
     }
     public void setData(){
+        try {
             models=getIntent().getParcelableArrayListExtra("personnel");
             nom.setText(models.get(0).getFirstname());
             prenom.setText(models.get(0).getLastname());
@@ -192,6 +193,10 @@ public class PersonalInformationActivity extends AppCompatActivity {
            /* RadioButton radioButton = (RadioButton)radioGroup.findViewById(1);
             radioButton.setSaveEnabled(true);            */
             save.setVisibility(View.VISIBLE);
+        }catch (Exception e){
+
+        }
+
 
 
 

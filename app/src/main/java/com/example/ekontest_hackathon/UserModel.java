@@ -93,8 +93,7 @@ public class UserModel implements Parcelable {
             //Toast.makeText(, "", Toast.LENGTH_SHORT).show();
         }
     }
-    public void InsertUsers(final PersonalInformationModel pModel,
-                            final List<AcademicInformationModel> aModel){
+    public void InsertUsers(final PersonalInformationModel pModel){
 
         switch (pModel.getType()){
             case "Student":
@@ -113,7 +112,6 @@ public class UserModel implements Parcelable {
                 break;
         }
     }
-
 
     public void getUserNameAndImage(String id, final ImageView imageUser, final TextView name,final  Context context){
         DatabaseReference avisRef = FirebaseDatabase.getInstance().getReference("Users")

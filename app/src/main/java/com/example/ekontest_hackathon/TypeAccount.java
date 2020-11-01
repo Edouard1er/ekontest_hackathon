@@ -64,7 +64,7 @@ public class TypeAccount extends AppCompatActivity {
         String type = (String) radioButton.getText();
         //open new activity based on the choice
         Intent intent = null;
-        if(type.compareTo("Student") == 0) {
+        /*if(type.compareTo("Student") == 0) {
             intent = new Intent(getApplicationContext(), ImageUploadActivity.class);
         }
         if(type.compareTo("Freelancer") == 0) {
@@ -72,7 +72,9 @@ public class TypeAccount extends AppCompatActivity {
         }
         if(type.compareTo("Professor") == 0) {
             intent = new Intent(getApplicationContext(), AcademicActivity.class);
-        }
+        }*/
+        intent = new Intent(getApplicationContext(), ReviewActivity.class);
+
         personelList=getIntent().getParcelableArrayListExtra("personnel");
         PersonalInformationModel personalInformationModel = new PersonalInformationModel(
                 personelList.get(0).getLastname(),

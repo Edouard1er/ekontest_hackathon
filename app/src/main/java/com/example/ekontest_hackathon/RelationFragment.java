@@ -61,8 +61,13 @@ public class RelationFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 PersonalInformationModel model = snapshot.getValue(PersonalInformationModel.class);
-                if(model.getType().equals("Student")) {
-                    mTabLayout.removeTabAt(1);
+                try{
+                    if(model.getType().equals("Student")) {
+                        mTabLayout.removeTabAt(1);
+                    }
+
+                }catch (Exception e){
+
                 }
             }
 
