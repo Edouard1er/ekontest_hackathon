@@ -35,7 +35,7 @@ import java.util.List;
 public class FreelancerListFragment extends Fragment {
 
     freelancerInterface listener;
-    ArrayList<CustomFreelancerModel>mArrayList;
+    ArrayList<CustomFreelancerModel> mArrayList;
     GridView mGridView;
     FreelancerListAdapter adapter;
     SearchView searchFreelancer;
@@ -106,7 +106,6 @@ public class FreelancerListFragment extends Fragment {
     }
 
     private void setDisplayUsers(View v){
-
         mGridView = v.findViewById(R.id.freelancer_gridview);
         //recyclerView.setHasFixedSize(true);
         //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -118,42 +117,32 @@ public class FreelancerListFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mFreelancers.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                    FreelancerModel model = dataSnapshot.getValue(FreelancerModel.class);
                     System.out.println(dataSnapshot);
                     HashMap<String, String> obj = (HashMap<String, String>) snapshot.getValue();
-//                    UserModel usrModel= dataSnapshot.getValue(UserModel.class);
-                   // System.out.println("id user: " + dataSnapshot.getValue());
-                       // System.out.println("id user__: " + obj.get("idUser"));
-                        DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child((String) dataSnapshot.getValue());
-                        user.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                FreelancerModel model = snapshot.getValue(FreelancerModel.class);
-                                System.out.println(snapshot);
-                                                    try {
-                                                        if(model.getPersonalInformationModel().getType().equals("Freelancer")){
-                                                            mFreelancers.add(model);
-                                                            adapter.notifyDataSetChanged();
-                                                        }
-                                                        if(model.getPersonalInformationModel().getType().equals("Professor")){
-                                                            mFreelancers.add(model);
-                                                            adapter.notifyDataSetChanged();
-                                                        }
-                                                    }catch (Exception e){
-                                                        e.printStackTrace();
-                                                    }
+                    System.out.println("id user__: " + obj);
+                    DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child( dataSnapshot.getKey());
+                    user.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            FreelancerModel model = snapshot.getValue(FreelancerModel.class);
+                            System.out.println(snapshot);
+                            try {
+                                if(model.getPersonalInformationModel().getType().equals("Freelancer")){
+                                    mFreelancers.add(model);
+                                    adapter.notifyDataSetChanged();
+                                }
+                                if(model.getPersonalInformationModel().getType().equals("Professor")){
+                                    mFreelancers.add(model);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
                             }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-
-                    //Toast.makeText(getContext(), model.getId()+" "+ model.getPersonalInformationModel().getType(), Toast.LENGTH_SHORT).show();
-
-
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
                 }
                 adapter= new FreelancerListAdapter(getContext(), mFreelancers);
                 mGridView.setAdapter(adapter);
@@ -164,6 +153,5 @@ public class FreelancerListFragment extends Fragment {
 
             }
         });
-
     }
 }

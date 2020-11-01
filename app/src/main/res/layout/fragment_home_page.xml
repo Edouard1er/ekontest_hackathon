@@ -100,7 +100,7 @@
                                 android:gravity="end"
                                 android:text="HTG 3600.00"
                                 android:textAlignment="textEnd"
-                                android:textColor="#f37a21"
+                                android:textColor="@color/orange"
                                 android:textSize="24sp"
                                 android:textStyle="bold" />
 

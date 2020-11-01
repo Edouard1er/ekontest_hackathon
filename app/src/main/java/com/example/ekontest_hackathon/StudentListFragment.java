@@ -68,35 +68,47 @@ public class StudentListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
-    private DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
-
+    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+    private DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("Students");
     private UserAdapter adapter;
     List<UserModel> mUsers=new ArrayList<>();
     RecyclerView recyclerView;
-    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_list, container, false);
+        setDisplayUsers(view);
+        return view;
     }
 
     private void setDisplayUsers(View v){
 
-        recyclerView = v.findViewById(R.id.listDisplayUser);
+        recyclerView = v.findViewById(R.id.student_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        System.out.println("Inside set display");
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUsers.clear();
+                System.out.println("Snapshot: " + snapshot);
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    UserModel model = dataSnapshot.getValue(UserModel.class);
-                    if(!model.getId().equals(user.getUid())){
-                        mUsers.add(model);
-                    }
+                    String stId = dataSnapshot.getKey();
+                    FirebaseDatabase.getInstance().getReference("Users").child(stId).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            System.out.println("Student user: " + snapshot);
+                            UserModel u = snapshot.getValue(UserModel.class);
+                            mUsers.add(u);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
                 adapter= new UserAdapter(getContext(), mUsers,false);
                 recyclerView.setAdapter(adapter);
@@ -107,6 +119,5 @@ public class StudentListFragment extends Fragment {
 
             }
         });
-
     }
 }
