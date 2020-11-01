@@ -94,8 +94,8 @@ public class TransactionModel {
                                 if(i[0] == 2) {
 
                                 }
-                                MonCash.MC.finish();
-                                MonCash.MC.startActivity(MonCash.MC.getIntent());
+//                                MonCash.MC.finish();
+//                                MonCash.MC.startActivity(MonCash.MC.getIntent());
                                 MonCash.successPaymentMessage();
                                 i[0] += 1;
                             } catch (MonCashRestException e) {

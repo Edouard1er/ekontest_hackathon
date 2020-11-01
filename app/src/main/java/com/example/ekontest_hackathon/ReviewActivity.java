@@ -57,7 +57,7 @@ public class ReviewActivity extends AppCompatActivity {
     String mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount,
             mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd;
     ImageView imagePhoto;
-    List<AcademicInformationModel> academicList;
+    List<AcademicInformationModel> cademicList;
     List<PersonalInformationModel> personelList;
     ProfilModel pofilModel;
     ListView mListView;
@@ -82,7 +82,7 @@ public class ReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_review);
 
 
-        academicList = new ArrayList<>();
+        //academicList = new ArrayList<>();
         personelList= new ArrayList<>();
       //  profilModel= new ProfilModel(0,0);
         mStorageRef= FirebaseStorage.getInstance().getReference();
@@ -133,13 +133,13 @@ public class ReviewActivity extends AppCompatActivity {
         }
         if(getIntent().getStringExtra("type").equals("Freelancer") ||
                 getIntent().getStringExtra("type").equals("Professor") ) {
-            academicList=getIntent().getParcelableArrayListExtra("academic");
+           /* academicList=getIntent().getParcelableArrayListExtra("academic");
             recyclerView= findViewById(R.id.list_info_academic);
 
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             adapter=new AcademicInformationAdapter(this, academicList,false);
-            recyclerView.setAdapter(adapter);
+            recyclerView.setAdapter(adapter);*/
         }
 
 
@@ -151,6 +151,7 @@ public class ReviewActivity extends AppCompatActivity {
         mPhone=personelList.get(0).getPhone();
         mUsername=personelList.get(0).getUsername();
         mAccount=getIntent().getStringExtra("type");
+        account.setText(mAccount);
 
         Toast.makeText(this, "The name of the array personnel :" + personelList.get(0).getLastname(), Toast.LENGTH_SHORT).show();
 
@@ -163,21 +164,11 @@ public class ReviewActivity extends AppCompatActivity {
 
        */
         try {
-
-            if(getIntent().hasExtra("photo")) {
+            if(user.getPhotoUrl()!= null){
+                uri = Uri.parse(user.getPhotoUrl().toString());
                 Glide.with(imagePhoto)
-                        .load(getIntent().getStringExtra("photo"))
+                        .load(user.getPhotoUrl())
                         .into(imagePhoto);
-            }
-            if(getIntent().getStringExtra("photo")!= null) {
-                uri = Uri.parse(getIntent().getStringExtra("photo"));
-            }else{
-                if(user.getPhotoUrl()!= null){
-                    uri = Uri.parse(user.getPhotoUrl().toString());
-                    Glide.with(imagePhoto)
-                            .load(getIntent().getStringExtra("photo"))
-                            .into(imagePhoto);
-                }
             }
         } catch (NullPointerException e) {
             e.getStackTrace();
@@ -281,7 +272,7 @@ public class ReviewActivity extends AppCompatActivity {
               //  AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
                 UserModel userModel = new UserModel();
                 //userModel.InsertUsers(pInfo,aInfo);
-                userModel.InsertUsers(pInfo,academicList);
+                userModel.InsertUsers(pInfo);
                 goToNavDrawerActivity();
 
             }else{
@@ -301,7 +292,7 @@ public class ReviewActivity extends AppCompatActivity {
 
 
                                                 UserModel userModel = new UserModel();
-                                                userModel.InsertUsers(pInfo,academicList);
+                                                userModel.InsertUsers(pInfo);
 
                                                 goToNavDrawerActivity();
                                             }
@@ -339,7 +330,7 @@ public class ReviewActivity extends AppCompatActivity {
             PersonalInformationModel pInfo= toSaveUserInformation("","",mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
 
             UserModel userModel = new UserModel();
-            userModel.InsertUsers(pInfo,academicList);
+            userModel.InsertUsers(pInfo);
 
             goToNavDrawerActivity();
         }

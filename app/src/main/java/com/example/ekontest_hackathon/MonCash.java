@@ -205,13 +205,22 @@ public class MonCash extends AppCompatActivity {
         }
 
         if (transaction.equals("document")) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference docs = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased");
             docs.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    boolean exist = false;
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        String doc = (String) snapshot.getValue();
+                        System.out.println("doc purchased: ");
+                        System.out.println(snapshot);
+                        HashMap<String, String> doc = (HashMap<String, String>) snapshot.getValue();
+                        if(idDocument.equals(doc.get(0))) {
+                            exist = true;
+                        }
+                    }
+                    if(!exist) {
+                        FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased").push().setValue(idDocument);
                     }
                 }
 
@@ -220,7 +229,6 @@ public class MonCash extends AppCompatActivity {
 
                 }
             });
-            FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased").push().setValue(idDocument);
         }
     }
 }

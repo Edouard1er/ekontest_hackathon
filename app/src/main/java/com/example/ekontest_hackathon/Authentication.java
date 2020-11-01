@@ -73,7 +73,7 @@ public class Authentication extends AppCompatActivity {
                 user =FirebaseAuth.getInstance().getCurrentUser();
                 if(user!=null){
 
-                    startActivity(new Intent(getApplicationContext(),NavDrawerActivity.class));
+                    startActivity(new Intent(getApplicationContext(),PersonalInformationActivity.class));
                     finish();
                 }else{
                     //Sign in Intent
