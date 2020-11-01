@@ -195,7 +195,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 //                System.out.println(snapshot);
                 PersonalInformationModel connectedUser = snapshot.getValue(PersonalInformationModel.class);
-                if(connectedUser.getType().equals("Freelancer") || connectedUser.getType().equals("Teacher")) {
+                if(connectedUser.getType().equals("Freelancer") || connectedUser.getType().equals("Professor")) {
                     inflater.inflate(R.menu.message_menu, menu);
                 }
             }

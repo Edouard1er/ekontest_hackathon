@@ -25,6 +25,7 @@ public class TransactionModel {
     String payer;
     String buyer;
     String type;
+    private ValueEventListener mListner;
 
     public String getPayer() {
         return payer;
@@ -71,8 +72,8 @@ public class TransactionModel {
         model.setIdTransaction(key);
         databaseReference.child(key).setValue(model);
 
-        DatabaseReference transaction = FirebaseDatabase.getInstance().getReference("TransactionModel").child(key);
-        transaction.addValueEventListener(new ValueEventListener() {
+        final DatabaseReference transaction = FirebaseDatabase.getInstance().getReference("TransactionModel").child(key);
+        mListner = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 final int[] i = {1};
@@ -85,24 +86,11 @@ public class TransactionModel {
                     System.out.println("First creation");
                 } else {
                     System.out.println("Should be closed");
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            MoncashGateway.MG.finish();
-                            try {
-                                if(i[0] == 2) {
-
-                                }
-//                                MonCash.MC.finish();
-//                                MonCash.MC.startActivity(MonCash.MC.getIntent());
-                                MonCash.successPaymentMessage();
-                                i[0] += 1;
-                            } catch (MonCashRestException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, 1000);
+                    try {
+                        MonCash.successPaymentMessage(tModel.getType());
+                    } catch (MonCashRestException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -110,7 +98,9 @@ public class TransactionModel {
             public void onCancelled(@NonNull DatabaseError error) {
                 System.out.println("Cancelled listenning...");
             }
-        });
+        };
+        transaction.addValueEventListener(mListner);
+
     }
 
     public String getOrderId() {

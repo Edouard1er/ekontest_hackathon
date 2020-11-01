@@ -38,6 +38,7 @@ public class MonCash extends AppCompatActivity {
     static  String idDocument;
     String receiver;
     String sender;
+    static ValueEventListener mListener;
     MonCashPayment payment;
     static public ProgressBar progressBar;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -183,9 +184,11 @@ public class MonCash extends AppCompatActivity {
         }, 500);
     }
 
-    public static void  successPaymentMessage() throws MonCashRestException {
+    public static void  successPaymentMessage(String transaction) throws MonCashRestException {
         submitButton.setVisibility(View.GONE);
         textViewSuccess.setVisibility(View.VISIBLE);
+        System.out.println("Inside success payment...");
+        System.out.println("Transaction type is: " + transaction);
         if(transaction.equals("freelance")) {
             FirebaseDatabase.getInstance().getReference("Invoice").child(invoiceId).child("status").setValue("Paid");
             DatabaseReference db = FirebaseDatabase.getInstance().getReference("Invoice").child(invoiceId);
@@ -205,30 +208,10 @@ public class MonCash extends AppCompatActivity {
         }
 
         if (transaction.equals("document")) {
+            System.out.println("We are inside type : " + transaction + " of transaction");
             final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            DatabaseReference docs = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased");
-            docs.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    boolean exist = false;
-                    for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        System.out.println("doc purchased: ");
-                        System.out.println(snapshot);
-                        HashMap<String, String> doc = (HashMap<String, String>) snapshot.getValue();
-                        if(idDocument.equals(doc.get(0))) {
-                            exist = true;
-                        }
-                    }
-                    if(!exist) {
-                        FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased").push().setValue(idDocument);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+            System.out.println("Current user: " + user.getUid());
+            FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased").push().setValue(idDocument);
         }
     }
 }

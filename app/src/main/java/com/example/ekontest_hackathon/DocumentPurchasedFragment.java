@@ -78,8 +78,10 @@ public class DocumentPurchasedFragment extends Fragment {
                         }
                     });
                 }
-                mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
-                mListView.setAdapter(mAdapter);
+                if(getActivity()!=null) {
+                    mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
+                    mListView.setAdapter(mAdapter);
+                }
             }
 
             @Override
