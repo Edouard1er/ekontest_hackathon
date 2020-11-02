@@ -20,7 +20,7 @@ public class AvisFreelancerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_avis_freelancer);
         avisFreelancerFragment=new AvisFreelancerFragment();
-        sendAvis = findViewById(R.id.send_avis_freelancer);
+        /*sendAvis = findViewById(R.id.send_avis_freelancer);
         sendAvis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +41,7 @@ public class AvisFreelancerActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
     }
     public Bundle getFreelancerId(){
 

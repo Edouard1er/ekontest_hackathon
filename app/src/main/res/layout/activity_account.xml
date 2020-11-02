@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".AccountActivity">
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -260,6 +261,7 @@
                         android:text="-" />
                 </LinearLayout>
 
+                <View style="@style/Divider"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -386,7 +388,20 @@
                             android:layout_gravity="end"
                             android:textAlignment="textEnd"
                             android:layout_marginRight="10dp"
-                            android:onClick="addAcademicFormation"/>
+                            />
+                        <TextView
+                            android:id="@+id/cancelTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20sp"
+                            android:layout_weight="1"
+                            android:text="cancel"
+                            android:textStyle="normal"
+                            android:layout_gravity="end"
+                            android:textAlignment="textEnd"
+                            android:layout_marginRight="10dp"
+                            android:visibility="gone"
+                            />
 
                     </LinearLayout>
 
@@ -408,11 +423,12 @@
 
                 <LinearLayout
                     android:id="@+id/tag_layout_second"
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="2dp"
                     android:background="#E7F1F0"
+                    android:weightSum="20"
                     android:visibility="gone">
 
                     <EditText
@@ -421,16 +437,19 @@
                         android:layout_height="60dp"
                         android:layout_margin="5dp"
                         android:autofillHints="Francais"
+                        android:layout_weight="18"
                         android:background="@android:color/white" />
 
                     <TextView
                         android:id="@+id/saveTag"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
                         android:layout_margin="10dp"
+                        android:layout_weight="2"
                         android:text="Save"
                         android:visibility="gone"/>
 
@@ -441,6 +460,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     />
+
             </LinearLayout>
 
         </LinearLayout>

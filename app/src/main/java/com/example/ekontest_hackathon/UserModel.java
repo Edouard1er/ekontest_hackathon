@@ -87,8 +87,20 @@ public class UserModel implements Parcelable {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user.getUid()!= null) {
-            databaseReference.child(user.getUid()).child("personalInformationModel").setValue(pModel);
-            databaseReference.child(user.getUid()).child("id").setValue(user.getUid());
+            databaseReference.child(user.getUid()).child("personalInformationModel").setValue(pModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    TagModel model = new TagModel();
+                    model.InsertTag(pModel.getFirstname()+" "+pModel.getLastname());
+                }
+            });
+            databaseReference.child(user.getUid()).child("id").setValue(user.getUid()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+
+                }
+            });
+
         }else{
             //Toast.makeText(, "", Toast.LENGTH_SHORT).show();
         }
@@ -122,12 +134,17 @@ public class UserModel implements Parcelable {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserModel model = snapshot.getValue(UserModel.class);
-                name.setText(model.getPersonalInformationModel().getFirstname()+" "+model.getPersonalInformationModel().getLastname());
-                final String[] url = new String[2];
-                url[0] = model.getPersonalInformationModel().getImagelink();
-                url[1] = model.getPersonalInformationModel().getImagename();
-                UrlImageModel urlImageModel = new UrlImageModel();
                 try {
+                    name.setText(model.getPersonalInformationModel().getFirstname() + " " + model.getPersonalInformationModel().getLastname());
+                }catch (Exception e){
+
+                }
+
+                try {
+                    final String[] url = new String[2];
+                    url[0] = model.getPersonalInformationModel().getImagelink();
+                    url[1] = model.getPersonalInformationModel().getImagename();
+                    UrlImageModel urlImageModel = new UrlImageModel();
                     urlImageModel.getUrlImage(url,imageUser,context);
                 }catch (Exception e){
                     e.printStackTrace();

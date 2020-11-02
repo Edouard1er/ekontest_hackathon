@@ -69,7 +69,7 @@ public class AccountActivity extends AppCompatActivity {
 
     //Tag part
     EditText textTag;
-    TextView showSpaceTag, saveTag;
+    TextView showSpaceTag, saveTag, hideSpaceTag;
 
     LinearLayout tagLayoutFirst;
     LinearLayout tagLayoutSecond;
@@ -83,6 +83,11 @@ public class AccountActivity extends AppCompatActivity {
         textTag = (EditText) findViewById(R.id.textTag);
         tagLayoutFirst = (LinearLayout) findViewById(R.id.tag_layout_first);
         tagLayoutSecond = (LinearLayout) findViewById(R.id.tag_layout_second);
+        showSpaceTag =(TextView) findViewById(R.id.addTag);
+        saveTag =(TextView) findViewById(R.id.saveTag);
+        hideSpaceTag =(TextView) findViewById(R.id.cancelTag);
+
+
 
 
         nom = (TextView) findViewById(R.id.textViewNom);
@@ -157,6 +162,17 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tagLayoutSecond.setVisibility(View.VISIBLE);
+                hideSpaceTag.setVisibility(View.VISIBLE);
+                showSpaceTag.setVisibility(View.GONE);
+
+            }
+        });
+        hideSpaceTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tagLayoutSecond.setVisibility(View.GONE);
+                showSpaceTag.setVisibility(View.VISIBLE);
+                hideSpaceTag.setVisibility(View.GONE);
             }
         });
 
@@ -197,7 +213,11 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                TagModel model = new TagModel();
+                model.InsertTag(textTag.getText().toString());
                 tagLayoutSecond.setVisibility(View.GONE);
+                showSpaceTag.setVisibility(View.VISIBLE);
+                hideSpaceTag.setVisibility(View.GONE);
                 Toast.makeText(AccountActivity.this, "Enregistre", Toast.LENGTH_SHORT).show();
 
             }
@@ -230,12 +250,17 @@ public class AccountActivity extends AppCompatActivity {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                if(model.getType().equals("Freelancer") || model.getType().equals("Professor")){
-                    tagLayoutFirst.setVisibility(View.VISIBLE);
-                }else{
-                    tagLayoutFirst.setVisibility(View.GONE);
+                try{
+                    if(model.getType().equals("Freelancer") || model.getType().equals("Professor")){
+                        tagLayoutFirst.setVisibility(View.VISIBLE);
+                    }else{
+                        tagLayoutFirst.setVisibility(View.GONE);
 
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
+
             }
 
             @Override
