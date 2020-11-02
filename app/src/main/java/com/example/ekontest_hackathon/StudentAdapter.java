@@ -3,14 +3,10 @@ package com.example.ekontest_hackathon;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,12 +22,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -109,32 +106,121 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
         @Override
         public void onClick(final View v) {
             try {
-                TextView receiverId = (TextView) v.findViewById(R.id.UserId);
+                final TextView receiverId = (TextView) v.findViewById(R.id.UserId);
                 Toast.makeText(v.getContext(), "User id: " + receiverId.getText().toString(), Toast.LENGTH_SHORT).show();
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("Select document for this student:");
-
-                // Set up the input
-                final EditText input = new EditText(v.getContext());
-                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
-
-                // Set up the buttons
-                builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                final List<String> docName = new ArrayList<String>();
+                final List<String> docId = new ArrayList<String>();
+                final List<Boolean> checked = new ArrayList<Boolean>();
+                FirebaseDatabase.getInstance().getReference("Documents").child("NormalDoc").addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(v.getContext(), "Setting doc for...", Toast.LENGTH_LONG).show();
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                            NormalDocModel model = dataSnapshot.getValue(NormalDocModel.class);
+                            if(model.getIdUser().equals(user.getUid())) {
+                                docName.add(model.getTitle());
+                                docId.add(model.getIdDocument());
+                                checked.add(false);
+                            }
+                        }
+                        System.out.println("array id: " + docId);
+                        System.out.println("array name: " + docName);
+                        //convert list to array
+                         final boolean[] checked_ = new boolean[checked.size()];
+                         final String[] docName_ = new String[checked.size()];
+                         for(int i = 0; i < checked.size(); i++) {
+                             checked_[i] = checked.get(i);
+                             docName_[i] = docName.get(i);
+                         }
+                        builder.setMultiChoiceItems(docName_, checked_, new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                System.out.println("New state:" + isChecked);
+                                // Get the current focused item
+                                final String currentItem = docId.get(which);
+                                if(String.valueOf(isChecked).equals("true")) {
+                                    //here we add the document to available doc list of the user
+                                    FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").push().setValue(currentItem);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                } else {
+                                    //here we add the document to available doc list of the user
+                                    FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                                                String idDoc_ = (String) dataSnapshot.getValue();
+                                                if(idDoc_.equals(currentItem)) {
+                                                    FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").child(dataSnapshot.getKey()).removeValue();
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }
+                                // Update the current focused item's checked status
+                                checked_[which] =  isChecked;
+
+                                // Notify the current action
+                                Toast.makeText(v.getContext(),
+                                        currentItem + " " + isChecked, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        // Specify the dialog is not cancelable
+                        builder.setCancelable(true);
+
+                        // Set a title for alert dialog
+                        builder.setTitle("Give doc access to student");
+
+                        // Set the positive/yes button click listener
+                        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Do something when click positive button
+                                for (int i = 0; i<checked_.length; i++){
+                                    boolean checked = checked_[i];
+                                    if (checked) {
+                                        System.out.println("document: " + docName.get(i));
+                                    }
+                                }
+                            }
+                        });
+
+                        // Set the neutral/cancel button click listener
+                        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Do something when click the neutral button
+                                dialog.cancel();
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        // Display the alert dialog on interface
+                        dialog.show();
+
+                        builder.show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
             }catch (Exception e){
                 e.printStackTrace();
             }

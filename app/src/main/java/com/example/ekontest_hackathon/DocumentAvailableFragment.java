@@ -57,6 +57,7 @@ public class DocumentAvailableFragment extends Fragment implements PopupMenu.OnM
                     docs.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            mArrayList.clear();
                             NormalDocModel model = snapshot.getValue(NormalDocModel.class);
                             System.out.println(snapshot);
 

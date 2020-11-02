@@ -30,7 +30,6 @@ public class StudentListFragment extends Fragment {
     }
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("Students");
-    private UserAdapter adapte;
     private StudentAdapter adapter_;
     List<UserModel> mUsers=new ArrayList<>();
     RecyclerView recyclerView;
@@ -56,7 +55,7 @@ public class StudentListFragment extends Fragment {
                 System.out.println("Snapshot: " + snapshot);
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     String stId = dataSnapshot.getKey();
-                    FirebaseDatabase.getInstance().getReference("Users").child(stId).addValueEventListener(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference("Users").child(stId).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             System.out.println("Student user: " + snapshot);

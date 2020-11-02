@@ -15,6 +15,9 @@
         android:id="@+id/floatingActionButtonInvoice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentBottom="false"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="50dp"
@@ -22,7 +25,8 @@
         android:layout_marginRight="0dp"
         android:layout_marginBottom="0dp"
         android:clickable="true"
-        app:srcCompat="@drawable/about" />
+        app:backgroundTint="@color/fui_transparent"
+        app:srcCompat="@drawable/financial1" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,7 +37,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/displayMessage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
