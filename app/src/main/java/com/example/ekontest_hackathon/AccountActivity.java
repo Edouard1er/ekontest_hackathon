@@ -3,6 +3,7 @@ package com.example.ekontest_hackathon;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,6 +74,8 @@ public class AccountActivity extends AppCompatActivity {
 
     LinearLayout tagLayoutFirst;
     LinearLayout tagLayoutSecond;
+    ConstraintLayout altUserImage;
+    TextView altTxtName;
 
 
     @Override
@@ -87,6 +90,9 @@ public class AccountActivity extends AppCompatActivity {
         saveTag =(TextView) findViewById(R.id.saveTag);
         hideSpaceTag =(TextView) findViewById(R.id.cancelTag);
 
+
+        altUserImage=findViewById(R.id.altUserImage);
+        altTxtName=findViewById(R.id.altTxtName);
 
 
 
@@ -141,10 +147,11 @@ public class AccountActivity extends AppCompatActivity {
                             final String[] url = new String[2];
                             url[0] = model.getPersonalInformationModel().getImagelink();
                             url[1] = model.getPersonalInformationModel().getImagename();
-                            //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
                             UrlImageModel urlImageModel = new UrlImageModel();
+                            urlImageModel.getUrlImage(url, imageUpload, getApplicationContext(),altUserImage,altTxtName,model);
+                           /* UrlImageModel urlImageModel = new UrlImageModel();
                             //urlImageModel.getUrlImage(url,  imageUpload);
-                            getUrlImage(url, imageUpload);
+                            getUrlImage(url, imageUpload);*/
 
                         }catch (Exception e){
                             e.printStackTrace();

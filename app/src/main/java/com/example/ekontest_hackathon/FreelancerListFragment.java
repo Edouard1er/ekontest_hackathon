@@ -63,7 +63,7 @@ public class FreelancerListFragment extends Fragment {
         searchFreelancer = (SearchView) view.findViewById(R.id.search_freelancer);
 
         AvisModel avisModel = new AvisModel();
-         avisModel.InsertAvis("ZtDNPvAIvLU6IjFRQ7GU4nuJdBG2", "Ce professeur est genial",4);
+        /// avisModel.InsertAvis("ZtDNPvAIvLU6IjFRQ7GU4nuJdBG2", "Ce professeur est genial",4);
        /* avisModel.InsertAvis("YcvzpV0btkURawrKYJGzeHWGNfb2", "Ce professeur est parfait",5);
         avisModel.InsertAvis("ZLdEAuSTgLfWJME1XFIdDjZvbR73", "Ce professeur est bon",3);
         avisModel.InsertAvis("hRYQaLWw89M0xmBpqwZqsUHkcwY2", "Ce professeur est catastrophique",1);*/

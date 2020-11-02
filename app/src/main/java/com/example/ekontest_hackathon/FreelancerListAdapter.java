@@ -81,20 +81,27 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
             model.loadFavoritePicture(model.getId(),add_favorite,remove_favorite,context);
             url[0] = model.getPersonalInformationModel().getImagelink();
             url[1] = model.getPersonalInformationModel().getImagename();
-            if(url[0].length()!=0 || url[1].length()!=0){
+            UrlImageModel urlImageModel = new UrlImageModel();
+            urlImageModel.getUrlImage(url, imageFreelancer, context,altImage,altTextName,model);
+           /* if(url[0].length()!=0 || url[1].length()!=0){
                 UserAdapter userAdapter= new UserAdapter();
                 //   userAdapter.getUrlImage(model.getPersonalInformationModel().getImagelink(),imageFreelancer);
                 userAdapter.getUrlImage(url,imageFreelancer);
+                imageFreelancer.setVisibility(View.VISIBLE);
+
                 altImage.setVisibility(View.GONE);
             }else{
                 imageFreelancer.setVisibility(View.GONE);
                 altImage.setVisibility(View.VISIBLE);
                 altTextName.setText(model.getPersonalInformationModel().getLastname().charAt(0)+""+model.getPersonalInformationModel().getFirstname().charAt(0));
-            }
+            }*/
 
 
 
         }catch (Exception e){
+            imageFreelancer.setVisibility(View.GONE);
+            altImage.setVisibility(View.VISIBLE);
+            altTextName.setText(model.getPersonalInformationModel().getLastname().charAt(0)+""+model.getPersonalInformationModel().getFirstname().charAt(0));
             e.printStackTrace();
         }
 

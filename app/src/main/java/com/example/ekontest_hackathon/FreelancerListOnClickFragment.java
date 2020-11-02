@@ -62,7 +62,7 @@ public class FreelancerListOnClickFragment extends Fragment{
     ArrayList <FreelancerModel> userModels;
     FreelancerModel singleUser;
     FloatingActionButton sendFreelancerMessage;
-    ConstraintLayout altUserImage;
+    LinearLayout altUserImage;
     TextView altTxtName;
 
     // Important when you have a listener with an interface
@@ -192,8 +192,8 @@ public class FreelancerListOnClickFragment extends Fragment{
         progressBar5= view.findViewById(R.id.progressBar5);
 
 
-         altUserImage=view.findViewById(R.id.altUserImage);
-         altTxtName=view.findViewById(R.id.altTxtName);
+         altUserImage=view.findViewById(R.id.altImage);
+         altTxtName=view.findViewById(R.id.altTextName);
         mFirstname = view.findViewById(R.id.prenom_freelancer);
         mLastname = view.findViewById(R.id.nom_freelancer);
         mSexe = view.findViewById(R.id.sexe_freelancer);
@@ -238,7 +238,7 @@ public class FreelancerListOnClickFragment extends Fragment{
             url[0] = singleUser.getPersonalInformationModel().getImagelink();
             url[1] = singleUser.getPersonalInformationModel().getImagename();
             UrlImageModel urlImageModel = new UrlImageModel();
-            urlImageModel.getUrlImage(url, mImageFreelancer,getContext(), altUserImage,altTxtName);
+            urlImageModel.getUrlImage(url, mImageFreelancer,getContext(), altUserImage,altTxtName,singleUser);
 
         }catch (Exception e){
             System.out.println("There is something wrong in freelancerlistOnclickFragment setinfoperson method");

@@ -103,6 +103,9 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         profile_image = header.findViewById(R.id.profile_image);
         profile_name = header.findViewById(R.id.profile_name);
         profile_type = header.findViewById(R.id.profile_type);
+        altUserImage=header.findViewById(R.id.altUserImage);
+        altTxtName=header.findViewById(R.id.altTxtName);
+
         logout = header.findViewById(R.id.logout);
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -120,7 +123,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                             url[1] = model.getPersonalInformationModel().getImagename();
                             //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
                             UrlImageModel urlImageModel = new UrlImageModel();
-                            urlImageModel.getUrlImage(url, profile_image, getApplicationContext());
+                            urlImageModel.getUrlImage(url, profile_image, getApplicationContext(),altUserImage,altTxtName,model);
                             profile_name.setText(model.getPersonalInformationModel().getUsername());
                             profile_type.setText(model.getPersonalInformationModel().getType());
                         }catch (Exception e){

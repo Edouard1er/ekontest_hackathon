@@ -61,6 +61,68 @@
                             android:layout_width="@dimen/toolbar_profile_width"
                             android:layout_height="wrap_content"
                             android:onClick="uploadImage">
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/altUserImage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="uploadImage"
+                                android:visibility="visible"
+                                android:layout_gravity="center"
+                                >
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/altImg"
+
+
+                                    android:layout_width="@dimen/toolbar_profile_width"
+                                    android:layout_height="@dimen/toolbar_profile_width"
+                                    android:layout_gravity="center"
+                                    android:elevation="10dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@color/bleu_fonce"
+
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="1.0"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_bias="1.0" />
+
+                                <TextView
+                                    android:id="@+id/altTxtName"
+                                    android:layout_width="24dp"
+                                    android:layout_height="41dp"
+                                    android:layout_centerInParent="true"
+                                    android:elevation="200dp"
+
+                                    android:gravity="center"
+                                    android:text="AD"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="@+id/altUserImage"
+                                    app:layout_constraintTop_toTopOf="@+id/altUserImage" />
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/img_plus"
+                                    android:layout_width="@dimen/ic_plus_width"
+                                    android:layout_height="@dimen/ic_plus_width"
+                                    android:layout_alignBottom="@id/altImg"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginBottom="4dp"
+                                    android:elevation="400dp"
+
+                                    android:src="@drawable/ic_add_photo"
+                                    app:layout_constraintBottom_toBottomOf="@+id/altImg"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="1.0"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_bias="1.0" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/imageViewPhoto"
                                 android:layout_width="@dimen/toolbar_profile_width"
@@ -69,16 +131,18 @@
                                 android:layout_marginBottom="@dimen/activity_padding"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/username"
+                                android:visibility="gone"
 
                                 />
 
                             <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/img_plus"
+                                android:id="@+id/img_pluss"
                                 android:layout_width="@dimen/ic_plus_width"
                                 android:layout_height="@dimen/ic_plus_width"
                                 android:layout_alignBottom="@id/imageViewPhoto"
                                 android:layout_alignParentRight="true"
                                 android:src="@drawable/ic_add_photo"
+                                android:visibility="gone"
 
                                 />
                         </RelativeLayout>
