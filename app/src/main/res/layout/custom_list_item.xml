@@ -54,17 +54,6 @@
                     android:textColor="@color/bleu_fonce" />
 
                 <TextView
-                    android:id="@+id/documentDate"
-                    android:layout_width="46dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:shadowColor="@color/bleu_fonce"
-                    android:text="TextView"
-                    android:textColor="@color/bleu_fonce"
-                    android:visibility="invisible" />
-
-                <TextView
                     android:id="@+id/documentStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

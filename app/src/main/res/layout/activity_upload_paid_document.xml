@@ -39,7 +39,8 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="Paid document submission might take some time before it become eligible to get purchased by any student. Our policy aims to avoid any kind of plagiarism. "
             android:textColor="@color/black"
             android:textStyle="italic" />
@@ -48,8 +49,9 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35sp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10sp"
+            android:layout_marginRight="20dp"
             android:text="Document title"
             android:textColor="@color/black" />
 
@@ -57,8 +59,9 @@
             android:id="@+id/editTextDocumentTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35sp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10sp"
+            android:layout_marginRight="20dp"
             android:ems="10"
             android:inputType="textPersonName" />
 
@@ -66,8 +69,9 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35sp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10sp"
+            android:layout_marginRight="20dp"
             android:text="Document price"
             android:textColor="@color/black" />
 
@@ -75,8 +79,9 @@
             android:id="@+id/editTextDocumentPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35sp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10sp"
+            android:layout_marginRight="20dp"
             android:ems="10"
             android:inputType="number" />
 
@@ -84,8 +89,9 @@
             android:id="@+id/getDocumentButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35sp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10sp"
+            android:layout_marginRight="20dp"
             android:background="@color/couleur4"
             android:onClick="showFileChooser"
             app:srcCompat="@android:drawable/ic_menu_upload" />
@@ -94,8 +100,9 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35sp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10sp"
+            android:layout_marginRight="20dp"
             android:text="Document name"
             android:textColor="@color/black" />
 
@@ -103,8 +110,9 @@
             android:id="@+id/editTextDocumentName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35sp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10sp"
+            android:layout_marginRight="20dp"
             android:ems="10"
             android:enabled="false"
             android:inputType="textPersonName" />
@@ -115,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="20sp"
-            android:layout_marginRight="10sp"
+            android:layout_marginRight="20sp"
             android:background="@color/couleur4"
             android:onClick="submitPdf"
             android:text="Submit"

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,11 +34,27 @@ public class StudentListFragment extends Fragment {
     private StudentAdapter adapter_;
     List<UserModel> mUsers=new ArrayList<>();
     RecyclerView recyclerView;
+    SearchView searchStudents;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
+        searchStudents = (SearchView) view.findViewById(R.id.search_student);
+
+        searchStudents.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter_.getFilter().filter(s);
+                return false;
+            }
+        });
         setDisplayUsers(view);
         return view;
     }
