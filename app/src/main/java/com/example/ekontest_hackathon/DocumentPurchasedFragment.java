@@ -50,9 +50,7 @@ public class DocumentPurchasedFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mArrayList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                    FreelancerModel model = dataSnapshot.getValue(FreelancerModel.class);
                     System.out.println(dataSnapshot);
-//                    UserModel usrModel= dataSnapshot.getValue(UserModel.class);
                     String idDoc = (String) dataSnapshot.getValue();
                     System.out.println("id doc: " + dataSnapshot.getValue());
                     System.out.println("id doc__: " + idDoc);

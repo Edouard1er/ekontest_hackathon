@@ -483,6 +483,7 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/send_freelancer_message"
         android:layout_width="wrap_content"
@@ -491,5 +492,6 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="15dp"
         android:clickable="true"
-        android:src="@drawable/fab" />
+        android:src="@drawable/speechbubble1"
+        app:backgroundTint="@color/couleur4" />
 </FrameLayout>

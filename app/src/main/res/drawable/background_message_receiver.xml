@@ -6,7 +6,7 @@
         android:radius="20dp"
         android:topLeftRadius="0dp"/>
 
-    <solid android:color="@color/fui_bgTwitter"/>
+    <solid android:color="@color/bleu_fonce_transparent"/>
 
 
 
