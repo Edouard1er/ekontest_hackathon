@@ -156,12 +156,12 @@ public class AccountActivity extends AppCompatActivity {
                             final String[] url = new String[2];
                             url[0] = model.getPersonalInformationModel().getImagelink();
                             url[1] = model.getPersonalInformationModel().getImagename();
-                           // UrlImageModel urlImageModel = new UrlImageModel();
-                            //urlImageModel.getUrlImage(url, imageUpload, getApplicationContext(),altUserImage,altTxtName,model);
-                            UrlImageModel urlImageModel = new UrlImageModel();
-                            //urlImageModel.getUrlImage(url,  imageUpload);
                             getUrlImage(url, imageUpload);
-                            Toast.makeText(AccountActivity.this, "Link"+url[0], Toast.LENGTH_SHORT).show();
+                            /*UrlImageModel urlImageModel = new UrlImageModel();
+                            urlImageModel.getUrlImage(url, imageUpload, getApplicationContext(),altUserImage,altTxtName,model);*/
+                           /* UrlImageModel urlImageModel = new UrlImageModel();
+                            //urlImageModel.getUrlImage(url,  imageUpload);
+                            Toast.makeText(AccountActivity.this, "Link"+url[0], Toast.LENGTH_SHORT).show();*/
 
                         }catch (Exception e){
                             e.printStackTrace();
@@ -394,10 +394,11 @@ public class AccountActivity extends AppCompatActivity {
                                         uri2.toString();
                                         UserModel model= new UserModel();
                                         //model.UpdateImageUser(uri2.toString(),"imagelink");
-                                        model.UpdateImageUser(user.getUid(),"imagelink","imagename", imageUpload, getApplicationContext(),altUserImage,altTxtName);
+                                        model.UpdateImageUser( uri2.toString(),"imagelink","imagename", imageUpload, getApplicationContext(),altUserImage,altTxtName);
                                         progressBar.setVisibility(View.GONE);
                                         editPicture.setVisibility(View.GONE);
-                                       addProfilePhoto();
+                                        photoPath=uri2.toString();
+                                        addProfilePhoto();
                                         //Toast.makeText(AccountActivity.this, "Succes", Toast.LENGTH_SHORT).show();
 
 
