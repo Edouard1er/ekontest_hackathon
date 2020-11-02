@@ -1,48 +1,22 @@
 package com.example.ekontest_hackathon;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
-
-public class HomePageFragment extends Fragment {
+public class TestHomeActivity extends AppCompatActivity {
     ListView mListView;
     CustomHomePageAdapter mAdapter;
     ArrayList mArrayList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_home_page, container, false);
-        mListView = view.findViewById(R.id.listview_home);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_test_home);
+        mListView = findViewById(R.id.listview_test);
         mArrayList = new ArrayList<CustomHomePageModel>();
         mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
                 "Math","HTG 600.50","HTG 70.24 /hour"));
@@ -64,8 +38,7 @@ public class HomePageFragment extends Fragment {
                 "Math","HTG 600.50","HTG 70.24 /hour"));
         mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
                 "Math","HTG 600.50","HTG 70.24 /hour"));
-        mAdapter = new CustomHomePageAdapter(getContext(),R.layout.homepage_custom_list, mArrayList);
+        mAdapter = new CustomHomePageAdapter(this,R.layout.homepage_custom_list, mArrayList);
         mListView.setAdapter(mAdapter);
-        return view;
     }
 }
