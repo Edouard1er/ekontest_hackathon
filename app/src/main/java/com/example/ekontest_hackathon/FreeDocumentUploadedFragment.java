@@ -52,7 +52,6 @@ public class FreeDocumentUploadedFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("Inside response...");
-//                System.out.println(snapshot);
                 mArrayList.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     NormalDocModel model = dataSnapshot.getValue(NormalDocModel.class);
@@ -69,8 +68,10 @@ public class FreeDocumentUploadedFragment extends Fragment {
                         mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_, model.getIdDocument(), "Accepted"));
                     }
                 }
-                mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
-                mListView.setAdapter(mAdapter);
+                if(getActivity()!=null) {
+                    mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
+                    mListView.setAdapter(mAdapter);
+                }
             }
 
             @Override
@@ -79,7 +80,6 @@ public class FreeDocumentUploadedFragment extends Fragment {
             }
         });
 
-//        mArrayList.add(new CustomDocumentModel("Théorie de la Chimie.pdf","15:00", "15/08/2020"));
         return view;
     }
 }

@@ -40,7 +40,6 @@ public class PaidDocumentUploadedFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_paid_document_uploaded, container, false);
         mArrayList = new ArrayList<CustomDocumentModel>();
-       // model.getTitle(),date_, time_, model.getIdDocument(), "Accepted")
         mListView = (ListView) view.findViewById(R.id.uploaded_list_paid_document);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,7 +56,6 @@ public class PaidDocumentUploadedFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("Inside response...");
-//                System.out.println(snapshot);
                 mArrayList.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     PaidDocModel model = dataSnapshot.getValue(PaidDocModel.class);
@@ -74,8 +72,10 @@ public class PaidDocumentUploadedFragment extends Fragment {
                         mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_, model.getIdDocument(), model.getStatus()));
                     }
                 }
-                mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
-                mListView.setAdapter(mAdapter);
+                if(getActivity()!=null) {
+                    mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
+                    mListView.setAdapter(mAdapter);
+                }
             }
 
             @Override

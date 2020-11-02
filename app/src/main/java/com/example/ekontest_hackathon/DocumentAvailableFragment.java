@@ -44,15 +44,12 @@ public class DocumentAvailableFragment extends Fragment implements PopupMenu.OnM
 
         final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docAvailable");
-        // Query query = freelancerRef.equalTo("personalInformationModel").equalTo("Student","type");
         freelancerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mArrayList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                    FreelancerModel model = dataSnapshot.getValue(FreelancerModel.class);
                     System.out.println(dataSnapshot);
-//                    UserModel usrModel= dataSnapshot.getValue(UserModel.class);
                     String idDoc = (String) dataSnapshot.getValue();
                     System.out.println("id doc: " + dataSnapshot.getValue());
                     System.out.println("id doc__: " + idDoc);
@@ -78,8 +75,11 @@ public class DocumentAvailableFragment extends Fragment implements PopupMenu.OnM
                         }
                     });
                 }
-                mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
-                mListView.setAdapter(mAdapter);
+
+                if(getActivity()!=null) {
+                    mAdapter = new CustomDocumentAdapter (getContext(), R.layout.custom_list_item, mArrayList);
+                    mListView.setAdapter(mAdapter);
+                }
             }
 
             @Override
@@ -88,8 +88,6 @@ public class DocumentAvailableFragment extends Fragment implements PopupMenu.OnM
             }
         });
 
-//        mArrayList.add(new CustomDocumentModel("Théorie des physiques et des mathematiques.pdf","20:00", "15/08/2020", "", "Accepted"));
-//        mArrayList.add(new CustomDocumentModel("Théorie des physiques et de la chimie.pdf","20:00", "15/08/2020", "", "Accepted"));
         return view;
     }
 
