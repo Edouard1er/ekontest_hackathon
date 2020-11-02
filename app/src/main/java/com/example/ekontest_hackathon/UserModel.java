@@ -171,13 +171,55 @@ public class UserModel implements Parcelable {
             }
         });
     }
-    public void UpdateImageUser(String path, String val){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    public void UpdateImageUser(final String path1, final String val1,
+                               final String val2, final ImageView imageUpload, final Context context, final ConstraintLayout constraintLayout, final TextView textView){
+
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
                 .child(user.getUid())
-                .child("personalInformationModel")
-                .child(val);
-        databaseReference.setValue(path);
+                .child("personalInformationModel").child(val1);
+
+        databaseReference.setValue(path1).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+               DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Users")
+                        .child(user.getUid())
+                        .child("personalInformationModel").child(val2);
+
+                databaseReference2.setValue(path1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        DatabaseReference databaseReference3 = FirebaseDatabase.getInstance().getReference("Users")
+                                .child(user.getUid());
+                        databaseReference3.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                    System.out.println("Snapshot:"+snapshot);
+                                    UserModel model = dataSnapshot.getValue(UserModel.class);
+                                    final String[] url = new String[2];
+                                    Toast.makeText(context, "User:"+user.getUid(), Toast.LENGTH_SHORT).show();
+                                    /*url[0] = model.getPersonalInformationModel().getImagelink();
+                                    url[1] = model.getPersonalInformationModel().getImagename();
+                                    UrlImageModel urlImageModel = new UrlImageModel();
+                                    urlImageModel.getUrlImage(url, imageUpload, context,constraintLayout,textView,model);*/
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+                    }
+                });
+            }
+        });
+
+
 
     }
     //Getter and Setter

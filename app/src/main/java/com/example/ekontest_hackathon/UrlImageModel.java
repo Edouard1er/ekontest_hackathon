@@ -165,7 +165,7 @@ public class UrlImageModel {
 
         try{
             if(imageSource[0].contains("firebasestorage.googleapis.com")){
-                final StorageReference fileReference= mStorageRef.child("Images").child(imageSource[1]+"_500x500");
+                final StorageReference fileReference= mStorageRef.child("Images").child(imageSource[1]+"_400x175");
                 fileReference.getDownloadUrl()
                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
@@ -184,20 +184,10 @@ public class UrlImageModel {
 
                 return url[0];
             }else{
-               /* url[0] =imageSource[0];
-                Glide.with(imageUser)
-                        .load(url[0])
-                        //  .apply(new RequestOptions().override(120,90))
-                        .centerCrop()
-                        .into(imageUser);
-                if(url[0].length()==0){
-
-                   // Toast.makeText(context, " zero", Toast.LENGTH_SHORT).show();
 
 
-                }else{
-                   // Toast.makeText(context, "Not zero", Toast.LENGTH_SHORT).show();
-                }*/
+
+
                 constraintLayout.setVisibility(View.VISIBLE);
                 altTxtName.setText(freelancerModel.getPersonalInformationModel().getLastname().charAt(0)+""+freelancerModel.getPersonalInformationModel().getFirstname().charAt(0));
                 imageUser.setVisibility(View.GONE);
