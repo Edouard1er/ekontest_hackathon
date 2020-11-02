@@ -1,5 +1,6 @@
 package com.example.ekontest_hackathon;
 
+import android.content.Intent;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -42,6 +44,19 @@ public class DocumentPurchasedFragment extends Fragment {
         mArrayList = new ArrayList<CustomDocumentModel>();
         mListView = (ListView) view.findViewById(R.id.purshased_list_document);
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int position = i;
+                CustomDocumentModel value = (CustomDocumentModel) mArrayList.get(position);
+                Toast.makeText(getContext(), position + "- Id: " + value.getId(), Toast.LENGTH_LONG).show();
+                System.out.println("About to open document: " + value.getId());
+                Intent intent = new Intent(view.getContext(), PdfView.class);
+                intent.putExtra("fileName", value.getFileName());
+                startActivity(intent);
+            }
+        });
+
         final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased");
         // Query query = freelancerRef.equalTo("personalInformationModel").equalTo("Student","type");
@@ -66,7 +81,7 @@ public class DocumentPurchasedFragment extends Fragment {
                             String date_ = parts[0];
                             String time_ = parts[1];
 
-                            mArrayList.add(new CustomDocumentModel(model.getTitle(),time_, time_, model.getIdDocument(), date_));
+                            mArrayList.add(new CustomDocumentModel(model.getTitle(),time_, time_, model.getIdDocument(), date_, model.getFileName()));
                             mAdapter.notifyDataSetChanged();
                         }
 

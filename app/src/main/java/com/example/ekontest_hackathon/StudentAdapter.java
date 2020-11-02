@@ -42,6 +42,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
     private Boolean isChat;
     private ImageButton menuOp;
     List <UserModel> mUser;
+    private static  boolean dialogOpened = false;
+
 
     public StudentAdapter(Context context, List <UserModel> mUser, Boolean isChat) {
         this.context=context;
@@ -113,11 +115,13 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
                 final List<String> docName = new ArrayList<String>();
                 final List<String> docId = new ArrayList<String>();
                 final List<Boolean> checked = new ArrayList<Boolean>();
-                FirebaseDatabase.getInstance().getReference("Documents").child("NormalDoc").addValueEventListener(new ValueEventListener() {
+
+                FirebaseDatabase.getInstance().getReference("Documents").child("NormalDoc").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                            NormalDocModel model = dataSnapshot.getValue(NormalDocModel.class);
+                    public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                        //
+                        for(DataSnapshot dataSnapshot1: snapshot1.getChildren()) {
+                            NormalDocModel model = dataSnapshot1.getValue(NormalDocModel.class);
                             if(model.getIdUser().equals(user.getUid())) {
                                 docName.add(model.getTitle());
                                 docId.add(model.getIdDocument());
@@ -126,94 +130,115 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
                         }
                         System.out.println("array id: " + docId);
                         System.out.println("array name: " + docName);
-                        //convert list to array
-                         final boolean[] checked_ = new boolean[checked.size()];
-                         final String[] docName_ = new String[checked.size()];
-                         for(int i = 0; i < checked.size(); i++) {
-                             checked_[i] = checked.get(i);
-                             docName_[i] = docName.get(i);
-                         }
-                        builder.setMultiChoiceItems(docName_, checked_, new DialogInterface.OnMultiChoiceClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                                System.out.println("New state:" + isChecked);
-                                // Get the current focused item
-                                final String currentItem = docId.get(which);
-                                if(String.valueOf(isChecked).equals("true")) {
-                                    //here we add the document to available doc list of the user
-                                    FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").push().setValue(currentItem);
+                        for(int j = 0; j < docId.size(); j++) {
+                            final String idC =docId.get(j);
+                            final int finalJ = j;
+                            FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                                    System.out.println("checking snapshot: " + snapshot1);
+                                    System.out.println("initial checked: " + checked);
+                                    for(DataSnapshot snap: snapshot1.getChildren()) {
+                                        String key = (String) snap.getValue();
+                                        System.out.println("element: " + snap);
+                                        System.out.println("element doc id: " + snap.getValue());
+                                        if(key.equals(idC)) {
+                                            checked.set(finalJ, true);
                                         }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                                } else {
-                                    //here we add the document to available doc list of the user
-                                    FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                                                String idDoc_ = (String) dataSnapshot.getValue();
-                                                if(idDoc_.equals(currentItem)) {
-                                                    FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").child(dataSnapshot.getKey()).removeValue();
-                                                }
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                                }
-                                // Update the current focused item's checked status
-                                checked_[which] =  isChecked;
-
-                                // Notify the current action
-                                Toast.makeText(v.getContext(),
-                                        currentItem + " " + isChecked, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                        // Specify the dialog is not cancelable
-                        builder.setCancelable(true);
-
-                        // Set a title for alert dialog
-                        builder.setTitle("Give doc access to student");
-
-                        // Set the positive/yes button click listener
-                        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Do something when click positive button
-                                for (int i = 0; i<checked_.length; i++){
-                                    boolean checked = checked_[i];
-                                    if (checked) {
-                                        System.out.println("document: " + docName.get(i));
                                     }
+                                    System.out.println("final checked: " + checked);
+                                    //convert list to array
+                                    final boolean[] checked_ = new boolean[checked.size()];
+                                    final String[] docName_ = new String[checked.size()];
+                                    for(int i = 0; i < checked.size(); i++) {
+                                        checked_[i] = checked.get(i);
+                                        docName_[i] = docName.get(i);
+                                    }
+                                    builder.setMultiChoiceItems(docName_, checked_, new DialogInterface.OnMultiChoiceClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                            System.out.println("New state:" + isChecked);
+                                            // Get the current focused item
+                                            final String currentItem = docId.get(which);
+                                            if(String.valueOf(isChecked).equals("true")) {
+                                                //here we add the document to available doc list of the user
+                                                FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").push().setValue(currentItem);
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                    }
+                                                });
+                                            }
+
+                                            if(String.valueOf(isChecked).equals("false")){
+                                                //here we add the document to available doc list of the user
+                                                FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                                                            String idDoc_ = (String) dataSnapshot.getValue();
+                                                            if(idDoc_.equals(currentItem)) {
+                                                                FirebaseDatabase.getInstance().getReference("Users").child(receiverId.getText().toString()).child("docAvailable").child(dataSnapshot.getKey()).removeValue();
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                    }
+                                                });
+                                            }
+                                            // Update the current focused item's checked status
+                                            checked_[which] =  isChecked;
+
+                                            // Notify the current action
+                                            Toast.makeText(v.getContext(),
+                                                    currentItem + " " + isChecked, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                    // Specify the dialog is not cancelable
+                                    builder.setCancelable(false);
+
+                                    // Set a title for alert dialog
+                                    builder.setTitle("Give doc access to student");
+
+                                    // Set the neutral/cancel button click listener
+                                    builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // Do something when click the neutral button
+                                            dialog.dismiss();
+                                            dialogOpened = false;
+                                        }
+                                    });
+
+                                    if(!dialogOpened) {
+                                        builder.show();
+                                        dialogOpened = true;
+                                    }
+
+//                                    AlertDialog dialog = builder.create();
+
+//                                    if ((dialog == null) || !dialog.isShowing()){
+////                                        m_dialog = new Dialog(...); // initiate it the way you need
+//                                        dialog.show();
+//                                    }
                                 }
-                            }
-                        });
 
-                        // Set the neutral/cancel button click listener
-                        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Do something when click the neutral button
-                                dialog.cancel();
-                            }
-                        });
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                        AlertDialog dialog = builder.create();
-                        // Display the alert dialog on interface
-                        dialog.show();
+                                }
+                            });
+                        }
 
-                        builder.show();
                     }
 
                     @Override

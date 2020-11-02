@@ -84,7 +84,7 @@ public class DocumentFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 PersonalInformationModel model = snapshot.getValue(PersonalInformationModel.class);
                 if(model.getType().equals("Student")) {
-                    mTabLayout.removeTabAt(2);
+                    mTabLayout.removeTabAt(3);
                     mTabLayout.removeTabAt(2);
                 }
 

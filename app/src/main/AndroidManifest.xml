@@ -35,6 +35,7 @@
         <activity android:name=".UploadPaidDocument" />
         <activity android:name=".MonCash" />
         <activity android:name=".MoncashGateway" />
+        <activity android:name=".PdfView" />
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
         <activity

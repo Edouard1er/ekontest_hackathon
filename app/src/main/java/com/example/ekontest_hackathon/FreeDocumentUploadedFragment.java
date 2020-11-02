@@ -1,5 +1,6 @@
 package com.example.ekontest_hackathon;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,10 @@ public class FreeDocumentUploadedFragment extends Fragment {
                 int position = i;
                 CustomDocumentModel value = (CustomDocumentModel) mArrayList.get(position);
                 Toast.makeText(getContext(), position + "- Id: " + value.getId(), Toast.LENGTH_LONG).show();
+                System.out.println("About to open document: " + value.getId());
+                Intent intent = new Intent(view.getContext(), PdfView.class);
+                intent.putExtra("fileName", value.getFileName());
+                startActivity(intent);
             }
         });
 
@@ -65,7 +70,7 @@ public class FreeDocumentUploadedFragment extends Fragment {
                     System.out.println("Date: " + parts[0]);
                     System.out.println("Time: " + parts[1]);
                     if(model.getIdUser().equals(user.getUid())) {
-                        mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_, model.getIdDocument(), "Accepted"));
+                        mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_, model.getIdDocument(), "Accepted", model.getFileName()));
                     }
                 }
                 if(getActivity()!=null) {
