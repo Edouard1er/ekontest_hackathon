@@ -45,6 +45,12 @@
                         android:layout_marginRight="10dp"
                         android:onClick="onButtonSaveClick"/>
                 </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -66,7 +72,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:onClick="uploadImage"
-                                android:visibility="visible"
+                                android:visibility="gone"
                                 android:layout_gravity="center"
                                 >
 
@@ -131,7 +137,7 @@
                                 android:layout_marginBottom="@dimen/activity_padding"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/username"
-                                android:visibility="gone"
+                                android:visibility="visible"
 
                                 />
 
@@ -142,7 +148,7 @@
                                 android:layout_alignBottom="@id/imageViewPhoto"
                                 android:layout_alignParentRight="true"
                                 android:src="@drawable/ic_add_photo"
-                                android:visibility="gone"
+                                android:visibility="visible"
 
                                 />
                         </RelativeLayout>

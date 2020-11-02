@@ -68,7 +68,9 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
             final String[] url = new String[2];
             url[0] = u.getPersonalInformationModel().getImagelink();
             url[1] = u.getPersonalInformationModel().getImagename();
-            if(url[0].length()!=0 || url[1].length()!=0){
+            UrlImageModel urlImageModel = new UrlImageModel();
+            urlImageModel.getUrlImage(url, holder.userImage,context, holder.altUserImage,holder.altTxtName,u);
+           /* if(url[0].length()!=0 || url[1].length()!=0){
                 UserAdapter userAdapter= new UserAdapter();
                 //   userAdapter.getUrlImage(model.getPersonalInformationModel().getImagelink(),imageFreelancer);
                 //userAdapter.getUrlImage(url,imageFreelancer);
@@ -79,7 +81,7 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
                 holder.userImage.setVisibility(View.GONE);
                 holder.altUserImage.setVisibility(View.VISIBLE);
                holder.altTxtName.setText(u.getPersonalInformationModel().getLastname().charAt(0)+""+u.getPersonalInformationModel().getFirstname().charAt(0));
-            }
+            }*/
             //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
 
             //Toast.makeText(context, "The last message is: "+theLastMessage, Toast.LENGTH_SHORT).show();

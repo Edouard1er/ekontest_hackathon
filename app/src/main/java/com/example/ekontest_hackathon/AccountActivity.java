@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,12 +71,13 @@ public class AccountActivity extends AppCompatActivity {
 
     //Tag part
     EditText textTag;
-    TextView showSpaceTag, saveTag, hideSpaceTag;
+    TextView showSpaceTag, saveTag, hideSpaceTag, editPicture;
 
     LinearLayout tagLayoutFirst;
     LinearLayout tagLayoutSecond;
     ConstraintLayout altUserImage;
     TextView altTxtName;
+    ProgressBar progressBar;
 
 
     @Override
@@ -89,10 +91,16 @@ public class AccountActivity extends AppCompatActivity {
         showSpaceTag =(TextView) findViewById(R.id.addTag);
         saveTag =(TextView) findViewById(R.id.saveTag);
         hideSpaceTag =(TextView) findViewById(R.id.cancelTag);
+        editPicture =(TextView) findViewById(R.id.editPicture);
+        editPicture.setVisibility(View.GONE);
+
 
 
         altUserImage=findViewById(R.id.altUserImage);
         altTxtName=findViewById(R.id.altTxtName);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+
 
 
 
@@ -117,6 +125,7 @@ public class AccountActivity extends AppCompatActivity {
                                 .into(imageUpload);
                         photoPath = photo;
                         System.out.println("Photo picken: " + photo);
+                        editPicture.setVisibility(View.VISIBLE);
 
                     }
                 });
@@ -229,6 +238,7 @@ public class AccountActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
     public void TagLayout(){
@@ -403,8 +413,17 @@ public class AccountActivity extends AppCompatActivity {
                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                        // double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                        //mProgressBar.setProgress((int)progress);
+                         double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                        progressBar.setProgress((int)progress);
+                        if((int) progress==100){
+                            progressBar.setVisibility(View.GONE);
+                            editPicture.setVisibility(View.GONE);
+
+                        }else{
+                            progressBar.setVisibility(View.VISIBLE);
+                            editPicture.setVisibility(View.GONE);
+
+                        }
 
                     }
                 });

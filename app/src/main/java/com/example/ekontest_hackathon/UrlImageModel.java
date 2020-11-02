@@ -157,6 +157,67 @@ public class UrlImageModel {
 
 
     }
+    public String getUrlImage(String[] imageSource, final ImageView imageUser,
+                              final Context context, final LinearLayout constraintLayout,
+                              final TextView altTxtName, UserModel freelancerModel){
+        final String[] url = new String[1];
+        final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
+
+        try{
+            if(imageSource[0].contains("firebasestorage.googleapis.com")){
+                final StorageReference fileReference= mStorageRef.child("Images").child(imageSource[1]+"_500x500");
+                fileReference.getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri2) {
+                                url[0] =String.valueOf(uri2);
+                                Glide.with(context)
+                                        .load(uri2)
+                                        .fitCenter()
+                                        .into(imageUser);
+                                //     .apply(new RequestOptions().override(200,90))
+
+
+
+                            }
+                        });
+
+                return url[0];
+            }else{
+               /* url[0] =imageSource[0];
+                Glide.with(imageUser)
+                        .load(url[0])
+                        //  .apply(new RequestOptions().override(120,90))
+                        .centerCrop()
+                        .into(imageUser);
+                if(url[0].length()==0){
+
+                   // Toast.makeText(context, " zero", Toast.LENGTH_SHORT).show();
+
+
+                }else{
+                   // Toast.makeText(context, "Not zero", Toast.LENGTH_SHORT).show();
+                }*/
+                constraintLayout.setVisibility(View.VISIBLE);
+                altTxtName.setText(freelancerModel.getPersonalInformationModel().getLastname().charAt(0)+""+freelancerModel.getPersonalInformationModel().getFirstname().charAt(0));
+                imageUser.setVisibility(View.GONE);
+
+                return url[0];
+            }
+        }catch (Exception e){
+            constraintLayout.setVisibility(View.VISIBLE);
+            altTxtName.setText(freelancerModel.getPersonalInformationModel().getLastname().charAt(0)+""+freelancerModel.getPersonalInformationModel().getFirstname().charAt(0));
+            imageUser.setVisibility(View.GONE);
+            Toast.makeText(context, " zero", Toast.LENGTH_SHORT).show();
+            return url[0];
+        }
+
+
+
+
+
+    }
+
     public String getUrlImage(String[] imageSource, final ImageView imageUser, final Context context){
         final String[] url = new String[1];
         final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();

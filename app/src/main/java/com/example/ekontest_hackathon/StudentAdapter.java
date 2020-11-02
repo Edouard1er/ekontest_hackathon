@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -71,7 +73,9 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
             final String[] url = new String[2];
             url[0] = u.getPersonalInformationModel().getImagelink();
             url[1] = u.getPersonalInformationModel().getImagename();
-            getUrlImage(url, holder.userImage);
+            UrlImageModel urlImageModel = new UrlImageModel();
+            urlImageModel.getUrlImage(url, holder.userImage,context, holder.altUserImage,holder.altTxtName,u);
+            //getUrlImage(url, holder.userImage);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -84,8 +88,9 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
         return mUser.size();
     }
     class UserHolder extends RecyclerView.ViewHolder  implements View.OnClickListener, View.OnLongClickListener{
-        TextView userName;
+        TextView userName,altTxtName;
         ImageView userImage;
+        ConstraintLayout altUserImage;
         TextView userId;
 
         TextView freelanceName_;
@@ -99,6 +104,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
             userImage=itemView.findViewById(R.id.cUserImage);
             userId = itemView.findViewById(R.id.UserId);
             freelanceName_ = itemView.findViewById(R.id.freelance_name);
+            altUserImage=itemView.findViewById(R.id.altUserImage);
+            altTxtName=itemView.findViewById(R.id.altTxtName);
             menuOp = itemView.findViewById(R.id.imageButton1);
         }
 
