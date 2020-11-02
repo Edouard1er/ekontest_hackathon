@@ -6,11 +6,13 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -126,7 +128,7 @@ public class UserModel implements Parcelable {
     }*/
 
 
-    public void getUserNameAndImage(String id, final ImageView imageUser, final TextView name,final  Context context){
+    public void getUserNameAndImage(String id, final ImageView imageUser, final TextView name, final  Context context, final ConstraintLayout altImage, final TextView altText){
         DatabaseReference avisRef = FirebaseDatabase.getInstance().getReference("Users")
                 .child(id);
 
@@ -144,8 +146,20 @@ public class UserModel implements Parcelable {
                     final String[] url = new String[2];
                     url[0] = model.getPersonalInformationModel().getImagelink();
                     url[1] = model.getPersonalInformationModel().getImagename();
-                    UrlImageModel urlImageModel = new UrlImageModel();
-                    urlImageModel.getUrlImage(url,imageUser,context);
+                    if(url[0].length()!=0 || url[1].length()!=0){
+
+                        UrlImageModel urlImageModel = new UrlImageModel();
+                        urlImageModel.getUrlImage(url,imageUser,context);
+                        altImage.setVisibility(View.GONE);
+
+
+
+                    }else{
+                        imageUser.setVisibility(View.GONE);
+                        altImage.setVisibility(View.VISIBLE);
+                        altText.setText(model.getPersonalInformationModel().getLastname().charAt(0)+""+model.getPersonalInformationModel().getFirstname().charAt(0));
+                    }
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }

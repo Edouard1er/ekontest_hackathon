@@ -2,10 +2,13 @@ package com.example.ekontest_hackathon;
 
 import android.content.Context;
 import android.net.Uri;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,6 +35,56 @@ public class UrlImageModel {
 
 
     public UrlImageModel() {
+    }
+    public String getUrlImage(String[] imageSource, final ImageView imageUser, final Context context, final ConstraintLayout constraintLayout, final TextView textView){
+        final String[] url = new String[1];
+        final StorageReference mStorageRef= FirebaseStorage.getInstance().getReference();
+
+        try{
+            if(imageSource[0].contains("firebasestorage.googleapis.com")){
+                final StorageReference fileReference= mStorageRef.child("Images").child(imageSource[1]+"_500x500");
+                fileReference.getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri2) {
+                                url[0] =String.valueOf(uri2);
+                                Glide.with(context)
+                                        .load(uri2)
+                                        .centerCrop()
+                                        .into(imageUser);
+                                //     .apply(new RequestOptions().override(200,90))
+
+
+
+                            }
+                        });
+                return url[0];
+            }else{
+                url[0] =imageSource[0];
+                Glide.with(imageUser)
+                        .load(url[0])
+                        //  .apply(new RequestOptions().override(120,90))
+                        .centerCrop()
+                        .into(imageUser);
+                if(url[0].length()==0){
+                    constraintLayout.setVisibility(View.VISIBLE);
+                    // holder.altTxtName.setText(u.getPersonalInformationModel().getLastname().charAt(0)+""+u.getPersonalInformationModel().getFirstname().charAt(0));
+                    imageUser.setVisibility(View.GONE);
+
+                }else{
+                    Toast.makeText(context, "Not zero", Toast.LENGTH_SHORT).show();
+                }
+
+                return url[0];
+            }
+        }catch (Exception e){
+            return url[0];
+        }
+
+
+
+
+
     }
     public String getUrlImage(String[] imageSource, final ImageView imageUser, final Context context){
         final String[] url = new String[1];
@@ -63,6 +116,7 @@ public class UrlImageModel {
                         //  .apply(new RequestOptions().override(120,90))
                         .centerCrop()
                         .into(imageUser);
+              
 
                 return url[0];
             }
@@ -71,7 +125,11 @@ public class UrlImageModel {
         }
 
 
+
+
+
     }
+
     public void updateImageUser(String path) throws FileNotFoundException {
         uri = Uri.parse(path);
         mStorageRef= FirebaseStorage.getInstance().getReference();
@@ -153,6 +211,7 @@ public class UrlImageModel {
         }catch (Exception e){
             return url[0];
         }
+
 
 
     }

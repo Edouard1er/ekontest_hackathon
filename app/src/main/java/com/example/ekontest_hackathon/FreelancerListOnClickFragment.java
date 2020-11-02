@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,6 +62,8 @@ public class FreelancerListOnClickFragment extends Fragment{
     ArrayList <FreelancerModel> userModels;
     FreelancerModel singleUser;
     FloatingActionButton sendFreelancerMessage;
+    ConstraintLayout altUserImage;
+    TextView altTxtName;
 
     // Important when you have a listener with an interface
     @Override
@@ -188,6 +191,9 @@ public class FreelancerListOnClickFragment extends Fragment{
         progressBar4= view.findViewById(R.id.progressBar4);
         progressBar5= view.findViewById(R.id.progressBar5);
 
+
+         altUserImage=view.findViewById(R.id.altUserImage);
+         altTxtName=view.findViewById(R.id.altTxtName);
         mFirstname = view.findViewById(R.id.prenom_freelancer);
         mLastname = view.findViewById(R.id.nom_freelancer);
         mSexe = view.findViewById(R.id.sexe_freelancer);
@@ -223,6 +229,7 @@ public class FreelancerListOnClickFragment extends Fragment{
     }
 
     public void setInfoPerso(){
+
         try {
             mFirstname.setText(singleUser.getPersonalInformationModel().getFirstname());
             mLastname.setText(singleUser.getPersonalInformationModel().getLastname());
@@ -231,7 +238,8 @@ public class FreelancerListOnClickFragment extends Fragment{
             url[0] = singleUser.getPersonalInformationModel().getImagelink();
             url[1] = singleUser.getPersonalInformationModel().getImagename();
             UrlImageModel urlImageModel = new UrlImageModel();
-            urlImageModel.getUrlImage(url, mImageFreelancer,getContext());
+            urlImageModel.getUrlImage(url, mImageFreelancer,getContext(), altUserImage,altTxtName);
+
         }catch (Exception e){
             System.out.println("There is something wrong in freelancerlistOnclickFragment setinfoperson method");
         }

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -64,6 +65,9 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
     TextView  profile_name;
     TextView  profile_type;
     Button logout;
+    ConstraintLayout altUserImage;
+    TextView altTxtName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

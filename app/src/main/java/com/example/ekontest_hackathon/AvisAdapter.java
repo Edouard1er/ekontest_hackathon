@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -69,7 +70,8 @@ public class AvisAdapter extends RecyclerView.Adapter <AvisAdapter.ViewHolder> {
         try{
             //Setting image and name of User
             UserModel userModel = new UserModel();
-            userModel.getUserNameAndImage(avisModel.getIdUser(),holder.userImage,holder.userName,context);
+            userModel.getUserNameAndImage(avisModel.getIdUser(),holder.userImage,holder.userName,context,holder.altUserImage, holder.altTxtName);
+
 
             // holder.userName.setText("Amos Dorceus");
             holder.comment.setText(avisModel.getComment());
@@ -87,9 +89,10 @@ public class AvisAdapter extends RecyclerView.Adapter <AvisAdapter.ViewHolder> {
     @Override
     public int getItemCount() { return mAvis.size();}
     class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener, View.OnLongClickListener{
-        TextView userName, date, comment;
+        TextView userName, date, comment,altTxtName;
         RatingBar ratingBar;
         ImageView userImage;
+        ConstraintLayout altUserImage;
         public  ViewHolder(View itemView){
             super(itemView);
             itemView.setOnClickListener(this);
@@ -102,7 +105,8 @@ public class AvisAdapter extends RecyclerView.Adapter <AvisAdapter.ViewHolder> {
             date = itemView.findViewById(R.id.avis_date);
             comment= itemView.findViewById(R.id.avis_info_freelancer);
             ratingBar=itemView.findViewById(R.id.avis_user_rate);
-
+            altUserImage=itemView.findViewById(R.id.altUserImage);
+            altTxtName=itemView.findViewById(R.id.altTxtName);
         }
         @Override
         public void onClick(View v) {

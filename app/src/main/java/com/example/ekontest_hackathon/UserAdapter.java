@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -67,8 +68,19 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
             final String[] url = new String[2];
             url[0] = u.getPersonalInformationModel().getImagelink();
             url[1] = u.getPersonalInformationModel().getImagename();
+            if(url[0].length()!=0 || url[1].length()!=0){
+                UserAdapter userAdapter= new UserAdapter();
+                //   userAdapter.getUrlImage(model.getPersonalInformationModel().getImagelink(),imageFreelancer);
+                //userAdapter.getUrlImage(url,imageFreelancer);
+                holder.altUserImage.setVisibility(View.GONE);
+                getUrlImage(url, holder.userImage);
+
+            }else{
+                holder.userImage.setVisibility(View.GONE);
+                holder.altUserImage.setVisibility(View.VISIBLE);
+               holder.altTxtName.setText(u.getPersonalInformationModel().getLastname().charAt(0)+""+u.getPersonalInformationModel().getFirstname().charAt(0));
+            }
             //getUrlImage(u.getPersonalInformationModel().getImagename(), holder.userImage);
-            getUrlImage(url, holder.userImage);
 
             //Toast.makeText(context, "The last message is: "+theLastMessage, Toast.LENGTH_SHORT).show();
             holder.lastMessage.setText(theLastMessage);
@@ -99,8 +111,10 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
         return mUser.size();
     }
     class UserHolder extends RecyclerView.ViewHolder  implements View.OnClickListener, View.OnLongClickListener{
-        TextView userName;
+        TextView userName,altTxtName;
         ImageView userImage;
+        ConstraintLayout altUserImage;
+
         TextView userId;
 
         TextView online;
@@ -114,7 +128,12 @@ public class UserAdapter extends RecyclerView.Adapter< UserAdapter.UserHolder> {
             context = itemView.getContext();
 
             userName=itemView.findViewById(R.id.cUserName);
+            altTxtName=itemView.findViewById(R.id.altTxtName);
             userImage=itemView.findViewById(R.id.cUserImage);
+            altUserImage=itemView.findViewById(R.id.altUserImage);
+            altTxtName=itemView.findViewById(R.id.altTxtName);
+
+
             userId = itemView.findViewById(R.id.UserId);
 
             lastMessage = itemView.findViewById(R.id.lastMessage);
