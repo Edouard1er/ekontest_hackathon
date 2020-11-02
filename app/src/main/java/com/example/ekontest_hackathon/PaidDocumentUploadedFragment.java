@@ -1,5 +1,6 @@
 package com.example.ekontest_hackathon;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,12 +42,17 @@ public class PaidDocumentUploadedFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_paid_document_uploaded, container, false);
         mArrayList = new ArrayList<CustomDocumentModel>();
         mListView = (ListView) view.findViewById(R.id.uploaded_list_paid_document);
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 int position = i;
                 CustomDocumentModel value = (CustomDocumentModel) mArrayList.get(position);
                 Toast.makeText(getContext(), position + "- Id: " + value.getId(), Toast.LENGTH_LONG).show();
+                System.out.println("About to open document: " + value.getId());
+                Intent intent = new Intent(view.getContext(), PdfView.class);
+                intent.putExtra("fileName", value.getFileName());
+                startActivity(intent);
             }
         });
 
@@ -69,7 +75,7 @@ public class PaidDocumentUploadedFragment extends Fragment {
                     System.out.println("Date: " + parts[0]);
                     System.out.println("Time: " + parts[1]);
                     if(model.getIdUser().equals(user.getUid())) {
-                        mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_, model.getIdDocument(), model.getStatus()));
+                        mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_, model.getIdDocument(), model.getStatus(), model.getFileName()));
                     }
                 }
                 if(getActivity()!=null) {

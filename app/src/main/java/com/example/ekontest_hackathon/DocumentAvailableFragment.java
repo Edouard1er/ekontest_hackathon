@@ -1,5 +1,6 @@
 package com.example.ekontest_hackathon;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -42,6 +44,19 @@ public class DocumentAvailableFragment extends Fragment implements PopupMenu.OnM
         mArrayList = new ArrayList<CustomDocumentModel>();
         mListView = (ListView) view.findViewById(R.id.available_list_document);
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int position = i;
+                CustomDocumentModel value = (CustomDocumentModel) mArrayList.get(position);
+                Toast.makeText(getContext(), position + "- Id: " + value.getId(), Toast.LENGTH_LONG).show();
+                System.out.println("About to open document: " + value.getId());
+                Intent intent = new Intent(view.getContext(), PdfView.class);
+                intent.putExtra("fileName", value.getFileName());
+                startActivity(intent);
+            }
+        });
+
         final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docAvailable");
         freelancerRef.addValueEventListener(new ValueEventListener() {
@@ -57,7 +72,6 @@ public class DocumentAvailableFragment extends Fragment implements PopupMenu.OnM
                     docs.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            mArrayList.clear();
                             NormalDocModel model = snapshot.getValue(NormalDocModel.class);
                             System.out.println(snapshot);
 
@@ -66,7 +80,7 @@ public class DocumentAvailableFragment extends Fragment implements PopupMenu.OnM
                             String date_ = parts[0];
                             String time_ = parts[1];
 
-                            mArrayList.add(new CustomDocumentModel(model.getTitle(),time_, time_, model.getIdDocument(), date_));
+                            mArrayList.add(new CustomDocumentModel(model.getTitle(),time_, time_, model.getIdDocument(), date_, model.getFileName()));
                             mAdapter.notifyDataSetChanged();
                         }
 
