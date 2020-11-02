@@ -42,10 +42,11 @@
 
     <LinearLayout
         android:id="@+id/spaceText"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="2dp"
+        android:weightSum="20"
         android:background="#E7F1F0">
 
         <EditText
@@ -54,6 +55,7 @@
             android:layout_height="60dp"
             android:layout_margin="5dp"
             android:autofillHints="send a message"
+            android:layout_weight="18"
             android:background="@android:color/white" />
 
         <ImageButton
@@ -64,6 +66,7 @@
             android:layout_alignParentRight="true"
             android:layout_gravity="center"
             android:layout_margin="10dp"
+            android:layout_weight="2"
             android:background="@drawable/send"
             android:visibility="gone"/>
 

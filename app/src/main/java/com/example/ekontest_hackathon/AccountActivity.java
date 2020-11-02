@@ -10,9 +10,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,10 +67,29 @@ public class AccountActivity extends AppCompatActivity {
     private StorageTask mUploadTask;
     private   Uri uri;
 
+    //Tag part
+    EditText textTag;
+    TextView showSpaceTag, saveTag, hideSpaceTag;
+
+    LinearLayout tagLayoutFirst;
+    LinearLayout tagLayoutSecond;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        //tag
+        textTag = (EditText) findViewById(R.id.textTag);
+        tagLayoutFirst = (LinearLayout) findViewById(R.id.tag_layout_first);
+        tagLayoutSecond = (LinearLayout) findViewById(R.id.tag_layout_second);
+        showSpaceTag =(TextView) findViewById(R.id.addTag);
+        saveTag =(TextView) findViewById(R.id.saveTag);
+        hideSpaceTag =(TextView) findViewById(R.id.cancelTag);
+
+
+
+
         nom = (TextView) findViewById(R.id.textViewNom);
         prenom = (TextView) findViewById(R.id.textViewPrenom);
         sexe = (TextView) findViewById(R.id.textViewSexe);
@@ -135,6 +158,74 @@ public class AccountActivity extends AppCompatActivity {
                 });
 
 
+        showSpaceTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tagLayoutSecond.setVisibility(View.VISIBLE);
+                hideSpaceTag.setVisibility(View.VISIBLE);
+                showSpaceTag.setVisibility(View.GONE);
+
+            }
+        });
+        hideSpaceTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tagLayoutSecond.setVisibility(View.GONE);
+                showSpaceTag.setVisibility(View.VISIBLE);
+                hideSpaceTag.setVisibility(View.GONE);
+            }
+        });
+
+        textTag.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                if(s.toString().trim().length()!=0){
+                    saveTag.setVisibility(View.VISIBLE);
+                }else{
+                    saveTag.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(s.toString().trim().length()!=0){
+                    saveTag.setVisibility(View.VISIBLE);
+                }else{
+                    saveTag.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().trim().length()!=0){
+                    saveTag.setVisibility(View.VISIBLE);
+                }else{
+                    saveTag.setVisibility(View.GONE);
+                }
+
+            }
+        });
+        saveTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TagModel model = new TagModel();
+                model.InsertTag(textTag.getText().toString());
+                tagLayoutSecond.setVisibility(View.GONE);
+                showSpaceTag.setVisibility(View.VISIBLE);
+                hideSpaceTag.setVisibility(View.GONE);
+                Toast.makeText(AccountActivity.this, "Enregistre", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+    public void TagLayout(){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
 
     }
@@ -159,6 +250,17 @@ public class AccountActivity extends AppCompatActivity {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
+                try{
+                    if(model.getType().equals("Freelancer") || model.getType().equals("Professor")){
+                        tagLayoutFirst.setVisibility(View.VISIBLE);
+                    }else{
+                        tagLayoutFirst.setVisibility(View.GONE);
+
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
             }
 
             @Override

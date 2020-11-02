@@ -25,7 +25,7 @@ public class TypeAccount extends AppCompatActivity {
     RadioGroup radioGroup;
     List<PersonalInformationModel> personelList;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String type;
+    String type="Student";
 
 
     @Override
