@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.ekontest_hackathon.AboutActivity;
 import com.example.ekontest_hackathon.AccountActivity;
+import com.example.ekontest_hackathon.Authentication;
 import com.example.ekontest_hackathon.AvisDisplayFreelancerFragment;
 import com.example.ekontest_hackathon.AvisFreelancerFragment;
 import com.example.ekontest_hackathon.DocumentFragment;
@@ -33,6 +35,7 @@ import com.example.ekontest_hackathon.HelpCommentActivity;
 import com.example.ekontest_hackathon.PaymentMethodActivity;
 import com.example.ekontest_hackathon.R;
 import com.example.ekontest_hackathon.SettingActivity;
+import com.example.ekontest_hackathon.TestHomeActivity;
 import com.example.ekontest_hackathon.UrlImageModel;
 import com.example.ekontest_hackathon.UserModel;
 import com.example.ekontest_hackathon.HomeFragment;
@@ -89,6 +92,20 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         mFragmentTransaction.commit();
         mToolbar.setTitle("Homepage");
         bottomMenu="HomePage";
+
+
+
+     /*   Handler handler = new Handler();
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(NavDrawerActivity.this, TestHomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 1);*/
+
 
 
 
