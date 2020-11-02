@@ -6,9 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".UploadNormalDocument">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
             android:text="Upload your new document"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
@@ -35,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40sp"
             android:text="Normal document are eligible right after submission. You can assign it to any of your students. "
+            android:textColor="@color/black"
             android:textStyle="italic" />
 
         <TextView
@@ -43,7 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="35sp"
             android:layout_marginTop="10sp"
-            android:text="Document title" />
+            android:text="Document title"
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/editTextDocumentTitle"
@@ -60,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="35sp"
             android:layout_marginTop="10sp"
+            android:background="@color/couleur4"
             android:onClick="showFileChooser"
             app:srcCompat="@android:drawable/ic_menu_upload" />
 
@@ -69,7 +78,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="35sp"
             android:layout_marginTop="10sp"
-            android:text="Document name" />
+            android:text="Document name"
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/editTextDocumentName"
@@ -88,8 +98,10 @@
             android:layout_gravity="end"
             android:layout_marginTop="20sp"
             android:layout_marginRight="10sp"
+            android:background="@color/couleur4"
             android:onClick="uploadPdf"
-            android:text="Upload" />
+            android:text="Upload"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

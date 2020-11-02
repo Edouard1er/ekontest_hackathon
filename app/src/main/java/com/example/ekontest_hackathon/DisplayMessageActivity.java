@@ -147,7 +147,6 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 }else{
                     send.setVisibility(View.GONE);
                 }
-
             }
 
             @Override
@@ -158,7 +157,6 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 }else{
                     send.setVisibility(View.GONE);
                 }
-
             }
 
             @Override
@@ -168,7 +166,6 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 }else{
                     send.setVisibility(View.GONE);
                 }
-
             }
         });
         send.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +174,6 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 notify =true;
                 sendingMessage(receiver,user.getUid(),message.getText().toString());
                 message.setText("");
-
             }
         });
 

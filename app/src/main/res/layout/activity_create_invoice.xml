@@ -6,9 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".UploadNormalDocument">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
             android:text="New Invoice"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
@@ -27,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40sp"
             android:text="This invoice is created by a freelancer and sent to student in order to proceed a payment."
+            android:textColor="@color/black"
             android:textStyle="italic" />
 
         <TextView
@@ -34,7 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="35sp"
             android:layout_marginTop="10sp"
-            android:text="Freelance name" />
+            android:text="Freelance name"
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/editTextFreelanceName"
@@ -51,7 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="35sp"
             android:layout_marginTop="10sp"
-            android:text="Student name" />
+            android:text="Student name"
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/editTextStudentName"
@@ -68,7 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="35sp"
             android:layout_marginTop="10sp"
-            android:text="Freelance price" />
+            android:text="Freelance price"
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/editTextFreelancePrice"
@@ -85,7 +95,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="35sp"
             android:layout_marginTop="10sp"
-            android:text="Duration" />
+            android:text="Duration"
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/editTextDuration"
@@ -103,8 +114,10 @@
             android:layout_gravity="end"
             android:layout_marginTop="20sp"
             android:layout_marginRight="10sp"
+            android:background="@color/couleur4"
             android:onClick="createInvoice"
             android:text="Submit"
+            android:textColor="@color/white"
             tools:text="Submit" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
