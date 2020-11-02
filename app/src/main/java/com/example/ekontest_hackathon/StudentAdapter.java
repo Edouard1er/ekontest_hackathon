@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,7 +45,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
     private  Context context;
     private Boolean isChat;
     private ImageButton menuOp;
+    List<StudentModel> userFiltered;
+    List<StudentModel> mStudent;
+
     List <UserModel> mUser;
+    CustomFilter filter;
+
     private static  boolean dialogOpened = false;
 
 
@@ -304,6 +311,69 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
             appCompatActivity.finish();
         }
     }
+
+    public Filter getFilter() {
+        // TODO Auto-generated method stub
+        if(filter == null)
+        {
+            filter=new StudentAdapter.CustomFilter();
+        }
+
+        return filter;
+    }
+    class CustomFilter extends Filter
+    {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            // TODO Auto-generated method stub
+
+            FilterResults results=new FilterResults();
+
+            if(constraint != null && constraint.length()>0)
+            {
+                Log.e("Main"," data search: "+constraint.toString());
+
+                //CONSTARINT TO UPPER
+                constraint=constraint.toString().toUpperCase();
+
+                ArrayList<StudentModel> filters=new ArrayList<StudentModel>();
+                // filters.clear();
+                //get specific items
+                for(StudentModel user : userFiltered)
+                {
+                    if(user.getPersonalInformationModel().getFirstname().toUpperCase().contains(constraint) || user.getPersonalInformationModel().getLastname().toUpperCase().contains(constraint))
+                    {
+                        filters.add(user);
+                    }
+                }
+                results.values=filters;
+                results.count=filters.size();
+
+            }else
+            {    results.values=userFiltered;
+                results.count=userFiltered.size();
+
+
+            }
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            // TODO Auto-generated method stub
+
+
+
+            mStudent=(ArrayList<StudentModel>) results.values;
+            notifyDataSetChanged();
+        }
+
+    }
+
+
 }
 
 
