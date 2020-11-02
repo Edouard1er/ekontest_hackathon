@@ -20,6 +20,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
+            <LinearLayout
+                android:id="@+id/altImage"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="@color/bleu_fonce"
+                android:visibility="gone">
+                <TextView
+                    android:id="@+id/altTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:text="AD"
+                    android:textColor="@color/white"
+                    android:textSize="40dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/image_freelancer"

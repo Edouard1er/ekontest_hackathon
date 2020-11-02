@@ -12,7 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/altUserImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:elevation="10dp"
+            android:scaleType="centerCrop"
+            android:src="@color/bleu_fonce"
+            />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cUserImage"

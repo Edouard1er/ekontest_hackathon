@@ -12,6 +12,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -67,6 +68,9 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
         TextView nbrEtudiantFreelancer= (TextView) convertView.findViewById(R.id.nbr_etudiant_freelancer);
         ImageView remove_favorite= convertView.findViewById(R.id.remove_favorite);
         ImageView add_favorite= convertView.findViewById(R.id.add_favorite);
+        LinearLayout altImage = (LinearLayout) convertView.findViewById(R.id.altImage);
+        TextView altTextName= (TextView) convertView.findViewById(R.id.altTextName);
+
 
 
 
@@ -74,12 +78,22 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
         final FreelancerModel model=  mFreelancer.get(position);
         final String[] url = new String[2];
         try {
+            model.loadFavoritePicture(model.getId(),add_favorite,remove_favorite,context);
             url[0] = model.getPersonalInformationModel().getImagelink();
             url[1] = model.getPersonalInformationModel().getImagename();
-            UserAdapter userAdapter= new UserAdapter();
-            //   userAdapter.getUrlImage(model.getPersonalInformationModel().getImagelink(),imageFreelancer);
-            userAdapter.getUrlImage(url,imageFreelancer);
-            model.loadFavoritePicture(model.getId(),add_favorite,remove_favorite,context);
+            if(url[0].length()!=0 || url[1].length()!=0){
+                UserAdapter userAdapter= new UserAdapter();
+                //   userAdapter.getUrlImage(model.getPersonalInformationModel().getImagelink(),imageFreelancer);
+                userAdapter.getUrlImage(url,imageFreelancer);
+                altImage.setVisibility(View.GONE);
+            }else{
+                imageFreelancer.setVisibility(View.GONE);
+                altImage.setVisibility(View.VISIBLE);
+                altTextName.setText(model.getPersonalInformationModel().getLastname().charAt(0)+""+model.getPersonalInformationModel().getFirstname().charAt(0));
+            }
+
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -90,7 +104,7 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
 
             String lastname=model.getPersonalInformationModel().getLastname().toLowerCase();
             lastname = lastname.substring(0,1).toUpperCase() + lastname.substring(1);
-            nameFreelancer.setText(firstname+" "+lastname);
+            nameFreelancer.setText(lastname+" "+firstname);
         }catch (Exception e){
             e.printStackTrace();
         }
