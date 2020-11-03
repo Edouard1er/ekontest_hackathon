@@ -2,7 +2,6 @@ package com.example.ekontest_hackathon;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -100,38 +99,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         fab.setVisibility(View.GONE);
 
-        fab.setOnTouchListener(new View.OnTouchListener() {
-            float dX;
-            float dY;
-            int lastAction;
 
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                switch (event.getActionMasked()) {
-                    case MotionEvent.ACTION_DOWN:
-                        dX = view.getX() - event.getRawX();
-                        dY = view.getY() - event.getRawY();
-                        lastAction = MotionEvent.ACTION_DOWN;
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        view.setY(event.getRawY() + dY);
-                        view.setX(event.getRawX() + dX);
-                        lastAction = MotionEvent.ACTION_MOVE;
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        if (lastAction == MotionEvent.ACTION_DOWN)
-//                            Toast.makeText(DraggableView.this, "Clicked!", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    default:
-                        return false;
-                }
-                return true;
-            }
-        });
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         message = findViewById(R.id.textMessage);
@@ -150,18 +118,45 @@ public class DisplayMessageActivity extends AppCompatActivity {
                         System.out.println("Invoice Id ---: " + invoice.getInvoiceId());
                         if(invoice.getStatus().equals("New")) {
                             System.out.println("Invoice Id: " + invoice.getInvoiceId());
-                            fab.setOnClickListener(new View.OnClickListener() {
+                            fab.setOnTouchListener(new View.OnTouchListener() {
+                                float dX;
+                                float dY;
+                                int lastAction;
+
                                 @Override
-                                public void onClick(View view) {
-                                    Toast.makeText(getApplicationContext(), "Reading invoice", Toast.LENGTH_LONG).show();
-                                    Intent intent_1 = new Intent(getApplicationContext(), MonCash.class);
-                                    intent_1.putExtra("receiver", receiver);
-                                    intent_1.putExtra("sender", invoice.getSenderId());
-                                    intent_1.putExtra("invoiceId", invoice.getInvoiceId());
-                                    intent_1.putExtra("transaction", "freelance");
-                                    startActivity(intent_1);
+                                public boolean onTouch(View view, MotionEvent event) {
+                                    switch (event.getActionMasked()) {
+                                        case MotionEvent.ACTION_DOWN:
+                                            dX = view.getX() - event.getRawX();
+                                            dY = view.getY() - event.getRawY();
+                                            lastAction = MotionEvent.ACTION_DOWN;
+                                            break;
+
+                                        case MotionEvent.ACTION_MOVE:
+                                            view.setY(event.getRawY() + dY);
+                                            view.setX(event.getRawX() + dX);
+                                            lastAction = MotionEvent.ACTION_MOVE;
+                                            break;
+
+                                        case MotionEvent.ACTION_UP:
+                                            if (lastAction == MotionEvent.ACTION_DOWN) {
+                                                Toast.makeText(getApplicationContext(), "Reading invoice", Toast.LENGTH_LONG).show();
+                                                Intent intent_1 = new Intent(getApplicationContext(), MonCash.class);
+                                                intent_1.putExtra("receiver", receiver);
+                                                intent_1.putExtra("sender", invoice.getSenderId());
+                                                intent_1.putExtra("invoiceId", invoice.getInvoiceId());
+                                                intent_1.putExtra("transaction", "freelance");
+                                                startActivity(intent_1);
+                                            }
+                                            break;
+
+                                        default:
+                                            return false;
+                                    }
+                                    return false;
                                 }
                             });
+
                             fab.setVisibility(View.VISIBLE);
                         }
                     }
