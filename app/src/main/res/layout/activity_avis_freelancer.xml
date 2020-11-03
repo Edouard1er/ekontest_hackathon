@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".AvisFreelancerActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/couleur4"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:theme="?attr/actionBarTheme"
+        app:subtitleTextColor="@color/couleur1"
+        app:title="@string/AvisFreelancer"
+        app:titleTextColor="@color/couleur1" />
     <fragment
         android:id="@+id/freelancerOnclickAvis"
         android:name="com.example.ekontest_hackathon.AvisFreelancerFragment"

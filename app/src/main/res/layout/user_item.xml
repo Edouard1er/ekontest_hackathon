@@ -27,7 +27,7 @@
 
                 android:elevation="10dp"
                 android:scaleType="centerCrop"
-                android:src="@color/bleu_fonce"
+                android:src="@color/couleur3"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,7 @@
                 android:layout_centerInParent="true"
 
                 android:text="AD"
-                android:textColor="@color/white"
+                android:textColor="@color/couleur1"
                 android:elevation="200dp"
                 android:textSize="15sp"
                 android:textAlignment="center"

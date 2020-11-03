@@ -49,9 +49,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="60dp"
-                    android:shadowColor="@color/bleu_fonce"
+                    android:shadowColor="@color/couleur3"
                     android:text="TextView"
-                    android:textColor="@color/bleu_fonce" />
+                    android:textColor="@color/couleur3" />
 
                 <TextView
                     android:id="@+id/documentStatus"
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textColor="@color/bleu_fonce" />
+                    android:textColor="@color/couleur3" />
             </LinearLayout>
 
         </LinearLayout>

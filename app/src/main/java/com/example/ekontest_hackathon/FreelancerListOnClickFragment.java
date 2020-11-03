@@ -105,7 +105,7 @@ public class FreelancerListOnClickFragment extends Fragment{
         mRatingBar2 = view.findViewById(R.id.rating_bar_item_freelancer2);
         mRatingValue = view.findViewById(R.id.rating_bar_value_freelancer);
         mRatingBar.setStarsSeparation(100,30);
-        mRatingBar.setFillColor(R.color.bleu_fonce);
+        mRatingBar.setFillColor(R.color.couleur3);
         rateLayout=view.findViewById(R.id.rate_layout);
 
         //Make rate layout invisible or visible

@@ -47,7 +47,6 @@ public class FavoriteFragment extends Fragment {
 
         mGridView = view.findViewById(R.id.favorite_gridview);
         mArrayList = new ArrayList<CustomFreelancerModel>();
-        mArrayList.add(new CustomFreelancerModel("Edouard", "Chevenslove", R.drawable.zidane));
         mArrayList.add(new CustomFreelancerModel("Romulus", "Ronick", R.drawable.messi));
         mArrayList.add(new CustomFreelancerModel("Romulus", "Ronick", R.drawable.messi));
         mainAdaper = new MainAdaper(getContext(), mArrayList);

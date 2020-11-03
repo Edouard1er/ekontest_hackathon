@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:elevation="10dp"
                 android:scaleType="centerCrop"
-                android:src="@color/bleu_fonce"
+                android:src="@color/couleur3"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
                 android:gravity="center"
                 android:text="AD"
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="@color/couleur1"
                 android:textSize="15sp"
 
                 android:textStyle="bold"
@@ -85,7 +85,7 @@
                 android:paddingTop="@dimen/nav_header_vertical_spacing"
                 android:text="username"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/white"
+                android:textColor="@color/couleur1"
                 android:textSize="13sp" />
 
             <TextView
@@ -95,7 +95,7 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="Freelancer"
-                android:textColor="@color/white"
+                android:textColor="@color/couleur1"
                 android:textSize="12sp" />
 
             <Button

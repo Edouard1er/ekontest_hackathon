@@ -127,7 +127,7 @@
             android:background="@color/couleur4"
             android:onClick="submitPdf"
             android:text="Submit"
-            android:textColor="@color/white"
+            android:textColor="@color/couleur1"
             tools:text="Submit" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

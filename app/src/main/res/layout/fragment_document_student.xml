@@ -18,8 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tabIndicatorColor="@color/couleur5"
-        app:tabRippleColor="@color/bleu_fonce"
-        app:tabSelectedTextColor="@color/white"
+        app:tabRippleColor="@color/couleur3"
+        app:tabSelectedTextColor="@color/couleur1"
         app:tabTextColor="@color/black">
 
         <com.google.android.material.tabs.TabItem

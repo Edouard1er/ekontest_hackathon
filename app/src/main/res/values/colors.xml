@@ -1,41 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="couleur1">#15a6d3</color>
+    <color name="couleur1">#ffffff</color>
     <color name="couleur2">#2c93cc</color>
-    <color name="couleur3">#4f8cd8</color>
+    <color name="couleur3">#1e68b3</color>
     <color name="couleur4">#168ecc</color>
-    <color name="couleur5">#f1d514</color>
-    <color name="couleur6">#76cee3</color>
-    <color name="couleur7">#2c93cc</color>
-    <color name="couleur8">#3aafd4</color>
-    <color name="couleur9">#01106b</color>
-    <color name="couleur10">#dfe6f2</color>
-    <color name="orange">#f37a21</color>
-    <color name="lightorange">#ffffd6</color>
-
-    <color name="lightblue">#00323a</color>
-    <color name="bleu_fonce">#021C41</color>
-
-    <color name="red">#F61459</color>
-
-
-    <color name="white">#FFFFFF</color>
+    <color name="couleur5">#f37a21</color>
     <color name="gray">#D3D3D3</color>
     <color name="black">#000000</color>
-    <color name="red_transparent">#AAF61459</color>
-    <color name="bleu_fonce_transparent">#88021C41</color>
-    <color name="primaryColor">#006064</color>
-    <color name="primaryLightColor">#428e92</color>
-    <color name="primaryDarkColor">#00363a</color>
-    <color name="secondaryColor">#263238</color>
-    <color name="secondaryLightColor">#4f5b62</color>
-    <color name="secondaryDarkColor">#000a12</color>
-    <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#ffffff</color>
-
+    <color name="bleu_fonce">#021C41</color>
     //Color for firebase login custom theme
     <color name="material_blue_50"> #ffffff</color>
     <color name="material_blue_500">#0761df</color>

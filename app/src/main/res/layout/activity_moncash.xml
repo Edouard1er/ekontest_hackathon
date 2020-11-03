@@ -54,7 +54,7 @@
                 android:layout_weight="1"
                 android:padding="10sp"
                 android:text="Summary"
-                android:textColor="@color/white"
+                android:textColor="@color/couleur1"
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -65,7 +65,7 @@
             android:layout_height="34dp"
             android:paddingLeft="25sp"
             android:text="Provider infos"
-            android:textColor="@color/white"
+            android:textColor="@color/couleur1"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -80,7 +80,7 @@
                 android:layout_weight="1"
                 android:paddingLeft="35sp"
                 android:text="Amos Dorceus"
-                android:textColor="@color/white" />
+                android:textColor="@color/couleur1" />
 
             <TextView
                 android:id="@+id/provider_email"
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="adorceus@gmail.com"
-                android:textColor="@color/white" />
+                android:textColor="@color/couleur1" />
         </LinearLayout>
 
         <LinearLayout
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="+509 36 90 53 18"
-                android:textColor="@color/white" />
+                android:textColor="@color/couleur1" />
         </LinearLayout>
 
         <LinearLayout
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="25sp"
             android:text="Product infos"
-            android:textColor="@color/white"
+            android:textColor="@color/couleur1"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -146,7 +146,7 @@
                 android:layout_weight="1"
                 android:paddingLeft="35sp"
                 android:text="Type"
-                android:textColor="@color/white" />
+                android:textColor="@color/couleur1" />
 
             <TextView
                 android:id="@+id/product_type"
@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Document"
-                android:textColor="@color/white" />
+                android:textColor="@color/couleur1" />
 
         </LinearLayout>
 
@@ -170,7 +170,7 @@
                 android:layout_weight="1"
                 android:paddingLeft="35sp"
                 android:text="Name"
-                android:textColor="@color/white" />
+                android:textColor="@color/couleur1" />
 
             <TextView
                 android:id="@+id/product_name"
@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="java_exo.pdf"
-                android:textColor="@color/white" />
+                android:textColor="@color/couleur1" />
         </LinearLayout>
 
         <LinearLayout
@@ -193,7 +193,7 @@
                 android:layout_weight="1"
                 android:paddingLeft="35sp"
                 android:text="Price"
-                android:textColor="@color/white" />
+                android:textColor="@color/couleur1" />
 
             <TextView
                 android:id="@+id/product_price"
@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="5 gdes"
-                android:textColor="@color/white"
+                android:textColor="@color/couleur1"
                 android:textStyle="bold" />
         </LinearLayout>
 

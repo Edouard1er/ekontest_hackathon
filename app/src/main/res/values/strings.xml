@@ -6,4 +6,8 @@
     <string name="close">Close</string>
     <string name="strProfile">"Profile "</string>
     <string name="sendComment">Send your comment</string>
+    <string name="AvisFreelancer">Freelancer review</string>
+    <string name="strAccount">Account</string>
+    <string name="strAbout">About</string>
+    <string name="strCreateInvoice">Create an invoice</string>
 </resources>
