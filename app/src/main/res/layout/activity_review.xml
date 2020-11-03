@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ReviewActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/couleur4"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitleTextColor="@color/couleur1"
+        app:title="@string/strEditAccount"
+        app:titleTextColor="@color/couleur1" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,11 +30,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/textView18"
                     android:layout_width="match_parent"
@@ -38,6 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="150sp"
                         android:layout_weight="1">
+
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/imageViewPhoto"
                             android:layout_width="96dp"
@@ -239,12 +259,11 @@
                 android:layout_height="40sp"
                 android:layout_marginLeft="0sp"
                 android:orientation="horizontal"
-                android:paddingTop="10sp"/>
+                android:paddingTop="10sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-
+                android:layout_height="wrap_content" />
 
 
             <LinearLayout
@@ -259,8 +278,8 @@
                     android:id="@+id/saveUserInformation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Save"
-                    android:onClick="onButtonUploadClick"/>
+                    android:onClick="onButtonUploadClick"
+                    android:text="Save" />
             </LinearLayout>
 
         </LinearLayout>

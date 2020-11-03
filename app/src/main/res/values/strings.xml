@@ -18,4 +18,8 @@
     <string name="strPictureUpload">Upload a picture</string>
     <string name="strPaymentMethod">Payment Method</string>
     <string name="strPersonnalInfo">Personnal Information</string>
+    <string name="strEditAccount">Edit Account</string>
+    <string name="strSetting">Settings</string>
+    <string name="strUploadPaidDoc">Upload paid document</string>
+    <string name="strUploadFreeDoc">Upload free document</string>
 </resources>
