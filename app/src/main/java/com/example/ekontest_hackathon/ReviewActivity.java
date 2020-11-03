@@ -272,7 +272,7 @@ public class ReviewActivity extends AppCompatActivity {
               //  AcademicInformationModel aInfo= saveUserAcademicInformation(mLevel, mInstitution, mFaculty, mDegree, mStart, mEnd);
                 UserModel userModel = new UserModel();
                 //userModel.InsertUsers(pInfo,aInfo);
-                userModel.InsertUsers(pInfo);
+                userModel.InsertUsers(pInfo,getApplicationContext());
                 goToNavDrawerActivity();
 
             }else{
@@ -292,7 +292,7 @@ public class ReviewActivity extends AppCompatActivity {
 
 
                                                 UserModel userModel = new UserModel();
-                                                userModel.InsertUsers(pInfo);
+                                                userModel.InsertUsers(pInfo,getApplicationContext());
 
                                                 goToNavDrawerActivity();
                                             }
@@ -330,7 +330,7 @@ public class ReviewActivity extends AppCompatActivity {
             PersonalInformationModel pInfo= toSaveUserInformation("","",mNom, mPrenom, mSexe, mEmail, mPhone, mUsername, mAccount);
 
             UserModel userModel = new UserModel();
-            userModel.InsertUsers(pInfo);
+            userModel.InsertUsers(pInfo,getApplicationContext());
 
             goToNavDrawerActivity();
         }

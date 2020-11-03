@@ -86,7 +86,7 @@ public class UserModel implements Parcelable {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
     }
 
-    public void InsertUsers(final PersonalInformationModel pModel){
+    public void InsertUsers(final PersonalInformationModel pModel, final Context context){
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user.getUid()!= null) {
@@ -94,7 +94,7 @@ public class UserModel implements Parcelable {
                 @Override
                 public void onSuccess(Void aVoid) {
                     TagModel model = new TagModel();
-                    model.InsertTag(pModel.getFirstname()+" "+pModel.getLastname());
+                    model.InsertTag(context,pModel.getFirstname()+" "+pModel.getLastname());
                 }
             });
             databaseReference.child(user.getUid()).child("id").setValue(user.getUid()).addOnSuccessListener(new OnSuccessListener<Void>() {

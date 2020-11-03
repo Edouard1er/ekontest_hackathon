@@ -14,6 +14,7 @@ import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -64,6 +65,7 @@ public class AccountActivity extends AppCompatActivity {
     ChoosePhotoHelper choosePhotoHelper;
     ImageView imageUpload;
     String photoPath;
+    ConstraintLayout imagePlus;
 
     private StorageReference mStorageRef;
     private StorageTask mUploadTask;
@@ -78,6 +80,10 @@ public class AccountActivity extends AppCompatActivity {
     ConstraintLayout altUserImage;
     TextView altTxtName;
     ProgressBar progressBar;
+
+    RecyclerView recyclerViewTag;
+    List <TagModel> mTag= new ArrayList<>();
+    TagListAdapter adapterTag;
 
 
     @Override
@@ -94,6 +100,8 @@ public class AccountActivity extends AppCompatActivity {
         hideSpaceTag =(TextView) findViewById(R.id.cancelTag);
         editPicture =(TextView) findViewById(R.id.editPicture);
         editPicture.setVisibility(View.GONE);
+
+        recyclerViewTag= findViewById(R.id.list_tag);
 
 
 
@@ -116,22 +124,28 @@ public class AccountActivity extends AppCompatActivity {
 
         //Image Upload
         imageUpload = (ImageView) findViewById(R.id.imageViewPhoto);
+        imagePlus =  findViewById(R.id.hideOriginalPicture);
+
         choosePhotoHelper = ChoosePhotoHelper.with(this)
                 .asFilePath()
                 .build(new ChoosePhotoCallback<String>() {
                     @Override
                     public void onChoose(String photo) {
+                        altUserImage.setVisibility(View.GONE);
+                        imageUpload.setVisibility(View.VISIBLE);
                         Glide.with(imageUpload)
                                 .load(photo)
                                 .into(imageUpload);
                         photoPath = photo;
                         System.out.println("Photo picken: " + photo);
                         editPicture.setVisibility(View.VISIBLE);
+                        imagePlus.setVisibility(View.VISIBLE);
 
                     }
                 });
         getAcademicData();
         getPersonalData();
+        getTagList();
         try {
             addProfilePhoto();
         }catch (Exception e){
@@ -157,7 +171,10 @@ public class AccountActivity extends AppCompatActivity {
                             final String[] url = new String[2];
                             url[0] = model.getPersonalInformationModel().getImagelink();
                             url[1] = model.getPersonalInformationModel().getImagename();
-                            getUrlImage(url, imageUpload);
+                            //getUrlImage(url, imageUpload);
+                            UrlImageModel urlImageModel = new UrlImageModel();
+                            urlImageModel.getUrlImage(url, imageUpload, imagePlus,getApplicationContext(),altUserImage,altTxtName,model);
+
                             /*UrlImageModel urlImageModel = new UrlImageModel();
                             urlImageModel.getUrlImage(url, imageUpload, getApplicationContext(),altUserImage,altTxtName,model);*/
                            /* UrlImageModel urlImageModel = new UrlImageModel();
@@ -232,19 +249,63 @@ public class AccountActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 TagModel model = new TagModel();
-                model.InsertTag(textTag.getText().toString());
+                model.InsertTag(getApplicationContext(),textTag.getText().toString());
                 tagLayoutSecond.setVisibility(View.GONE);
                 showSpaceTag.setVisibility(View.VISIBLE);
                 hideSpaceTag.setVisibility(View.GONE);
-                Toast.makeText(AccountActivity.this, "Enregistre", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AccountActivity.this, "Enregistre", Toast.LENGTH_SHORT).show();
 
             }
         });
 
 
     }
-    public void TagLayout(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+    public void getTagList(){
+
+
+        final DatabaseReference databaseReference =  FirebaseDatabase.getInstance().getReference("Tags");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mTag.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                   final String tag = dataSnapshot.getKey();
+                    DatabaseReference databaseReference2 =  FirebaseDatabase.getInstance().getReference("Tags")
+                            .child(tag).child(user.getUid());
+                    databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists() && !tag.equals(nom.getText().toString()+" "+prenom.getText().toString())){
+                                TagModel model = new TagModel();
+                                model.setTag(tag);
+                                mTag.add(model);
+                                recyclerViewTag.setHasFixedSize(true);
+                                recyclerViewTag.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+                                adapterTag= new TagListAdapter(getApplicationContext(), mTag);
+                                recyclerViewTag.setAdapter(adapterTag);
+
+                                //Toast.makeText(AccountActivity.this, ""+model.getTag(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+
+                    });
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
     }
@@ -452,7 +513,7 @@ public class AccountActivity extends AppCompatActivity {
 
         try{
             if(imageSource[0].contains("firebasestorage.googleapis.com")){
-                final StorageReference fileReference= mStorageRef.child("Images").child(imageSource[1]+"_500x500");
+                final StorageReference fileReference= mStorageRef.child("Images").child(imageSource[1]+"_500x175");
                 fileReference.getDownloadUrl()
                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
