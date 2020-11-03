@@ -54,6 +54,7 @@ public class HomePageFragment extends Fragment {
         mArrayList = new ArrayList<CustomHomePageModel>();
         SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy", Locale.getDefault());
 
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         textHome.setVisibility(View.GONE);
         FirebaseDatabase.getInstance().getReference("Invoice").addValueEventListener(new ValueEventListener() {
             @Override
@@ -61,46 +62,48 @@ public class HomePageFragment extends Fragment {
                 if(snapshot.exists()) {
                     for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
                         InvoiceModel inv = dataSnapshot.getValue(InvoiceModel.class);
-                        final int montant = inv.getAmount();
-                        final String name = inv.getFreelanceName();
-                        String date = inv.getDate();
-                        int duree = inv.getDuration();
-                        final int rate = montant / duree;
-                        String dateToShow = "";
+                        if(inv.getSenderId().equals(user.getUid())) {
+                            final int montant = inv.getAmount();
+                            final String name = inv.getFreelanceName();
+                            String date = inv.getDate();
+                            int duree = inv.getDuration();
+                            final int rate = montant / duree;
+                            String dateToShow = "";
 
-                        Calendar cal = Calendar.getInstance();
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
-                        try {
-                            cal.setTime(sdf.parse(date));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
+                            try {
+                                cal.setTime(sdf.parse(date));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            dateToShow += sdf.format(cal.getTime());
+                            cal.add(Calendar.DAY_OF_YEAR, duree);
+                            dateToShow += " - " + sdf.format(cal.getTime());
+
+                            System.out.println("Current time => " + sdf.format(cal.getTime()));
+                            String idReceiver = inv.getReceiverId();
+                            final String finalDateToShow = dateToShow;
+                            FirebaseDatabase.getInstance().getReference("Users").child(idReceiver).child("personalInformationModel").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    PersonalInformationModel infMod = snapshot.getValue(PersonalInformationModel.class);
+                                    String nom = infMod.getFirstname() + " " + infMod.getLastname();
+                                    mArrayList.add(new CustomHomePageModel(finalDateToShow,nom,
+                                            name,montant +" HTG"  ,"HTG " + rate +" /Day"));
+                                    mAdapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         }
-                        dateToShow += sdf.format(cal.getTime());
-                        cal.add(Calendar.DAY_OF_YEAR, duree);
-                        dateToShow += " - " + sdf.format(cal.getTime());
-
-                        System.out.println("Current time => " + sdf.format(cal.getTime()));
-                        String idReceiver = inv.getReceiverId();
-                        final String finalDateToShow = dateToShow;
-                        FirebaseDatabase.getInstance().getReference("Users").child(idReceiver).child("personalInformationModel").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                PersonalInformationModel infMod = snapshot.getValue(PersonalInformationModel.class);
-                                String nom = infMod.getFirstname() + " " + infMod.getLastname();
-                                mArrayList.add(new CustomHomePageModel(finalDateToShow,nom,
-                                        name,montant +" HTG"  ,"HTG " + rate +" /Day"));
-                                mAdapter.notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
                     }
                     if(getActivity() != null) {
-                        mAdapter = new CustomHomePageAdapter(getContext(),R.layout.homepage_custom_list, mArrayList);
-                        mListView.setAdapter(mAdapter);
+                            mAdapter = new CustomHomePageAdapter(getContext(),R.layout.homepage_custom_list, mArrayList);
+                            mListView.setAdapter(mAdapter);
                     }
                 } else {
                     textHome.setVisibility(View.VISIBLE);
