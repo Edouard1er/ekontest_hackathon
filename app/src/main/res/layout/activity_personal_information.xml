@@ -7,6 +7,22 @@
     android:isScrollContainer="true"
     tools:context=".PersonalInformationActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarPersonnalInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/couleur4"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitleTextColor="@color/couleur1"
+        app:title="@string/strPersonnalInfo"
+        app:titleTextColor="@color/couleur1" />
+
     <ScrollView
         android:layout_width="409dp"
         android:layout_height="0dp"
@@ -18,7 +34,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="60dp"
             android:orientation="vertical"
             android:paddingBottom="10sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -181,7 +197,8 @@
                 android:layout_marginRight="30sp"
                 android:onClick="nextFormAction"
                 android:text="Next"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
             <Button
                 android:id="@+id/save_button"
                 android:layout_width="wrap_content"
@@ -191,7 +208,7 @@
                 android:layout_marginRight="30sp"
                 android:onClick="updateData"
                 android:text="Save"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

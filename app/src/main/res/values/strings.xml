@@ -16,4 +16,6 @@
     <string name="strFreelancerInfo">Freelancer Information</string>
     <string name="strHelp">Help and Comments</string>
     <string name="strPictureUpload">Upload a picture</string>
+    <string name="strPaymentMethod">Payment Method</string>
+    <string name="strPersonnalInfo">Personnal Information</string>
 </resources>
