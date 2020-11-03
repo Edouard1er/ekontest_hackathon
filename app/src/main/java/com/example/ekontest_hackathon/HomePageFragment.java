@@ -27,8 +27,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -36,6 +42,7 @@ public class HomePageFragment extends Fragment {
     ListView mListView;
     CustomHomePageAdapter mAdapter;
     ArrayList mArrayList;
+    TextView textHome;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,29 +50,90 @@ public class HomePageFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_home_page, container, false);
         mListView = view.findViewById(R.id.listview_home);
+        textHome = view.findViewById(R.id.textViewHome);
         mArrayList = new ArrayList<CustomHomePageModel>();
-        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-                "Math","HTG 600.50","HTG 70.24 /hour"));
-        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-                "Math","HTG 600.50","HTG 70.24 /hour"));
-        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-                "Math","HTG 600.50","HTG 70.24 /hour"));
-        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-                "Math","HTG 600.50","HTG 70.24 /hour"));
-        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-                "Math","HTG 600.50","HTG 70.24 /hour"));
-        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-                "Math","HTG 600.50","HTG 70.24 /hour"));
-        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-                "Math","HTG 600.50","HTG 70.24 /hour"));
-        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-                "Math","HTG 600.50","HTG 70.24 /hour"));
-        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-                "Math","HTG 600.50","HTG 70.24 /hour"));
-        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-                "Math","HTG 600.50","HTG 70.24 /hour"));
-        mAdapter = new CustomHomePageAdapter(getContext(),R.layout.homepage_custom_list, mArrayList);
-        mListView.setAdapter(mAdapter);
+        SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy", Locale.getDefault());
+
+        textHome.setVisibility(View.GONE);
+        FirebaseDatabase.getInstance().getReference("Invoice").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                        InvoiceModel inv = dataSnapshot.getValue(InvoiceModel.class);
+                        final int montant = inv.getAmount();
+                        final String name = inv.getFreelanceName();
+                        String date = inv.getDate();
+                        int duree = inv.getDuration();
+                        final int rate = montant / duree;
+                        String dateToShow = "";
+
+                        Calendar cal = Calendar.getInstance();
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
+                        try {
+                            cal.setTime(sdf.parse(date));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        dateToShow += sdf.format(cal.getTime());
+                        cal.add(Calendar.DAY_OF_YEAR, duree);
+                        dateToShow += " - " + sdf.format(cal.getTime());
+
+                        System.out.println("Current time => " + sdf.format(cal.getTime()));
+                        String idReceiver = inv.getReceiverId();
+                        final String finalDateToShow = dateToShow;
+                        FirebaseDatabase.getInstance().getReference("Users").child(idReceiver).child("personalInformationModel").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                PersonalInformationModel infMod = snapshot.getValue(PersonalInformationModel.class);
+                                String nom = infMod.getFirstname() + " " + infMod.getLastname();
+                                mArrayList.add(new CustomHomePageModel(finalDateToShow,nom,
+                                        name,montant +" HTG"  ,"HTG " + rate +" /Day"));
+                                mAdapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                    if(getActivity() != null) {
+                        mAdapter = new CustomHomePageAdapter(getContext(),R.layout.homepage_custom_list, mArrayList);
+                        mListView.setAdapter(mAdapter);
+                    }
+                } else {
+                    textHome.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
+//                "Math","HTG 600.50","HTG 70.24 /hour"));
+//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
+//                "Math","HTG 600.50","HTG 70.24 /hour"));
+//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
+//                "Math","HTG 600.50","HTG 70.24 /hour"));
+//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
+//                "Math","HTG 600.50","HTG 70.24 /hour"));
+//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
+//                "Math","HTG 600.50","HTG 70.24 /hour"));
+//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
+//                "Math","HTG 600.50","HTG 70.24 /hour"));
+//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
+//                "Math","HTG 600.50","HTG 70.24 /hour"));
+//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
+//                "Math","HTG 600.50","HTG 70.24 /hour"));
+//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
+//                "Math","HTG 600.50","HTG 70.24 /hour"));
+//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
+//                "Math","HTG 600.50","HTG 70.24 /hour"));
         return view;
     }
 }

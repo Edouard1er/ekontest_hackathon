@@ -11,12 +11,13 @@ public class InvoiceModel {
     String status;
     int duration;
     String freelanceName;
+    String date;
     DatabaseReference databaseReference;
 
 
     public InvoiceModel() {};
 
-    public InvoiceModel(String invoiceId, String senderId, String receiverId, int amount, String status, int duration, String freelanceName) {
+    public InvoiceModel(String invoiceId, String senderId, String receiverId, int amount, String status, int duration, String freelanceName, String date) {
         this.invoiceId = invoiceId;
         this.senderId = senderId;
         this.receiverId = receiverId;
@@ -24,6 +25,7 @@ public class InvoiceModel {
         this.status = status;
         this.duration = duration;
         this.freelanceName = freelanceName;
+        this.date = date;
     }
 
     public void insertInvoice(InvoiceModel model) {
@@ -90,7 +92,11 @@ public class InvoiceModel {
         this.freelanceName = freelanceName;
     }
 
-//    public static void unsetInvoice(String idInvoice) {
+    public String getDate() {
+        return date;
+    }
 
-//    }
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

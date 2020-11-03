@@ -57,7 +57,7 @@ public class CreateInvoice extends AppCompatActivity {
 
     public void createInvoice(View view) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        InvoiceModel model = new InvoiceModel("", user.getUid(), receiver, Integer.valueOf(freelancePriceEdit.getText().toString()), "New", Integer.valueOf(durationEdit.getText().toString()), freelanceName.getText().toString());
+        InvoiceModel model = new InvoiceModel("", user.getUid(), receiver, Integer.valueOf(freelancePriceEdit.getText().toString()), "New", Integer.valueOf(durationEdit.getText().toString()), freelanceName.getText().toString(), "");
         model.insertInvoice(model);
         Toast.makeText(getApplicationContext(), "Invoice created.", Toast.LENGTH_LONG).show();
         finish();

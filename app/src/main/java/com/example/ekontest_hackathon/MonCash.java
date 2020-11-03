@@ -23,7 +23,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class MonCash extends AppCompatActivity {
 
@@ -195,9 +199,15 @@ public class MonCash extends AppCompatActivity {
             db.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Date c = Calendar.getInstance().getTime();
+                    System.out.println("Current time => " + c);
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                    String formattedDate = df.format(c);
+
                     InvoiceModel inv = snapshot.getValue(InvoiceModel.class);
                     MyFreelancerModel.InsertMyFreelancer(inv.getSenderId());
                     FirebaseDatabase.getInstance().getReference("Users").child(inv.getSenderId()).child("Students").push().child(inv.getReceiverId());
+                    FirebaseDatabase.getInstance().getReference("Invoice").child(inv.getInvoiceId()).child("date").setValue(c);
                 }
 
                 @Override
