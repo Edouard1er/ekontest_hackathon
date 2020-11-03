@@ -1,47 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".AccountActivity">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/couleur4"
-        android:minHeight="?attr/actionBarSize"
-        android:paddingLeft="30dp"
-        android:paddingRight="20dp"
-        android:theme="?attr/actionBarTheme"
-        app:subtitleTextColor="@color/couleur1"
-        app:title="@string/strAccount"
-        app:titleTextColor="@color/couleur1" />
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="always">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10sp"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10sp">
                     <TextView
                         android:id="@+id/textView1"
                         android:layout_width="wrap_content"
@@ -50,53 +32,49 @@
                         android:layout_weight="1"
                         android:text="Profil picture"
                         android:textStyle="bold" />
-
                     <TextView
                         android:id="@+id/editPicture"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
                         android:layout_marginLeft="20sp"
-                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:onClick="onButtonSaveClick"
                         android:text="Save"
+                        android:textStyle="normal"
+                        android:layout_gravity="end"
                         android:textAlignment="textEnd"
-                        android:textStyle="normal" />
+                        android:layout_marginRight="10dp"
+                        android:onClick="onButtonSaveClick"/>
                 </LinearLayout>
-
                 <ProgressBar
                     android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="150sp"
                     android:layout_weight="1">
+                     <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="0sp"
+                    android:gravity="center"
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:layout_marginLeft="0sp"
-                        android:gravity="center"
-
-                        >
-
+                    >
                         <RelativeLayout
                             android:layout_width="@dimen/toolbar_profile_width"
                             android:layout_height="wrap_content"
                             android:onClick="uploadImage">
-
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/altUserImage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:onClick="uploadImage"
-                                android:visibility="gone">
+                                android:visibility="gone"
+                                android:layout_gravity="center"
+                                >
 
                                 <de.hdodenhof.circleimageview.CircleImageView
                                     android:id="@+id/altImg"
@@ -107,7 +85,7 @@
                                     android:layout_gravity="center"
                                     android:elevation="10dp"
                                     android:scaleType="centerCrop"
-                                    android:src="@color/couleur3"
+                                    android:src="@color/bleu_fonce"
 
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -126,7 +104,7 @@
                                     android:gravity="center"
                                     android:text="AD"
                                     android:textAlignment="center"
-                                    android:textColor="@color/couleur1"
+                                    android:textColor="@color/white"
                                     android:textSize="15sp"
                                     android:textStyle="bold"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -152,43 +130,53 @@
                                     app:layout_constraintVertical_bias="1.0" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/imageViewPhoto"
-                                android:layout_width="@dimen/toolbar_profile_width"
-                                android:layout_height="@dimen/toolbar_profile_width"
-                                android:layout_marginTop="@dimen/activity_padding"
-                                android:layout_marginBottom="@dimen/activity_padding"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/username"
-                                android:visibility="visible"
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/hideOriginalPicture"
 
-                                />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
 
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/img_pluss"
-                                android:layout_width="@dimen/ic_plus_width"
-                                android:layout_height="@dimen/ic_plus_width"
-                                android:layout_alignBottom="@id/imageViewPhoto"
-                                android:layout_alignParentRight="true"
-                                android:src="@drawable/ic_add_photo"
-                                android:visibility="visible"
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/imageViewPhoto"
+                                    android:layout_width="@dimen/toolbar_profile_width"
+                                    android:layout_height="@dimen/toolbar_profile_width"
+                                    android:layout_marginTop="@dimen/activity_padding"
+                                    android:layout_marginBottom="@dimen/activity_padding"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/username"
+                                    android:visibility="visible"
 
-                                />
+                                    tools:ignore="MissingConstraints" />
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/img_pluss"
+                                    android:layout_width="@dimen/ic_plus_width"
+                                    android:layout_height="@dimen/ic_plus_width"
+                                    android:layout_alignBottom="@id/imageViewPhoto"
+                                    android:layout_alignParentRight="true"
+                                    android:src="@drawable/ic_add_photo"
+                                    android:visibility="visible"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="1.0"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_bias="1.0" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
                         </RelativeLayout>
-                    </LinearLayout>
+                </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
 
             </LinearLayout>
-
-            <View style="@style/Divider" />
-
+            <View style="@style/Divider"/>
             <LinearLayout
                 android:id="@+id/personel_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -204,19 +192,18 @@
                         android:layout_weight="1"
                         android:text="Personal Information"
                         android:textStyle="bold" />
-
                     <TextView
                         android:id="@+id/editPersonal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
                         android:layout_marginLeft="20sp"
-                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:onClick="updatePersonalData"
                         android:text="Edit"
+                        android:textStyle="normal"
+                        android:layout_gravity="end"
                         android:textAlignment="textEnd"
-                        android:textStyle="normal" />
+                        android:layout_marginRight="10dp"
+                        android:onClick="updatePersonalData"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -308,7 +295,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20sp"
                         android:layout_weight="1"
-                        android:text="-" />
+                        android:text="-"
+                        />
                 </LinearLayout>
 
                 <LinearLayout
@@ -357,13 +345,12 @@
                         android:text="-" />
                 </LinearLayout>
 
-                <View style="@style/Divider" />
+                <View style="@style/Divider"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="21sp"
@@ -383,16 +370,15 @@
                             android:id="@+id/editType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
                             android:layout_marginLeft="20sp"
-                            android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:onClick="editType"
                             android:text="Edit"
+                            android:textStyle="normal"
+                            android:layout_gravity="end"
                             android:textAlignment="textEnd"
-                            android:textStyle="normal" />
+                            android:layout_marginRight="10dp"
+                            android:onClick="editType"/>
                     </LinearLayout>
-
                     <TextView
                         android:id="@+id/textViewAccountType"
                         android:layout_width="wrap_content"
@@ -406,15 +392,12 @@
 
 
             </LinearLayout>
-
-            <View style="@style/Divider" />
-
+            <View style="@style/Divider"/>
             <LinearLayout
                 android:id="@+id/academic_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40sp"
@@ -430,42 +413,39 @@
                         android:layout_weight="1"
                         android:text="Academic information"
                         android:textStyle="bold" />
-
                     <TextView
                         android:id="@+id/editAcademic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
                         android:layout_marginLeft="20sp"
-                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:onClick="addAcademicFormation"
                         android:text="Add"
+                        android:textStyle="normal"
+                        android:layout_gravity="end"
                         android:textAlignment="textEnd"
-                        android:textStyle="normal" />
+                        android:layout_marginRight="10dp"
+                        android:onClick="addAcademicFormation"/>
                 </LinearLayout>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_info_academic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10sp" />
+                    android:layout_marginRight="10sp"
+                    />
             </LinearLayout>
-
-            <View style="@style/Divider" />
+            <View style="@style/Divider"/>
 
             <LinearLayout
                 android:id="@+id/tag_layout_first"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
-
+                android:visibility="visible"
+                >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40sp"
@@ -481,31 +461,31 @@
                             android:layout_weight="1"
                             android:text="Tags"
                             android:textStyle="bold" />
-
                         <TextView
                             android:id="@+id/addTag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
                             android:layout_marginLeft="20sp"
-                            android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:text="Add"
+                            android:textStyle="normal"
+                            android:layout_gravity="end"
                             android:textAlignment="textEnd"
-                            android:textStyle="normal" />
-
+                            android:layout_marginRight="10dp"
+                            />
                         <TextView
                             android:id="@+id/cancelTag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
                             android:layout_marginLeft="20sp"
-                            android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:text="cancel"
-                            android:textAlignment="textEnd"
                             android:textStyle="normal"
-                            android:visibility="gone" />
+                            android:layout_gravity="end"
+                            android:textAlignment="textEnd"
+                            android:layout_marginRight="10dp"
+                            android:visibility="gone"
+                            />
 
                     </LinearLayout>
 
@@ -514,13 +494,14 @@
                         android:id="@+id/tagExplication"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
                         android:layout_marginLeft="20sp"
-                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:gravity="center_horizontal"
                         android:text="Ajouter des mots cles a propos de vous pour faciliter les utilisateurs a vous retrouver. Exemple: Chimie."
-                        android:textStyle="italic" />
+                        android:textStyle="italic"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:layout_marginRight="10dp"
+                        />
 
                 </LinearLayout>
 
@@ -531,16 +512,17 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="2dp"
                     android:background="#E7F1F0"
-                    android:visibility="gone"
-                    android:weightSum="20">
+                    android:weightSum="20"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/textTag"
                         android:layout_width="291dp"
                         android:layout_height="60dp"
                         android:layout_margin="5dp"
-                        android:layout_weight="18"
                         android:autofillHints="Francais"
+                        android:padding="5dp"
+                        android:layout_weight="18"
                         android:background="@android:color/white" />
 
                     <TextView
@@ -550,23 +532,24 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
                         android:layout_margin="10dp"
                         android:layout_weight="2"
-                        android:gravity="center_vertical"
                         android:text="Save"
-                        android:visibility="gone" />
+                        android:visibility="gone"/>
 
                 </LinearLayout>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_tag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10sp" />
+                    android:layout_marginRight="10sp"
+                    android:layout_marginLeft="20dp"
+                    />
 
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
-</LinearLayout>
+</FrameLayout>

@@ -1,5 +1,8 @@
 package com.example.ekontest_hackathon;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,35 +24,30 @@ public class TagModel {
     public TagModel(){
 
     }
-    public void InsertTag(final String tag){
-        databaseReference = FirebaseDatabase.getInstance().getReference("Tags").child(tag)
-        .child(cUser.getUid());
-        databaseReference.setValue(cUser.getUid())
-        .addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
+    public void InsertTag(final Context context,final String tag){
+        if(!tag.contains(".") && !tag.contains("#") &&!tag.contains("$") && !tag.contains("[")&&!tag.contains("]")){
+            databaseReference = FirebaseDatabase.getInstance().getReference("Tags").child(tag)
+                    .child(cUser.getUid());
+            databaseReference.setValue(cUser.getUid())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(context, "Enregistre", Toast.LENGTH_SHORT).show();
 
-            }
-        });
-      /*  //databaseReference.push().setValue(model);
-
-        //String key = databaseReference.push().getKey();
-        Map<String,Object> t= new HashMap<>();
-        t.put("tag", tag);
-        databaseReference.setValue(t)
-        .addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                databaseReference = FirebaseDatabase.getInstance().getReference("Tags")
-                        .child(tag);
-                databaseReference.child(cUser.getUid()).setValue(cUser.getUid());
-
-            }
-        });*/
+                        }
+                    });
+        }else{
+            Toast.makeText(context, "Svp, supprimer ces caracteres:  . , # , $ , [ ,]", Toast.LENGTH_LONG).show();
+        }
 
     }
     public void InsertUserIdIntoTag(){
 
+    }
+
+    public void removeTag(String tag){
+        databaseReference = FirebaseDatabase.getInstance().getReference("Tags").child(tag).child(cUser.getUid());
+        databaseReference.removeValue();
     }
 
     public String getTag() {
