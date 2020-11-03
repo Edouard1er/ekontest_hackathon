@@ -54,7 +54,6 @@ public class MonCash extends AppCompatActivity {
         setContentView(R.layout.activity_moncash);
         MC = this;
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         toolbar.setTitle("Payment");
 
         submitButton = (ImageButton) findViewById(R.id.submitAmount);

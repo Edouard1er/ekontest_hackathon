@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,6 +60,8 @@ public class UploadNormalDocument extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         mStorageReference = FirebaseStorage.getInstance().getReference();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Upload free document");
     }
 
     public void showFileChooser(View view) {
