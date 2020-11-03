@@ -39,6 +39,7 @@ public class MoncashGateway extends AppCompatActivity {
         MG = this;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Quelque chose");
 
         webview = findViewById(R.id.webview);
         progressBar = findViewById(R.id.progressBar);

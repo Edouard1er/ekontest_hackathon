@@ -12,4 +12,8 @@
     <string name="strCreateInvoice">Create an invoice</string>
     <string name="strAllReview">All review</string>
     <string name="strMessage">Message</string>
+    <string name="strFavorite">Favorite</string>
+    <string name="strFreelancerInfo">Freelancer Information</string>
+    <string name="strHelp">Help and Comments</string>
+    <string name="strPictureUpload">Upload a picture</string>
 </resources>

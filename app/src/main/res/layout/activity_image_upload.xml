@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".ImageUploadActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarUploadImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/couleur4"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitleTextColor="@color/couleur1"
+        app:title="@string/strPictureUpload"
+        app:titleTextColor="@color/couleur1" />
+
     <ScrollView
         android:layout_width="409dp"
         android:layout_height="746dp"
@@ -30,6 +44,7 @@
                 android:layout_width="299dp"
                 android:layout_height="82dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

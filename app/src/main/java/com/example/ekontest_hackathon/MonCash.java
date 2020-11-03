@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.digicelgroup.moncash.exception.MonCashRestException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,6 +53,9 @@ public class MonCash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moncash);
         MC = this;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("Payment");
 
         submitButton = (ImageButton) findViewById(R.id.submitAmount);
         progressBar = (ProgressBar) findViewById(R.id.progressBar2);

@@ -4,15 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".FavoriteActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarFavorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/couleur4"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:theme="?attr/actionBarTheme"
+        app:subtitleTextColor="@color/couleur1"
+        app:title="@string/strFavorite"
+        app:titleTextColor="@color/couleur1" />
+
     <GridView
+        android:id="@+id/freelancer_gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/freelancer_gridview"
-        android:numColumns="2"
         android:layout_margin="10dp"
-        android:stretchMode="columnWidth"
         android:gravity="center"
-        />
+        android:numColumns="2"
+        android:stretchMode="columnWidth" />
 </LinearLayout>
