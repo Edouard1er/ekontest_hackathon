@@ -143,7 +143,6 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                             urlImageModel.getUrlImage(url, profile_image, getApplicationContext(),altUserImage,altTxtName,model);
                             profile_name.setText(model.getPersonalInformationModel().getUsername());
                             profile_type.setText(model.getPersonalInformationModel().getType());
-                            //SEt up tag to help find
                         }catch (Exception e){
                             e.printStackTrace();
                         }
