@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicatorColor="@color/couleur5"
+        app:tabIndicatorColor="#f37a21"
         app:tabRippleColor="@color/bleu_fonce"
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/black">
@@ -39,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Free docs" />
+
         <com.google.android.material.tabs.TabItem
             android:id="@+id/id_paid_uploaded_tab"
             android:layout_width="wrap_content"
