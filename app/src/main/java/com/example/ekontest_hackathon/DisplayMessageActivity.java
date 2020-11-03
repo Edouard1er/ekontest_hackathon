@@ -2,6 +2,7 @@ package com.example.ekontest_hackathon;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -97,6 +99,39 @@ public class DisplayMessageActivity extends AppCompatActivity {
         fab = findViewById(R.id.floatingActionButtonInvoice);
 
         fab.setVisibility(View.GONE);
+
+        fab.setOnTouchListener(new View.OnTouchListener() {
+            float dX;
+            float dY;
+            int lastAction;
+
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        dX = view.getX() - event.getRawX();
+                        dY = view.getY() - event.getRawY();
+                        lastAction = MotionEvent.ACTION_DOWN;
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        view.setY(event.getRawY() + dY);
+                        view.setX(event.getRawX() + dX);
+                        lastAction = MotionEvent.ACTION_MOVE;
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        if (lastAction == MotionEvent.ACTION_DOWN)
+//                            Toast.makeText(DraggableView.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         message = findViewById(R.id.textMessage);
