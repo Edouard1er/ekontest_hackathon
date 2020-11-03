@@ -4,11 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".AvisDisplayAllActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarAllAvis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/couleur4"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:theme="?attr/actionBarTheme"
+        app:subtitleTextColor="@color/couleur1"
+        app:title="@string/strAllReview"
+        app:titleTextColor="@color/couleur1" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_avis_on_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp" />
 
 </LinearLayout>

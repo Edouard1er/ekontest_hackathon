@@ -85,11 +85,14 @@ public class DisplayMessageActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             receiver = extras.getString("receiver");
             //The key argument here must match that used in the other activity
         }
+        UserModel model = new UserModel();
+        model.getUserName(receiver, toolbar);
 
         fab = findViewById(R.id.floatingActionButtonInvoice);
 

@@ -10,4 +10,6 @@
     <string name="strAccount">Account</string>
     <string name="strAbout">About</string>
     <string name="strCreateInvoice">Create an invoice</string>
+    <string name="strAllReview">All review</string>
+    <string name="strMessage">Message</string>
 </resources>

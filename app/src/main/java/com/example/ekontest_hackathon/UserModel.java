@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -171,6 +172,30 @@ public class UserModel implements Parcelable {
             }
         });
     }
+
+    public void getUserName(String id, final Toolbar toolbar){
+        DatabaseReference avisRef = FirebaseDatabase.getInstance().getReference("Users")
+                .child(id);
+
+        avisRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserModel model = snapshot.getValue(UserModel.class);
+                try {
+                    toolbar.setTitle(model.getPersonalInformationModel().getFirstname() + " " + model.getPersonalInformationModel().getLastname());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     public void UpdateImageUser(final String path1, final String val1,
                                final String val2, final ImageView imageUpload, final Context context, final ConstraintLayout constraintLayout, final TextView textView){
 
