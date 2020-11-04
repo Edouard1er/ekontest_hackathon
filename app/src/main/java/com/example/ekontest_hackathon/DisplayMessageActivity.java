@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,6 +72,14 @@ public class DisplayMessageActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FirebaseUser user;
 
+    private class SingleTapConfirm extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent event) {
+            return true;
+        }
+    }
+
     //Service Notification
     APIService apiService;
     Boolean notify=false;
@@ -122,36 +131,41 @@ public class DisplayMessageActivity extends AppCompatActivity {
                                 float dX;
                                 float dY;
                                 int lastAction;
+                                GestureDetector gestureDetector = new GestureDetector(getApplicationContext(), new SingleTapConfirm());
+
 
                                 @Override
                                 public boolean onTouch(View view, MotionEvent event) {
-                                    switch (event.getActionMasked()) {
-                                        case MotionEvent.ACTION_DOWN:
-                                            dX = view.getX() - event.getRawX();
-                                            dY = view.getY() - event.getRawY();
-                                            lastAction = MotionEvent.ACTION_DOWN;
-                                            break;
+                                    if(gestureDetector.onTouchEvent(event)) {
+                                        Intent intent_1 = new Intent(getApplicationContext(), MonCash.class);
+                                        intent_1.putExtra("receiver", receiver);
+                                        intent_1.putExtra("sender", invoice.getSenderId());
+                                        intent_1.putExtra("invoiceId", invoice.getInvoiceId());
+                                        intent_1.putExtra("transaction", "freelance");
+                                        startActivity(intent_1);
+                                    } else {
+                                        switch (event.getActionMasked()) {
+                                            case MotionEvent.ACTION_DOWN:
+                                                dX = view.getX() - event.getRawX();
+                                                dY = view.getY() - event.getRawY();
+                                                lastAction = MotionEvent.ACTION_DOWN;
+                                                break;
 
-                                        case MotionEvent.ACTION_MOVE:
-                                            view.setY(event.getRawY() + dY);
-                                            view.setX(event.getRawX() + dX);
-                                            lastAction = MotionEvent.ACTION_MOVE;
-                                            break;
+                                            case MotionEvent.ACTION_MOVE:
+                                                view.setY(event.getRawY() + dY);
+                                                view.setX(event.getRawX() + dX);
+                                                lastAction = MotionEvent.ACTION_MOVE;
+                                                break;
 
-                                        case MotionEvent.ACTION_UP:
-                                            if (lastAction == MotionEvent.ACTION_DOWN) {
-                                                Toast.makeText(getApplicationContext(), "Reading invoice", Toast.LENGTH_LONG).show();
-                                                Intent intent_1 = new Intent(getApplicationContext(), MonCash.class);
-                                                intent_1.putExtra("receiver", receiver);
-                                                intent_1.putExtra("sender", invoice.getSenderId());
-                                                intent_1.putExtra("invoiceId", invoice.getInvoiceId());
-                                                intent_1.putExtra("transaction", "freelance");
-                                                startActivity(intent_1);
-                                            }
-                                            break;
+                                            case MotionEvent.ACTION_UP:
+                                                if (lastAction == MotionEvent.ACTION_DOWN) {
+                                                    Toast.makeText(getApplicationContext(), "Reading invoice", Toast.LENGTH_LONG).show();
+                                                }
+                                                break;
 
-                                        default:
-                                            return false;
+                                            default:
+                                                return false;
+                                        }
                                     }
                                     return false;
                                 }
@@ -167,6 +181,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
             }
         });
+
+
 
         Toast.makeText(getApplicationContext(), "user id: " + user.getEmail(), Toast.LENGTH_LONG).show();
 
@@ -405,3 +421,4 @@ public class DisplayMessageActivity extends AppCompatActivity {
     }
 
 }
+
