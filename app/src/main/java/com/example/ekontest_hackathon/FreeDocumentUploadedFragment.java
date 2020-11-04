@@ -70,7 +70,7 @@ public class FreeDocumentUploadedFragment extends Fragment {
                     System.out.println("Date: " + parts[0]);
                     System.out.println("Time: " + parts[1]);
                     if(model.getIdUser().equals(user.getUid())) {
-                        mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_, model.getIdDocument(), "Accepted", model.getFileName()));
+                        mArrayList.add(new CustomDocumentModel(model.getTitle(),date_, time_, model.getIdDocument(), "Accepted", model.getFileName(), "Uploaded"));
                     }
                 }
                 if(getActivity()!=null) {

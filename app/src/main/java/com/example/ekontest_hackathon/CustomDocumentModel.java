@@ -9,15 +9,17 @@ class CustomDocumentModel {
    private String documentStatus;
    private String id;
    private String fileName;
+   private String tab;
 
 
-    public CustomDocumentModel(String documentName, String timeUploadedDocument, String dateUploadedDocument, String id, String documentStatus, String fileName) {
+    public CustomDocumentModel(String documentName, String timeUploadedDocument, String dateUploadedDocument, String id, String documentStatus, String fileName, String tab) {
         DocumentName = documentName;
         this.timeUploadedDocument = timeUploadedDocument;
         mDateUploadedDocument = dateUploadedDocument;
         this.id = id;
         this.documentStatus = documentStatus;
         this.fileName = fileName;
+        this.tab = tab;
     }
 
     public String getDocumentName() {
@@ -59,5 +61,13 @@ class CustomDocumentModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTab() {
+        return tab;
+    }
+
+    public void setTab(String tab) {
+        this.tab = tab;
     }
 }

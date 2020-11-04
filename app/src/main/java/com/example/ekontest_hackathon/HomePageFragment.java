@@ -61,7 +61,7 @@ public class HomePageFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                        InvoiceModel inv = dataSnapshot.getValue(InvoiceModel.class);
+                        final InvoiceModel inv = dataSnapshot.getValue(InvoiceModel.class);
                         if(inv.getSenderId().equals(user.getUid())) {
                             final int montant = inv.getAmount();
                             final String name = inv.getFreelanceName();
@@ -89,8 +89,14 @@ public class HomePageFragment extends Fragment {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     PersonalInformationModel infMod = snapshot.getValue(PersonalInformationModel.class);
                                     String nom = infMod.getFirstname() + " " + infMod.getLastname();
-                                    mArrayList.add(new CustomHomePageModel(finalDateToShow,nom,
-                                            name,montant +" HTG"  ,"HTG " + rate +" /Day"));
+                                    if(inv.getStatus().equals("Paid")) {
+                                        mArrayList.add(new CustomHomePageModel(finalDateToShow,nom,
+                                                name,montant +" HTG"  ,"HTG " + rate +" /Day"));
+                                    } else {
+                                        mArrayList.add(new CustomHomePageModel("-",nom,
+                                                name,montant +" HTG"  ,"HTG " + "-" +" /Day"));
+                                    }
+
                                     mAdapter.notifyDataSetChanged();
                                 }
 

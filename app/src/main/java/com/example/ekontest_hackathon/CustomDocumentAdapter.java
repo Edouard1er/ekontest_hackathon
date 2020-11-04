@@ -20,6 +20,8 @@ import androidx.annotation.RequiresApi;
 
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +35,7 @@ class CustomDocumentAdapter extends ArrayAdapter  implements  PopupMenu.OnMenuIt
     String name;
     ArrayList<CustomDocumentModel> mArrayList;
     int tabPosition;
+    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public CustomDocumentAdapter(@NonNull Context context, int resource, ArrayList<CustomDocumentModel> mArrayList) {
         super(context, resource, mArrayList);
@@ -73,41 +76,145 @@ class CustomDocumentAdapter extends ArrayAdapter  implements  PopupMenu.OnMenuIt
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.delete_purchavala_document: {
-                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                builder1.setMessage("Do you really want to remove this document?");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                final CustomDocumentModel model = mArrayList.get(tabPosition);
+                                if(model.getTab().equals("Paid")) {
+                                    System.out.println("Paid tab");
+                                    //check if the document exist for another user first
+                                }
+
+                                if(model.getTab().equals("Purchased")){
+                                    System.out.println("Purchased tab");
+                                    System.out.println("id user: " + user.getUid());
+                                    System.out.println("id doc: " + model.getId());
+                                    FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                                                String docKey = (String) dataSnapshot.getValue();
+                                                if(docKey.equals(model.getId())) {
+                                                    FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docPurchased").child(dataSnapshot.getKey()).removeValue();
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }
+
+                                if(model.getTab().equals("Available")) {
+                                    System.out.println("Available tab");
+                                    System.out.println("id user: " + user.getUid());
+                                    System.out.println("id doc: " + model.getId());
+                                    FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docAvailable").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                                                String docKey = (String) dataSnapshot.getValue();
+                                                if(docKey.equals(model.getId())) {
+                                                    FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("docAvailable").child(dataSnapshot.getKey()).removeValue();
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }
+
+                                if(model.getTab().equals("Uploaded")) {
+                                    System.out.println("Uploaded tab");
+                                }
+
+                                Toast.makeText(getContext(), "Document deleted successfully.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
                 return true;
             }
             case R.id.info_document: {
 //                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                 System.out.println("detail: " + tabPosition);
                 CustomDocumentModel model = mArrayList.get(tabPosition);
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Documents").child("PaidDoc").child(model.getId());
-                ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        PaidDocModel mod = snapshot.getValue(PaidDocModel.class);
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setTitle("Type the document code");
+                if(model.getTab().equals("Paid") || model.getTab().equals("Purchased")) {
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Documents").child("PaidDoc").child(model.getId());
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            PaidDocModel mod = snapshot.getValue(PaidDocModel.class);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setTitle("Type the document code");
 
-                        builder.setMessage("Document code: " + mod.getSharingCode());
+                            builder.setMessage("Document code: " + mod.getSharingCode());
 
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
 
-                        builder.show();
-                    }
+                            builder.show();
+                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+                } else {
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Documents").child("NormalDoc").child(model.getId());
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            NormalDocModel mod = snapshot.getValue(NormalDocModel.class);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setTitle("Type the document code");
+
+                            builder.setMessage("Document Title: " + mod.getTitle());
+
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            builder.show();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+
                 return true;
             }
 

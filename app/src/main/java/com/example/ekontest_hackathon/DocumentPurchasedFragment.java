@@ -81,7 +81,7 @@ public class DocumentPurchasedFragment extends Fragment {
                             String date_ = parts[0];
                             String time_ = parts[1];
 
-                            mArrayList.add(new CustomDocumentModel(model.getTitle(),time_, time_, model.getIdDocument(), date_, model.getFileName()));
+                            mArrayList.add(new CustomDocumentModel(model.getTitle(),time_, time_, model.getIdDocument(), date_, model.getFileName(), "Purchased"));
                             mAdapter.notifyDataSetChanged();
                         }
 
