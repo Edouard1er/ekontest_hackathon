@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,11 +36,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHolder> {
-    //private static ClickListener clickListener;
-    public static final int  MSG_RECEIVER = 0;
-    public static final int  MSG_SENDER = 1;
+public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentHolder> implements Filterable
+{
 
     String freelanceName;
     private  Context context;
@@ -48,16 +46,16 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
     List<StudentModel> userFiltered;
     List<StudentModel> mStudent;
 
-    List <UserModel> mUser;
-    CustomFilter filter;
+    List <StudentModel> mUser;
+   // CustomFilter filter;
 
     private static  boolean dialogOpened = false;
 
 
-    public StudentAdapter(Context context, List <UserModel> mUser, Boolean isChat) {
+    public StudentAdapter(Context context, List <StudentModel> mUser) {
         this.context=context;
         this.mUser=mUser;
-        this.isChat=isChat;
+        this.userFiltered=mUser;
     }
 
     public StudentAdapter (){
@@ -65,16 +63,16 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
     }
     @NonNull
     @Override
-    public UserHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.student_item, parent, false);
-         return new StudentAdapter.UserHolder(view);
+    public StudentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_item, parent, false);
+        return new StudentHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StudentAdapter.UserHolder holder, int position) {
+    public void onBindViewHolder(@NonNull StudentHolder holder, int position) {
         try {
             menuOp.setVisibility(View.GONE);
-            UserModel u = mUser.get(position);
+            StudentModel u = mUser.get(position);
             holder.userName.setText(u.getPersonalInformationModel().getFirstname() + " " + u.getPersonalInformationModel().getLastname());
             holder.userImage.setImageResource(R.drawable.username);
             holder.userId.setText(u.getId());
@@ -96,14 +94,16 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
     public int getItemCount() {
         return mUser.size();
     }
-    class UserHolder extends RecyclerView.ViewHolder  implements View.OnClickListener, View.OnLongClickListener{
+
+
+    class StudentHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         TextView userName,altTxtName;
         ImageView userImage;
         ConstraintLayout altUserImage;
         TextView userId;
 
         TextView freelanceName_;
-        public  UserHolder(View itemView){
+        public  StudentHolder(View itemView){
             super(itemView);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -117,7 +117,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
             altTxtName=itemView.findViewById(R.id.altTxtName);
             menuOp = itemView.findViewById(R.id.imageButton1);
         }
-
 
         @Override
         public void onClick(final View v) {
@@ -271,6 +270,45 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
         }
     }
 
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+
+            List<StudentModel> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(userFiltered);
+                results.values=userFiltered;
+                results.count=userFiltered.size();
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (StudentModel item : userFiltered) {
+
+                    if (item.getPersonalInformationModel().getFirstname().toLowerCase().contains(filterPattern)||
+                            item.getPersonalInformationModel().getLastname().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+                results.values = filteredList;
+                results.count=filteredList.size();
+
+            }
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            //mUser.clear();
+            mUser=(ArrayList<StudentModel>) results.values;;
+            notifyDataSetChanged();
+        }
+    };
+
+
+
 
 
 
@@ -312,7 +350,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
         }
     }
 
-    public Filter getFilter() {
+  /*  public Filter getFilter() {
         // TODO Auto-generated method stub
         if(filter == null)
         {
@@ -371,7 +409,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.UserHold
             notifyDataSetChanged();
         }
 
-    }
+    }*/
 
 
 }
