@@ -461,6 +461,10 @@ public class AccountActivity extends AppCompatActivity {
                                         editPicture.setVisibility(View.GONE);
                                         photoPath=uri2.toString();
                                         addProfilePhoto();
+                                        Intent intent = new Intent(getApplicationContext(),AccountActivity.class);
+                                        startActivity(intent);
+                                        finish();
+
                                         //Toast.makeText(AccountActivity.this, "Succes", Toast.LENGTH_SHORT).show();
 
 
