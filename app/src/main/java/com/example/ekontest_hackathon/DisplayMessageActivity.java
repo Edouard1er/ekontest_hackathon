@@ -2,7 +2,6 @@ package com.example.ekontest_hackathon;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -72,6 +72,14 @@ public class DisplayMessageActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FirebaseUser user;
 
+    private class SingleTapConfirm extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent event) {
+            return true;
+        }
+    }
+
     //Service Notification
     APIService apiService;
     Boolean notify=false;
@@ -100,38 +108,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         fab.setVisibility(View.GONE);
 
-        fab.setOnTouchListener(new View.OnTouchListener() {
-            float dX;
-            float dY;
-            int lastAction;
 
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                switch (event.getActionMasked()) {
-                    case MotionEvent.ACTION_DOWN:
-                        dX = view.getX() - event.getRawX();
-                        dY = view.getY() - event.getRawY();
-                        lastAction = MotionEvent.ACTION_DOWN;
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        view.setY(event.getRawY() + dY);
-                        view.setX(event.getRawX() + dX);
-                        lastAction = MotionEvent.ACTION_MOVE;
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        if (lastAction == MotionEvent.ACTION_DOWN)
-//                            Toast.makeText(DraggableView.this, "Clicked!", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    default:
-                        return false;
-                }
-                return true;
-            }
-        });
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         message = findViewById(R.id.textMessage);
@@ -150,18 +127,50 @@ public class DisplayMessageActivity extends AppCompatActivity {
                         System.out.println("Invoice Id ---: " + invoice.getInvoiceId());
                         if(invoice.getStatus().equals("New")) {
                             System.out.println("Invoice Id: " + invoice.getInvoiceId());
-                            fab.setOnClickListener(new View.OnClickListener() {
+                            fab.setOnTouchListener(new View.OnTouchListener() {
+                                float dX;
+                                float dY;
+                                int lastAction;
+                                GestureDetector gestureDetector = new GestureDetector(getApplicationContext(), new SingleTapConfirm());
+
+
                                 @Override
-                                public void onClick(View view) {
-                                    Toast.makeText(getApplicationContext(), "Reading invoice", Toast.LENGTH_LONG).show();
-                                    Intent intent_1 = new Intent(getApplicationContext(), MonCash.class);
-                                    intent_1.putExtra("receiver", receiver);
-                                    intent_1.putExtra("sender", invoice.getSenderId());
-                                    intent_1.putExtra("invoiceId", invoice.getInvoiceId());
-                                    intent_1.putExtra("transaction", "freelance");
-                                    startActivity(intent_1);
+                                public boolean onTouch(View view, MotionEvent event) {
+                                    if(gestureDetector.onTouchEvent(event)) {
+                                        Intent intent_1 = new Intent(getApplicationContext(), MonCash.class);
+                                        intent_1.putExtra("receiver", receiver);
+                                        intent_1.putExtra("sender", invoice.getSenderId());
+                                        intent_1.putExtra("invoiceId", invoice.getInvoiceId());
+                                        intent_1.putExtra("transaction", "freelance");
+                                        startActivity(intent_1);
+                                    } else {
+                                        switch (event.getActionMasked()) {
+                                            case MotionEvent.ACTION_DOWN:
+                                                dX = view.getX() - event.getRawX();
+                                                dY = view.getY() - event.getRawY();
+                                                lastAction = MotionEvent.ACTION_DOWN;
+                                                break;
+
+                                            case MotionEvent.ACTION_MOVE:
+                                                view.setY(event.getRawY() + dY);
+                                                view.setX(event.getRawX() + dX);
+                                                lastAction = MotionEvent.ACTION_MOVE;
+                                                break;
+
+                                            case MotionEvent.ACTION_UP:
+                                                if (lastAction == MotionEvent.ACTION_DOWN) {
+                                                    Toast.makeText(getApplicationContext(), "Reading invoice", Toast.LENGTH_LONG).show();
+                                                }
+                                                break;
+
+                                            default:
+                                                return false;
+                                        }
+                                    }
+                                    return false;
                                 }
                             });
+
                             fab.setVisibility(View.VISIBLE);
                         }
                     }
@@ -172,6 +181,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
             }
         });
+
+
 
         Toast.makeText(getApplicationContext(), "user id: " + user.getEmail(), Toast.LENGTH_LONG).show();
 
@@ -410,3 +421,4 @@ public class DisplayMessageActivity extends AppCompatActivity {
     }
 
 }
+

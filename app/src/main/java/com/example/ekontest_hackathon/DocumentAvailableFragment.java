@@ -80,7 +80,7 @@ public class DocumentAvailableFragment extends Fragment implements PopupMenu.OnM
                             String date_ = parts[0];
                             String time_ = parts[1];
 
-                            mArrayList.add(new CustomDocumentModel(model.getTitle(),time_, time_, model.getIdDocument(), date_, model.getFileName()));
+                            mArrayList.add(new CustomDocumentModel(model.getTitle(),time_, time_, model.getIdDocument(), date_, model.getFileName(),"Available"));
                             mAdapter.notifyDataSetChanged();
                         }
 

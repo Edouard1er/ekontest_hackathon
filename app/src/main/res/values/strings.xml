@@ -22,4 +22,5 @@
     <string name="strSetting">Settings</string>
     <string name="strUploadPaidDoc">Upload paid document</string>
     <string name="strUploadFreeDoc">Upload free document</string>
+    <string name="strProfilePicture">Profile picture</string>
 </resources>
