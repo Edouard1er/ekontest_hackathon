@@ -1,5 +1,6 @@
 package com.example.ekontest_hackathon;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,14 +8,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,11 +38,6 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomePageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SearchFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -82,18 +84,26 @@ public class SearchFragment extends Fragment {
     private DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
 
     private UserAdapter adapter;
-    List<FreelancerModel> mUsers=new ArrayList<>();
+
     RecyclerView recyclerView;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     UserModel userModel;
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> autoCompleteAdapter;
     ArrayList<String> autoCompleteListe ;
-    Button searchButton;
+    ImageButton searchButton;
 
 
     GridView mGridView;
+    List<FreelancerModel> mUsers=new ArrayList<>();
     FreelancerListAdapter adapterGrid;
+    ListView listViewTag;
+    List <TagModel> mTag= new ArrayList<>();
+    TagListAdapter adapterTag ;
+
+    ArrayAdapter simpleAdapter;
+    List <String> simpleTag= new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,16 +111,65 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_search, container, false);
         autoCompleteTextView =(AutoCompleteTextView) view.findViewById(R.id.search_freelancer);
-        searchButton =(Button) view.findViewById(R.id.searchResult);
+        searchButton =(ImageButton) view.findViewById(R.id.searchResult);
+        searchButton.setVisibility(View.GONE);
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getContext(), "You click", Toast.LENGTH_SHORT).show();
-                getUserMatchingtheSearchTerm(autoCompleteTextView.getText().toString());
-                hideKeybaord(v);
+                if(autoCompleteTextView.getText().toString().trim().length()!=0){
+                    getUserMatchingtheSearchTerm(autoCompleteTextView.getText().toString());
+                    hideKeybaord(v);
+
+                }
+
             }
         });
         autoCompleteListe =new ArrayList<>();
+        listViewTag= view.findViewById(R.id.list_tag);
+        listViewTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String tag = listViewTag.getItemAtPosition(position).toString();
+                //Toast.makeText(getContext(), ""+val, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(),SearchResultActivity.class);
+                intent.putExtra("tag", tag);
+                startActivity(intent);
+            }
+        });
+
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                if(s.toString().trim().length()!=0){
+                    searchButton.setVisibility(View.VISIBLE);
+                }else{
+                    searchButton.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().trim().length()!=0){
+                    searchButton.setVisibility(View.VISIBLE);
+                }else{
+                    searchButton.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().trim().length()!=0){
+                    searchButton.setVisibility(View.VISIBLE);
+                }else{
+                    searchButton.setVisibility(View.GONE);
+                }
+            }
+        });
+
        /* ArrayList<String> a =new ArrayList<>();
         a.add("Amos");
         a.add("Jodler");*/
@@ -121,6 +180,7 @@ public class SearchFragment extends Fragment {
 
 
         getListTags();
+        showListTag();
         autoCompleteAdapter  = new ArrayAdapter<>(view.getContext(),android.R.layout.simple_dropdown_item_1line,autoCompleteListe);
         autoCompleteTextView.setAdapter(autoCompleteAdapter);
         recyclerView = view.findViewById(R.id.listDisplayUser);
@@ -177,8 +237,52 @@ public class SearchFragment extends Fragment {
     public void getUserMatchingtheSearchTerm(final String tag){
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+
+            
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tags").child(tag);
-        ref.addValueEventListener(new ValueEventListener() {
+        
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    if(snapshot.getChildrenCount()>1){
+                        Intent intent = new Intent(getContext(),SearchResultActivity.class);
+                        intent.putExtra("tag", tag);
+                        startActivity(intent);
+                    }else{
+                        if(snapshot.getChildrenCount()==1){
+                            for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                if(!dataSnapshot.getKey().equals(user.getUid())){
+                                    Intent intent = new Intent(getContext(),SearchResultActivity.class);
+                                    intent.putExtra("tag", tag);
+                                    startActivity(intent);
+
+                                }else{
+                                    Toast.makeText(getContext(), "No User matching this search", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tags").child(tag);
+
+
+                        }
+                    }
+                }else{
+                    Toast.makeText(getContext(), "No User matching this search", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        
+        
+        
+        /*ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUsers.clear();
@@ -215,7 +319,7 @@ public class SearchFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
 
     }
@@ -235,6 +339,110 @@ public class SearchFragment extends Fragment {
 
             }
         });
+
+    }
+    public void showListTag(){
+
+      /*  listViewTag.setHasFixedSize(true);
+        listViewTag.setLayoutManager(new LinearLayoutManager(getContext()));*/
+                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    DatabaseReference databaseReference2 =  FirebaseDatabase.getInstance().getReference("Tags");
+                    databaseReference2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                final String tag = dataSnapshot.getKey();
+                                DatabaseReference databaseReference3 =  FirebaseDatabase.getInstance()
+                                        .getReference("Tags")
+                                        .child(dataSnapshot.getKey());
+                                databaseReference3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for(DataSnapshot dataSnapshot1 : snapshot.getChildren()){
+                                           final  Long qte= dataSnapshot1.getChildrenCount();
+                                            final String userKey=dataSnapshot1.getKey();
+
+                                                    DatabaseReference databaseReference4 =  FirebaseDatabase.getInstance()
+                                                    .getReference("Users").child(dataSnapshot1.getKey());
+                                            databaseReference4.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    if(snapshot.exists()){
+                                                        UserModel model = snapshot.getValue(UserModel.class);
+                                                        String name=model.getPersonalInformationModel().getFirstname()+" "+model.getPersonalInformationModel().getLastname();
+                                                      // Toast.makeText(getContext(), ""+name, Toast.LENGTH_SHORT).show();
+                                                        if(!(name).equals(tag)){
+                                                            if(!user.getUid().equals(userKey)){
+                                                                if(!simpleTag.contains(tag)){
+                                                                    simpleTag.add(tag);
+                                                                    simpleAdapter= new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1,simpleTag);
+                                                                    listViewTag.setAdapter(simpleAdapter);
+                                                                     /*TagModel m = new TagModel();
+                                                                m.setTag(tag);
+                                                                mTag.add(m);
+
+                                                                adapterTag= new TagListAdapter(getContext(), mTag);
+                                                                 listViewTag.setAdapter(adapterTag);*/
+
+                                                                }
+
+
+
+
+                                                            }
+
+                                                        }else{
+                                                            //Toast.makeText(getContext(), "Never inside", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                            }
+                          /*
+                            if(snapshot.exists() && !tag.equals(nom.getText().toString()+" "+prenom.getText().toString())){
+                                TagModel model = new TagModel();
+                                model.setTag(tag);
+                                mTag.add(model);
+                                listViewTag.setHasFixedSize(true);
+                                listViewTag.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                               ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_dropdown_item_1line, autoCompleteListe);
+
+
+                                adapterTag= new TagListAdapter(getContext(), mTag);
+                                listViewTag.setAdapter(adapterTag);
+
+                                //Toast.makeText(AccountActivity.this, ""+model.getTag(), Toast.LENGTH_SHORT).show();
+                            }
+                        */
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+
+                    });
+
+
+
+
 
     }
     private void hideKeybaord(View v) {

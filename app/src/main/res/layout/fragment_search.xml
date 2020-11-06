@@ -17,28 +17,32 @@ tools:context=".SearchFragment">
             android:id="@+id/search_freelancer"
             android:layout_width="200dp"
             android:layout_weight="18"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/searchResult"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:hint="Search or click on list to find your tutor"
+            android:maxLines="2"/>
+        <ImageButton
+            android:id="@+id/searchResult"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
             android:layout_weight="2"
-            android:text="Search"
+            android:background="@drawable/search"
 
             />
 
 
     </LinearLayout>
-    <GridView
+    <View style="@style/Divider"/>
+
+    <ListView
+        android:id="@+id/list_tag"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/freelancer_gridview"
-        android:numColumns="2"
-        android:layout_margin="10dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+
         />
+    <View style="@style/Divider"/>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listDisplayUser"

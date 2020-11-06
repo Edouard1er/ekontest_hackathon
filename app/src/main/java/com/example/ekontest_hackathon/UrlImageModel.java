@@ -124,20 +124,7 @@ public class UrlImageModel {
 
                 return url[0];
             }else{
-               /* url[0] =imageSource[0];
-                Glide.with(imageUser)
-                        .load(url[0])
-                        //  .apply(new RequestOptions().override(120,90))
-                        .centerCrop()
-                        .into(imageUser);
-                if(url[0].length()==0){
 
-                   // Toast.makeText(context, " zero", Toast.LENGTH_SHORT).show();
-
-
-                }else{
-                   // Toast.makeText(context, "Not zero", Toast.LENGTH_SHORT).show();
-                }*/
                 constraintLayout.setVisibility(View.VISIBLE);
                 altTxtName.setText(freelancerModel.getPersonalInformationModel().getLastname().charAt(0)+""+freelancerModel.getPersonalInformationModel().getFirstname().charAt(0));
                 imageUser.setVisibility(View.GONE);
@@ -274,7 +261,7 @@ public class UrlImageModel {
                                 url[0] =String.valueOf(uri2);
                                 Glide.with(context)
                                         .load(uri2)
-                                        .centerCrop()
+                                        .fitCenter()
                                         .into(imageUser);
                      }
                         });
@@ -284,7 +271,7 @@ public class UrlImageModel {
                 Glide.with(imageUser)
                         .load(url[0])
                         //  .apply(new RequestOptions().override(120,90))
-                        .centerCrop()
+                        .fitCenter()
                         .into(imageUser);
               
 

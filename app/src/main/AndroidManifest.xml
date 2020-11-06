@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".TestHomeActivity"></activity>
+        <activity android:name=".SearchResultActivity"></activity>
+        <activity android:name=".TestHomeActivity" />
         <activity android:name=".CreateInvoice" />
         <activity android:name=".AvisDisplayAllActivity" />
         <activity android:name=".AboutActivity" />
@@ -40,8 +41,12 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
         <activity android:name=".PdfView" />
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <activity
             android:name=".ui.NavDrawerActivity"
