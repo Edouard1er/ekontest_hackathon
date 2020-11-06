@@ -131,7 +131,14 @@ public class SearchFragment extends Fragment {
         listViewTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String tag = listViewTag.getItemAtPosition(position).toString();
+                String val = listViewTag.getItemAtPosition(position).toString();
+                String [] word=val.split(" ");
+                String capitalizeEachWord="";
+                for(int i=0 ; i<word.length; i++){
+                    capitalizeEachWord = capitalizeEachWord+" "+word[i].substring(0, 1).toUpperCase() + word[i].substring(1).toLowerCase();
+
+                }
+                String tag = capitalizeEachWord;
                 //Toast.makeText(getContext(), ""+val, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(),SearchResultActivity.class);
                 intent.putExtra("tag", tag);

@@ -53,7 +53,7 @@ public class UrlImageModel {
                                 url[0] =String.valueOf(uri2);
                                 Glide.with(context)
                                         .load(uri2)
-                                        .fitCenter()
+                                        .centerCrop()
                                         .into(imageUser);
                                 //     .apply(new RequestOptions().override(200,90))
 
@@ -113,7 +113,7 @@ public class UrlImageModel {
                                 url[0] =String.valueOf(uri2);
                                 Glide.with(context)
                                         .load(uri2)
-                                        .fitCenter()
+                                        .centerCrop()
                                         .into(imageUser);
                                 //     .apply(new RequestOptions().override(200,90))
 
@@ -160,7 +160,7 @@ public class UrlImageModel {
                                 url[0] =String.valueOf(uri2);
                                 Glide.with(context)
                                         .load(uri2)
-                                        .fitCenter()
+                                        .centerCrop()
                                         .into(imageUser);
                                 //     .apply(new RequestOptions().override(200,90))
 
@@ -211,7 +211,7 @@ public class UrlImageModel {
                                 url[0] =String.valueOf(uri2);
                                 Glide.with(context)
                                         .load(uri2)
-                                        .fitCenter()
+                                        .centerCrop()
                                         .into(imageUser);
                                 //     .apply(new RequestOptions().override(200,90))
 
@@ -261,7 +261,7 @@ public class UrlImageModel {
                                 url[0] =String.valueOf(uri2);
                                 Glide.with(context)
                                         .load(uri2)
-                                        .fitCenter()
+                                        .centerCrop()
                                         .into(imageUser);
                      }
                         });
@@ -271,7 +271,7 @@ public class UrlImageModel {
                 Glide.with(imageUser)
                         .load(url[0])
                         //  .apply(new RequestOptions().override(120,90))
-                        .fitCenter()
+                        .centerCrop()
                         .into(imageUser);
               
 

@@ -24,7 +24,15 @@ public class TagModel {
     public TagModel(){
 
     }
-    public void InsertTag(final Context context,final String tag){
+    public void InsertTag(final Context context,final String val){
+        String [] word=val.split(" ");
+        String capitalizeEachWord="";
+        for(int i=0 ; i<word.length; i++){
+            capitalizeEachWord = capitalizeEachWord+" "+word[i].substring(0, 1).toUpperCase() + word[i].substring(1).toLowerCase();
+
+        }
+        final  String tag =capitalizeEachWord;
+
         if(!tag.contains(".") && !tag.contains("#") &&!tag.contains("$") && !tag.contains("[")&&!tag.contains("]")){
             databaseReference = FirebaseDatabase.getInstance().getReference("Tags").child(tag)
                     .child(cUser.getUid());
