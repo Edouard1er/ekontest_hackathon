@@ -28,10 +28,14 @@ public class TagModel {
         String [] word=val.split(" ");
         String capitalizeEachWord="";
         for(int i=0 ; i<word.length; i++){
-            capitalizeEachWord = capitalizeEachWord+" "+word[i].substring(0, 1).toUpperCase() + word[i].substring(1).toLowerCase();
+            try{
+                capitalizeEachWord = capitalizeEachWord+" "+word[i].substring(0, 1).toUpperCase() + word[i].substring(1).toLowerCase();
 
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
-        final  String tag =capitalizeEachWord;
+        final  String tag =capitalizeEachWord.trim();
 
         if(!tag.contains(".") && !tag.contains("#") &&!tag.contains("$") && !tag.contains("[")&&!tag.contains("]")){
             databaseReference = FirebaseDatabase.getInstance().getReference("Tags").child(tag)

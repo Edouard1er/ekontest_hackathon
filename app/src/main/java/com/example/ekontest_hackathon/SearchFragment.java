@@ -131,14 +131,19 @@ public class SearchFragment extends Fragment {
         listViewTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String val = listViewTag.getItemAtPosition(position).toString();
-                String [] word=val.split(" ");
+                String tag = listViewTag.getItemAtPosition(position).toString().trim();
+              /*  String [] word=val.split(" ");
                 String capitalizeEachWord="";
                 for(int i=0 ; i<word.length; i++){
-                    capitalizeEachWord = capitalizeEachWord+" "+word[i].substring(0, 1).toUpperCase() + word[i].substring(1).toLowerCase();
+                    try{
+                        capitalizeEachWord = capitalizeEachWord+" "+word[i].substring(0, 1).toUpperCase() + word[i].substring(1).toLowerCase();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
 
-                }
-                String tag = capitalizeEachWord;
+                }*/
+                //String tag = capitalizeEachWord;
+                //Toast.makeText(getContext(), ""+capitalizeEachWord, Toast.LENGTH_SHORT).show();
                 //Toast.makeText(getContext(), ""+val, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(),SearchResultActivity.class);
                 intent.putExtra("tag", tag);
@@ -381,10 +386,11 @@ public class SearchFragment extends Fragment {
                                                       // Toast.makeText(getContext(), ""+name, Toast.LENGTH_SHORT).show();
                                                         if(!(name).equals(tag)){
                                                             if(!user.getUid().equals(userKey)){
-                                                                if(!simpleTag.contains(tag)){
-                                                                    simpleTag.add(tag);
-                                                                    simpleAdapter= new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1,simpleTag);
-                                                                    listViewTag.setAdapter(simpleAdapter);
+                                                                try{
+                                                                    if(!simpleTag.contains(tag)){
+                                                                        simpleTag.add(tag);
+                                                                        simpleAdapter= new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1,simpleTag);
+                                                                        listViewTag.setAdapter(simpleAdapter);
                                                                      /*TagModel m = new TagModel();
                                                                 m.setTag(tag);
                                                                 mTag.add(m);
@@ -392,7 +398,11 @@ public class SearchFragment extends Fragment {
                                                                 adapterTag= new TagListAdapter(getContext(), mTag);
                                                                  listViewTag.setAdapter(adapterTag);*/
 
+                                                                    }
+                                                                }catch (Exception e){
+
                                                                 }
+
 
 
 
