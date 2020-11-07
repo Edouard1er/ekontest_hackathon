@@ -160,6 +160,7 @@ public class SearchFragment extends Fragment {
                 }else{
                     searchButton.setVisibility(View.GONE);
                 }
+                simpleAdapter.getFilter().filter(s);
             }
 
             @Override
@@ -169,6 +170,8 @@ public class SearchFragment extends Fragment {
                 }else{
                     searchButton.setVisibility(View.GONE);
                 }
+                simpleAdapter.getFilter().filter(s);
+
 
             }
 
@@ -179,6 +182,8 @@ public class SearchFragment extends Fragment {
                 }else{
                     searchButton.setVisibility(View.GONE);
                 }
+                simpleAdapter.getFilter().filter(s);
+
             }
         });
 

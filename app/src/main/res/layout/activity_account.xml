@@ -530,12 +530,12 @@
                     android:weightSum="20"
                     android:visibility="gone">
 
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/textTag"
                         android:layout_width="291dp"
                         android:layout_height="60dp"
                         android:layout_margin="5dp"
-                        android:autofillHints="Francais"
+                        android:hint="Nom de la matiere"
                         android:padding="5dp"
                         android:layout_weight="18"
                         android:background="@android:color/white" />

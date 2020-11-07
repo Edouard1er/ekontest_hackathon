@@ -15,6 +15,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -72,7 +74,7 @@ public class AccountActivity extends AppCompatActivity {
     private   Uri uri;
 
     //Tag part
-    EditText textTag;
+   AutoCompleteTextView textTag;
     TextView showSpaceTag, saveTag, hideSpaceTag, editPicture;
 
     LinearLayout tagLayoutFirst;
@@ -85,6 +87,11 @@ public class AccountActivity extends AppCompatActivity {
     List <TagModel> mTag= new ArrayList<>();
     TagListAdapter adapterTag;
 
+    ArrayList<String> autoCompleteListe ;
+    ArrayAdapter<String> autoCompleteAdapter;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +99,7 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account);
 
         //tag
-        textTag = (EditText) findViewById(R.id.textTag);
+        textTag = (AutoCompleteTextView) findViewById(R.id.textTag);
         tagLayoutFirst = (LinearLayout) findViewById(R.id.tag_layout_first);
         tagLayoutSecond = (LinearLayout) findViewById(R.id.tag_layout_second);
         showSpaceTag =(TextView) findViewById(R.id.addTag);
@@ -102,6 +109,8 @@ public class AccountActivity extends AppCompatActivity {
         editPicture.setVisibility(View.GONE);
 
         recyclerViewTag= findViewById(R.id.list_tag);
+        autoCompleteListe =new ArrayList<>();
+
 
 
 
@@ -151,6 +160,10 @@ public class AccountActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+        getListTagsAutoComplete();
+
+        autoCompleteAdapter  = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,autoCompleteListe);
+        textTag.setAdapter(autoCompleteAdapter);
     }
     private void addProfilePhoto() {
 
@@ -550,7 +563,24 @@ public class AccountActivity extends AppCompatActivity {
 
 
     }
+    public void getListTagsAutoComplete(){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tags");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                autoCompleteListe.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    autoCompleteListe.add(dataSnapshot.getKey());
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 
     @Override
     public void onBackPressed() {
