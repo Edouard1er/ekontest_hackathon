@@ -92,16 +92,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
 
 
 
-    /*    Handler handler = new Handler();
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(NavDrawerActivity.this, SwipeActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }, 1);*/
 
 
 

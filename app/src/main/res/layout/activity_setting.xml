@@ -24,22 +24,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="70dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingLeft="45dp"
+        android:paddingTop="70dp"
+        android:paddingRight="45dp">
 
         <TextView
             android:id="@+id/id_confidentialite_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:drawableLeft="@drawable/privacy"
+            android:drawablePadding="5dp"
             android:shadowColor="@color/couleur4"
             android:text="@string/privacySettings"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="15dp"
             android:background="@color/couleur4" />
@@ -49,13 +51,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:drawableLeft="@drawable/language"
+            android:drawablePadding="5dp"
             android:shadowColor="@color/couleur4"
             android:text="@string/strLanguage"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="15dp"
             android:background="@color/couleur4" />
@@ -65,13 +69,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:drawableLeft="@drawable/conditions"
+            android:drawablePadding="5dp"
             android:shadowColor="@color/couleur4"
             android:text="@string/strTermsOfUse"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="15dp"
             android:background="@color/couleur4" />
@@ -81,13 +87,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:drawableLeft="@drawable/user"
+            android:drawablePadding="5dp"
             android:shadowColor="@color/couleur4"
             android:text="@string/StrUserDataPolicy"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="15dp"
             android:background="@color/couleur4" />
@@ -97,13 +105,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:drawableLeft="@drawable/copyright"
+            android:drawablePadding="5dp"
             android:shadowColor="@color/couleur4"
             android:text="@string/strCopyright"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="15dp"
             android:background="@color/couleur4" />
