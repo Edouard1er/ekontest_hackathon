@@ -28,9 +28,11 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class UploadNormalDocument extends AppCompatActivity {
 
@@ -96,6 +98,7 @@ public class UploadNormalDocument extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void uploadPdf(View view) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
 

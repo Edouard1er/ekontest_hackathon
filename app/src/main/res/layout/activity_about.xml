@@ -35,7 +35,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/pwof_pam_01" />
+            app:srcCompat="@drawable/pwofpam22" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -51,6 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:fontFamily="@font/gotham"
+                    android:lineSpacingExtra="8sp"
                     android:text="PwofPam est une application mobile qui met en relation des eleves, des tuteurs et des professeurs. PwofPam est une application mobile qui met en relation des eleves, des tuteurs et des professeurs. PwofPam est une application mobile qui met en relation des eleves, des tuteurs et des professeurs."
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/black" />
@@ -59,7 +60,7 @@
                     android:id="@+id/version_about"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginBottom="15dp"
                     android:fontFamily="@font/gotham"
                     android:text="Version 1.0.0"
