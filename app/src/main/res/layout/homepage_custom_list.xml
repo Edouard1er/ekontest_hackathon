@@ -31,12 +31,11 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/id_period_time_homepage"
+                    android:id="@+id/id_subject_homepage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
-                    android:text="9:00AM - 12:30PM"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <TextView
@@ -46,17 +45,15 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
                     android:fontFamily="@font/calibri"
-                    android:text="Expo bus service"
                     android:textColor="#4b4b4b"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/id_subject_homepage"
+                    android:id="@+id/id_period_time_homepage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
-                    android:text="A/C Sleeper (2+2)"
-                    android:textColor="#8a8a8a" />
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -73,7 +70,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
                     android:gravity="end"
-                    android:text="$600.00"
                     android:textAlignment="textEnd"
                     android:textColor="#f37a21"
                     android:textSize="24sp"
@@ -87,7 +83,6 @@
                     android:layout_marginBottom="4dp"
                     android:fontFamily="@font/calibri"
                     android:gravity="end"
-                    android:text="3.30 Hour"
                     android:textAlignment="textEnd"
                     android:textColor="#b3b3b3" />
             </LinearLayout>
