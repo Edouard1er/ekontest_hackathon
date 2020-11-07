@@ -19,15 +19,12 @@
             android:visibility="gone">
 
             <de.hdodenhof.circleimageview.CircleImageView
-
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-
                 android:elevation="10dp"
                 android:scaleType="centerCrop"
                 android:src="@color/couleur3"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"

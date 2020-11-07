@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SearchResultActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarSearchFreelancer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/couleur4"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:theme="?attr/actionBarTheme"
+        app:subtitleTextColor="@color/couleur1"
+        app:title="@string/strSearchFreelancer"
+        app:titleTextColor="@color/couleur1" />
     <SearchView
         android:id="@+id/search_freelancer"
         android:layout_width="match_parent"

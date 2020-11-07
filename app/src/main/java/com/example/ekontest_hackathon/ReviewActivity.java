@@ -1,7 +1,6 @@
 package com.example.ekontest_hackathon;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
@@ -10,24 +9,16 @@ import android.net.Uri;
 import android.os.Bundle;
 
 
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aminography.choosephotohelper.ChoosePhotoHelper;
-import com.aminography.choosephotohelper.callback.ChoosePhotoCallback;
 import com.bumptech.glide.Glide;
 import com.example.ekontest_hackathon.ui.NavDrawerActivity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,13 +26,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.google.protobuf.StringValue;
 
 import java.io.File;
 import java.io.FileInputStream;

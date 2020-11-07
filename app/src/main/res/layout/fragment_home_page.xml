@@ -17,29 +17,101 @@
         android:scaleType="centerCrop"
         android:src="@drawable/l" />
 
-    <TextView
-        android:id="@+id/textViewHome"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:ems="2"
-        android:gravity="center_horizontal"
-        android:text="Search for new freelancer"
-        android:textColor="@color/couleur4"
-        android:textSize="18sp"
-        android:textStyle="bold|italic" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="-14dp"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/listview_home"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="@string/strTopFreelancer"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="Mathematiques"
+                android:textColor="@color/black" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/id_math_viewPager2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp" >
+
+            </androidx.viewpager2.widget.ViewPager2>
+
+            <TextView
+                android:id="@+id/textView38"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="Chimie"
+                android:textColor="@color/black" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/id_chimie_viewPager2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/textView40"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="Francais"
+                android:textColor="@color/black" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/id_francais_viewPager2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/textView42"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="C#"
+                android:textColor="@color/black" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/id_CSharp_viewPager2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/textView44"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="Java"
+                android:textColor="@color/black" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/id_java_viewPager2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

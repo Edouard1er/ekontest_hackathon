@@ -7,7 +7,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,7 @@ public class CoursModel implements Parcelable {
     private String idCours;
     private String cours;
     private int nEtudiant;
-    private AvisModel avisModel;
+    private com.example.ekontest_hackathon.AvisModel avisModel;
     DatabaseReference databaseReference;
     FirebaseUser cUser= FirebaseAuth.getInstance().getCurrentUser();
 

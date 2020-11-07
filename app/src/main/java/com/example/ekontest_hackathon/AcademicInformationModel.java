@@ -2,14 +2,12 @@ package com.example.ekontest_hackathon;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 
 import java.util.HashMap;
 import java.util.List;
@@ -177,7 +175,7 @@ public class AcademicInformationModel  implements Parcelable {
         this.endDate = in.readString();
 
     }
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+    public static final Creator CREATOR = new Creator() {
         public AcademicInformationModel createFromParcel(Parcel in) {
             return new AcademicInformationModel(in);
         }

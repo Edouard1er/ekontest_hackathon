@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginBottom="10dp"
-                    android:src="@drawable/messi" />
+                    />
 
 
             </LinearLayout>
@@ -263,11 +263,13 @@
                         android:id="@+id/id_rating_bar_freelancer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
+                        app:srb_borderColor="@color/bleu_fonce"
+                        app:srb_fillColor="@color/couleur4"
                         app:srb_numberOfStars="5"
-                        app:srb_stepSize="1.0"
-                        android:layout_gravity="center"/>
+                        app:srb_stepSize="1.0" />
 
 
                     <TextView
@@ -320,7 +322,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:numStars="5"
-                            android:rating="4" />
+                            android:rating="4"
+                            />
 
                         <TextView
                             android:id="@+id/avis_total"

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/altUserImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="uploadImage"
+                android:visibility="gone">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:elevation="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@color/couleur3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/altTxtName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:elevation="200dp"
+                    android:gravity="center"
+                    android:text="AD"
+                    android:textAlignment="center"
+                    android:textColor="@color/couleur1"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/altUserImage"
+                    app:layout_constraintTop_toTopOf="@+id/altUserImage" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_freelancer_home"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/username"
+                android:elevation="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/username" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/id_nom_freelancer_home"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:text="Nom"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lastMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:maxLines="1"
+                        android:padding="1dp"
+                        android:text="Nombre de cours:"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/id_nombre_cours_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5" />
+
+                    <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                        android:id="@+id/id_simpe_rating_bar_home"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="50dp"
+                        app:srb_borderColor="@color/couleur3"
+                        app:srb_fillColor="@color/couleur4"
+                        app:srb_gravity="left"
+                        app:srb_numberOfStars="5"
+                        app:srb_rating="4"
+                        app:srb_starSize="15dp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/statusOnline"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="20"
+                    android:padding="2dp"
+                    android:text="Nom"
+                    android:textSize="8dp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/statusOfline"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="20"
+                    android:padding="2dp"
+                    android:text="Nom"
+                    android:textSize="8dp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/UserId"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="id"
+                    android:visibility="gone"
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="20"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/id_page_now_home"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:text="1" />
+
+                    <TextView
+                        android:id="@+id/textView47"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/" />
+
+                    <TextView
+                        android:id="@+id/page_total_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@android:color/darker_gray" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

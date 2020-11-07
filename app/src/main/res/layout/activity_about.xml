@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="30dp"
-    tools:context=".AboutActivity">
+    tools:context=".ui.about_us.AboutActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarAbout"

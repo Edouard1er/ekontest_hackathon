@@ -5,7 +5,6 @@ import android.os.Parcelable;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -334,7 +333,7 @@ public class AvisModel  implements Parcelable  {
         this.datetime = in.readLong();
 
     }
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+    public static final Creator CREATOR = new Creator() {
         public AvisModel createFromParcel(Parcel in) {
             return new AvisModel(in);
         }

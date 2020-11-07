@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import java.util.List;
 
 public class AcademicInformationAdapter extends RecyclerView.Adapter <AcademicInformationAdapter.ViewHolder> {

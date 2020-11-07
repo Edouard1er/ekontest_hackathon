@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.ekontest_hackathon.Authentication;
 import com.example.ekontest_hackathon.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, Authentication.class);
+                Intent intent = new Intent(MainActivity.this, NavDrawerActivity.class);
                 startActivity(intent);
                 finish();
             }

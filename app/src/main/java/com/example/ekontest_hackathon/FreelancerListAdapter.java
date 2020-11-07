@@ -2,7 +2,6 @@ package com.example.ekontest_hackathon;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,18 +9,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.internal.$Gson$Preconditions;
-import com.iarcuschin.simpleratingbar.SimpleRatingBar;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

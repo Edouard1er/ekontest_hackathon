@@ -15,10 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity android:name=".SearchResultActivity"></activity>
-        <activity android:name=".TestHomeActivity" />
         <activity android:name=".CreateInvoice" />
         <activity android:name=".AvisDisplayAllActivity" />
-        <activity android:name=".AboutActivity" />
+        <activity android:name=".ui.about_us.AboutActivity" />
         <activity android:name=".HelpCommentActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".PaymentMethodActivity" />

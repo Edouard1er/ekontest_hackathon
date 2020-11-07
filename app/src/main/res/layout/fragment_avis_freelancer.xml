@@ -17,6 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
+        app:srb_borderColor="@color/bleu_fonce"
+        app:srb_fillColor="@color/couleur4"
         app:srb_numberOfStars="5"
         app:srb_stepSize="1.0" />
 

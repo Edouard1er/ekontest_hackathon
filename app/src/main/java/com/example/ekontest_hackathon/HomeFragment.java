@@ -4,10 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,15 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.ekontest_hackathon.CustomHomePageModel;
-import com.example.ekontest_hackathon.DocumentFragment;
-import com.example.ekontest_hackathon.FreelancerListFragment;
-import com.example.ekontest_hackathon.FreelancerListOnClickFragment;
-import com.example.ekontest_hackathon.HomePageFragment;
-import com.example.ekontest_hackathon.MessageFragment;
-import com.example.ekontest_hackathon.R;
-import com.example.ekontest_hackathon.RelationFragment;
-import com.example.ekontest_hackathon.SearchFragment;
 import com.example.ekontest_hackathon.ui.NavDrawerActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

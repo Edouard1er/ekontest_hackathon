@@ -23,4 +23,7 @@
     <string name="strUploadPaidDoc">Upload paid document</string>
     <string name="strUploadFreeDoc">Upload free document</string>
     <string name="strProfilePicture">Profile picture</string>
+    <string name="strTopFreelancer">Top of Freelancer</string>
+    <string name="strAcademicInfo">Academic Information</string>
+    <string name="strSearchFreelancer">Freelancer Search</string>
 </resources>

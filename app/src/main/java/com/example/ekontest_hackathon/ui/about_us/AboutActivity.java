@@ -1,4 +1,4 @@
-package com.example.ekontest_hackathon;
+package com.example.ekontest_hackathon.ui.about_us;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toolbar;
 
+import com.example.ekontest_hackathon.R;
 import com.example.ekontest_hackathon.ui.NavDrawerActivity;
 
 public class AboutActivity extends AppCompatActivity {
