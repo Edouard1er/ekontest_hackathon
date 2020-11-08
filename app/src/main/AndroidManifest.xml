@@ -14,7 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".LanguageSettingActivity"></activity>
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".CreateInvoice" />
         <activity android:name=".AvisDisplayAllActivity" />

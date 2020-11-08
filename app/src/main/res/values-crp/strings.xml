@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="open">ouvri</string>
+    <string name="close">femen</string>
+    <string name="strProfile">pwofil</string>
+    <string name="sendComment">voye komante</string>
+    <string name="AvisFreelancer">jounal Freelancer</string>
+    <string name="strAccount">Kont</string>
+    <string name="strAbout">apwopo</string>
+    <string name="strCreateInvoice">"kreye yon "</string>
+    <string name="strAllReview">tout jounal yo</string>
+    <string name="strMessage">Mesaj</string>
+    <string name="strFavorite">Favori</string>
+    <string name="strFreelancerInfo">Enfomasyon sou freelancer</string>
+    <string name="strHelp">ed ak komante</string>
+    <string name="strPictureUpload">telechaje imaj</string>
+    <string name="strPaymentMethod">metod peman</string>
+    <string name="strPersonnalInfo">enfomasyon pesonel</string>
+    <string name="strEditAccount">Modifye kont ou</string>
+    <string name="strSetting">pameramet</string>
+    <string name="strUploadPaidDoc">Telechaje doukimant ou peye</string>
+    <string name="strUploadFreeDoc">telechaje dokiman gratis</string>
+    <string name="strProfilePicture">foto pwofil</string>
+    <string name="strTopFreelancer">Top freelancer</string>
+    <string name="strAcademicInfo">Enfomasyon akademik</string>
+    <string name="strSearchFreelancer">cheche freelancer</string>
+    <string name="strLanguage">Lang</string>
+    <string name="strTermsOfUse">kondisyon itilizasyon</string>
+    <string name="strCopyright">dwa dote</string>
+    <string name="StrUserDataPolicy">Itilizate done politik</string>
+    <string name="hello_blank_fragment">hello blank fragment</string>
+    <string name="privacySettings">anviwonman vi prive</string>
+</resources>

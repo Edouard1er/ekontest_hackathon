@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PwòfPam</string>
+    <string name="open">Ouvrir</string>
+    <string name="close">Fermer</string>
+    <string name="strProfile">Profile</string>
+    <string name="sendComment">"Envoyer des commentaire "</string>
+    <string name="strAccount">compte</string>
+    <string name="AvisFreelancer">journal du freelaancer</string>
+    <string name="strAbout">A propos</string>
+    <string name="strMessage">message</string>
+    <string name="strFavorite">Favori</string>
+    <string name="strFreelancerInfo">information sur le freelancer</string>
+    <string name="strHelp">aide et commentaire</string>
+    <string name="strPictureUpload">telecharger une photo</string>
+    <string name="strPaymentMethod">methode de paiement</string>
+    <string name="strPersonnalInfo">personnel information</string>
+    <string name="strEditAccount">Modifier votre compte</string>
+    <string name="strSetting">paramettre</string>
+    <string name="strUploadPaidDoc">Telecharger</string>
+    <string name="strUploadFreeDoc">Telechager  document libre</string>
+    <string name="strProfilePicture">Photo de profile</string>
+    <string name="strTopFreelancer">Top  Freelancer</string>
+    <string name="strAcademicInfo">information academique</string>
+    <string name="strSearchFreelancer">Chercher des Freelancer</string>
+    <string name="privacySettings">Paramettre de confidentialite</string>
+    <string name="strLanguage">Langue</string>
+    <string name="strTermsOfUse">Terme d\'utilisation</string>
+    <string name="strCopyright">Tout droit etre reserve</string>
+    <string name="strCreateInvoice">Creer un compte</string>
+    <string name="strAllReview">Tous les journales</string>
+    <string name="hello_blank_fragment">hello blank fragment</string>
+    <string name="StrUserDataPolicy">Politique de donnee d\'utilisation</string>
+</resources>
