@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +17,9 @@ import java.util.List;
 
 class SwipeUserAdapter extends RecyclerView.Adapter<SwipeUserAdapter.UserViewHolder> {
     Context mContext;
-    List <SwipeUser> mUserList;
+    List <FreelancerModel> mUserList;
 
-    public SwipeUserAdapter(Context context, List<SwipeUser> userList) {
+    public SwipeUserAdapter(Context context, List<FreelancerModel> userList) {
         mContext = context;
         mUserList = userList;
     }
@@ -32,11 +33,16 @@ class SwipeUserAdapter extends RecyclerView.Adapter<SwipeUserAdapter.UserViewHol
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        SwipeUser user= mUserList.get(position);
-        holder.nomFreelancerHome.setText(user.getNomFreelancer());
-        holder.numberRatingBarHome.setRating(user.getRatingBarNumber());
-        holder.numberCoursHome.setText(user.getNombreCours());
-        holder.icon.setImageResource(user.getIcon());
+        FreelancerModel user= mUserList.get(position);
+        holder.nomFreelancerHome.setText(user.getPersonalInformationModel().getLastname()+" "+user.getPersonalInformationModel().getFirstname());
+        holder.numberRatingBarHome.setRating((float)user.getRate());
+        holder.numberCoursHome.setText("5");
+        final String[] url = new String[2];
+        url[0] = user.getPersonalInformationModel().getImagelink();
+        url[1] = user.getPersonalInformationModel().getImagename();
+        UrlImageModel urlImageModel = new UrlImageModel();
+        urlImageModel.getUrlImage(url, holder.icon, mContext,holder.altImage,holder.altTextName,user);
+        //holder.icon.setImageResource(user.getIcon());
         holder.page_total.setText(""+mUserList.size());
         int page_now=position+1;
         holder.page_now.setText(""+page_now);
@@ -50,6 +56,8 @@ class SwipeUserAdapter extends RecyclerView.Adapter<SwipeUserAdapter.UserViewHol
         ImageView icon;
         TextView nomFreelancerHome, numberCoursHome, page_now, page_total;
         SimpleRatingBar numberRatingBarHome;
+        LinearLayout altImage ;
+        TextView altTextName;
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             icon = itemView.findViewById(R.id.image_freelancer_home);
@@ -58,6 +66,8 @@ class SwipeUserAdapter extends RecyclerView.Adapter<SwipeUserAdapter.UserViewHol
             numberRatingBarHome=itemView.findViewById(R.id.id_simpe_rating_bar_home);
             page_now=itemView.findViewById(R.id.id_page_now_home);
             page_total=itemView.findViewById(R.id.page_total_home);
+             altImage = (LinearLayout) itemView.findViewById(R.id.altImage);
+            altTextName= (TextView) itemView.findViewById(R.id.altTextName);
 
         }
     }

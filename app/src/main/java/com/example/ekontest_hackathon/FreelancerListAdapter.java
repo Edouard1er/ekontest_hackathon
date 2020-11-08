@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +102,7 @@ public class FreelancerListAdapter extends BaseAdapter implements SearchView.OnQ
         try{
             String firstname=model.getPersonalInformationModel().getFirstname().toLowerCase();
             firstname = firstname.substring(0,1).toUpperCase() + firstname.substring(1);
+            //Toast.makeText(context, ""+model.getRate(), Toast.LENGTH_SHORT).show();
 
             String lastname=model.getPersonalInformationModel().getLastname().toLowerCase();
             lastname = lastname.substring(0,1).toUpperCase() + lastname.substring(1);

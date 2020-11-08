@@ -23,6 +23,7 @@ import java.util.List;
 
 public class FreelancerModel extends StudentModel implements Parcelable {
     private String id;
+    private double rate;
     private PersonalInformationModel personalInformationModel;
     private AcademicInformationModel academicInformationModel;
     private AvisModel avisModel;
@@ -185,6 +186,14 @@ public class FreelancerModel extends StudentModel implements Parcelable {
         this.id = id;
     }
 
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
     @Override
     public PersonalInformationModel getPersonalInformationModel() {
         return personalInformationModel;
@@ -203,6 +212,7 @@ public class FreelancerModel extends StudentModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
+        dest.writeDouble(this.rate);
         dest.writeParcelable(this.personalInformationModel,flags);
         dest.writeParcelable(this.academicInformationModel,flags);
        // dest.writeParcelable(this.profilModel,flags);
@@ -212,6 +222,7 @@ public class FreelancerModel extends StudentModel implements Parcelable {
     // example constructor that takes a Parcel and gives you an object populated with it's values
     private FreelancerModel(Parcel in) {
         this.id= in.readString();
+        this.rate=in.readDouble();
         this.personalInformationModel = in.readParcelable(getClass().getClassLoader());
         this.academicInformationModel = in.readParcelable(getClass().getClassLoader());
         //this.profilModel = in.readParcelable(getClass().getClassLoader());

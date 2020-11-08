@@ -34,6 +34,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,9 +44,13 @@ public class HomePageFragment extends Fragment {
     ListView mListView;
     CustomHomePageAdapter mAdapter;
     ArrayList mArrayList;
-    ViewPager2 mathViewPager2,  chimieViewPager2, francaisViewPager2, cSharpViewPager2, javaViewPager2;
+    ViewPager2 mathViewPager2,  topViewPager, francaisViewPager2, cSharpViewPager2, javaViewPager2;
     List<SwipeUser> mUserListMath,mUserListChimie, mUserListFrancais, mUserListCSharp, mUserListJava;
-    SwipeUserAdapter mSwipeUserAdapterMath, mSwipeUserAdapterChime, mSwipeUserAdapterFrancais, mSwipeUserAdapterCSharp, mSwipeUserAdapterJava;
+    SwipeUserAdapter mSwipeUserAdapterMath, mSwipeFreelancerAdapter, mSwipeUserAdapterFrancais, mSwipeUserAdapterCSharp, mSwipeUserAdapterJava;
+
+
+    SwipeUserAdapter adapter;
+    List<FreelancerModel> mFreelancers = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,9 +67,9 @@ public class HomePageFragment extends Fragment {
         mUserListMath.add(new SwipeUser("Edouard Chevenslove", "10",2,R.drawable.person));
         mUserListMath.add(new SwipeUser("Osson Sergio", "5",4,R.drawable.luka2));
         mUserListMath.add(new SwipeUser("Dorceus Amos", "5",4,R.drawable.messi));
-        mSwipeUserAdapterMath = new SwipeUserAdapter(getContext(),mUserListMath);
+        //mSwipeUserAdapterMath = new SwipeUserAdapter(getContext(),mUserListMath);
         mathViewPager2.setAdapter(mSwipeUserAdapterMath);
-        //Chimie
+       /* //Chimie
         chimieViewPager2=view.findViewById(R.id.id_chimie_viewPager2);
         mUserListChimie.add(new SwipeUser("Dorceus Amos", "5",4,R.drawable.messi));
         mUserListChimie.add(new SwipeUser("Dorceus Amos", "5",4,R.drawable.messi));
@@ -91,99 +96,87 @@ public class HomePageFragment extends Fragment {
         mUserListJava.add(new SwipeUser("Dorceus Amos", "5",4,R.drawable.messi));
         mUserListJava.add(new SwipeUser("Dorceus Amos", "5",4,R.drawable.messi));
         mSwipeUserAdapterJava = new SwipeUserAdapter(getContext(),mUserListJava);
-        javaViewPager2.setAdapter(mSwipeUserAdapterJava);
+        javaViewPager2.setAdapter(mSwipeUserAdapterJava);*/
 
-        // mListView = view.findViewById(R.id.listview_home);
-        mArrayList = new ArrayList<CustomHomePageModel>();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy", Locale.getDefault());
+        setDisplayUsers(view);
+        return view;
+    }
 
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseDatabase.getInstance().getReference("Invoice").addValueEventListener(new ValueEventListener() {
+    private void setDisplayUsers(View v){
+        topViewPager=v.findViewById(R.id.id_math_viewPager2);
+        //recyclerView.setHasFixedSize(true);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference user_ = FirebaseDatabase.getInstance().getReference("Users");
+        user_.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                        final InvoiceModel inv = dataSnapshot.getValue(InvoiceModel.class);
-                        if(inv.getSenderId().equals(user.getUid())) {
-                            final int montant = inv.getAmount();
-                            final String name = inv.getFreelanceName();
-                            String date = inv.getDate();
-                            int duree = inv.getDuration();
-                            final int rate = montant / duree;
-                            String dateToShow = "";
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    FreelancerModel model = dataSnapshot.getValue(FreelancerModel.class);
+                    System.out.println(snapshot);
+                    try {
+                        if(model.getPersonalInformationModel().getType().equals("Freelancer")){
+                            mFreelancers.add(model);
+                            adapter.notifyDataSetChanged();
+                        }
+                        if(model.getPersonalInformationModel().getType().equals("Professor")){
+                            mFreelancers.add(model);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                adapter= new SwipeUserAdapter(getContext(), mFreelancers);
+                topViewPager.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
-                            Calendar cal = Calendar.getInstance();
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
+        /*DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("myFreelancers");
+        // Query query = freelancerRef.equalTo("personalInformationModel").equalTo("Student","type");
+        freelancerRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mFreelancers.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    System.out.println(dataSnapshot);
+                    HashMap<String, String> obj = (HashMap<String, String>) snapshot.getValue();
+                    System.out.println("id user__: " + obj);
+                    DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child( dataSnapshot.getKey());
+                    user.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            FreelancerModel model = snapshot.getValue(FreelancerModel.class);
+                            System.out.println(snapshot);
                             try {
-                                cal.setTime(sdf.parse(date));
-                            } catch (ParseException e) {
+                                if(model.getPersonalInformationModel().getType().equals("Freelancer")){
+                                    mFreelancers.add(model);
+                                    adapter.notifyDataSetChanged();
+                                }
+                                if(model.getPersonalInformationModel().getType().equals("Professor")){
+                                    mFreelancers.add(model);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }catch (Exception e){
                                 e.printStackTrace();
                             }
-                            dateToShow += sdf.format(cal.getTime());
-                            cal.add(Calendar.DAY_OF_YEAR, duree);
-                            dateToShow += " - " + sdf.format(cal.getTime());
-
-                            System.out.println("Current time => " + sdf.format(cal.getTime()));
-                            String idReceiver = inv.getReceiverId();
-                            final String finalDateToShow = dateToShow;
-                            FirebaseDatabase.getInstance().getReference("Users").child(idReceiver).child("personalInformationModel").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    PersonalInformationModel infMod = snapshot.getValue(PersonalInformationModel.class);
-                                    String nom = infMod.getFirstname() + " " + infMod.getLastname();
-                                    if(inv.getStatus().equals("Paid")) {
-                                        mArrayList.add(new CustomHomePageModel(finalDateToShow,nom,
-                                                name,montant +" HTG"  ,"HTG " + rate +" /Day"));
-                                    } else {
-                                        mArrayList.add(new CustomHomePageModel("-",nom,
-                                                name,montant +" HTG"  ,"HTG " + "-" +" /Day"));
-                                    }
-
-         //                           mAdapter.notifyDataSetChanged();
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
                         }
-                    }
-                    if(getActivity() != null) {
-                            mAdapter = new CustomHomePageAdapter(getContext(),R.layout.homepage_custom_list, mArrayList);
-           //                 mListView.setAdapter(mAdapter);
-                    }
-                } else {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
                 }
+                adapter= new SwipeUserAdapter(getContext(), mFreelancers);
+                topViewPager.setAdapter(adapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
-
-
-//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-//                "Math","HTG 600.50","HTG 70.24 /hour"));
-//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-//                "Math","HTG 600.50","HTG 70.24 /hour"));
-//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-//                "Math","HTG 600.50","HTG 70.24 /hour"));
-//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-//                "Math","HTG 600.50","HTG 70.24 /hour"));
-//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-//                "Math","HTG 600.50","HTG 70.24 /hour"));
-//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-//                "Math","HTG 600.50","HTG 70.24 /hour"));
-//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-//                "Math","HTG 600.50","HTG 70.24 /hour"));
-//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-//                "Math","HTG 600.50","HTG 70.24 /hour"));
-//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-//                "Math","HTG 600.50","HTG 70.24 /hour"));
-//        mArrayList.add(new CustomHomePageModel("09/09/2020 - 10/10/2020","Edouard Chevenslove",
-//                "Math","HTG 600.50","HTG 70.24 /hour"));
-        return view;
+        });*/
     }
 }

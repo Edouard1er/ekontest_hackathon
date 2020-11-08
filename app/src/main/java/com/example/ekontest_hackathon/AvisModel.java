@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -79,10 +80,11 @@ public class AvisModel  implements Parcelable  {
     }
 
 
-    public void setInfoAvis(String idFreelancer,final RatingBar bar){
+    public void setInfoAvis(final String idFreelancer, final RatingBar bar){
        /* AvisModel avisModel = new AvisModel();
         int [] data = avisModel.getAvisData(results.getString("idFreelancer"));
         Toast.makeText(activity, "Voyons si les donnees sont recuperees: "+data[1], Toast.LENGTH_SHORT).show();*/
+       //InsertAvisForCourse("Chimie","great", 5);
         final int[] tStars = new int[1];
         final int[] tRate = new int [1];
         tStars[0]=0;
@@ -102,6 +104,7 @@ public class AvisModel  implements Parcelable  {
                 }
                 if(tRate[0]>0){
                     bar.setRating((float) tStars[0]/tRate[0]);
+                    saveRateFreelancer(idFreelancer,(double) tStars[0]/tRate[0]);
                     // mRatingBar.setNumberOfStars(tStars[0]/tRate[0]);
                 }else{
                     bar.setRating(0);
@@ -110,6 +113,18 @@ public class AvisModel  implements Parcelable  {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void saveRateFreelancer(String idUser,double rate){
+
+        DatabaseReference freelancerRef= FirebaseDatabase.getInstance().getReference("Users")
+                .child(idUser).child("rate");
+        freelancerRef.setValue(rate).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
 
             }
         });

@@ -97,6 +97,8 @@ public class UrlImageModel {
 
 
     }
+    //Userswipe get url
+
     public String getUrlImage(String[] imageSource, final ImageView imageUser,
                               final Context context, final ConstraintLayout constraintLayout,
                               final TextView altTxtName, UserModel freelancerModel){
