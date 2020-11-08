@@ -58,7 +58,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="10sp"
                 android:paddingLeft="20sp"
-                android:text="Academic informations"
+                android:text="@string/strAcademicInfo"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

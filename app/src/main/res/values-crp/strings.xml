@@ -30,4 +30,11 @@
     <string name="StrUserDataPolicy">Itilizate done politik</string>
     <string name="hello_blank_fragment">hello blank fragment</string>
     <string name="privacySettings">anviwonman vi prive</string>
+    <string name="AboutUs">A pwopo de Pwofpam</string>
+    <string name="Edit">Modifye</string>
+    <string name="userName">Non itilizate a</string>
+    <string name="Logout">Dekonekte</string>
+    <string name="AccountType">Tip kont</string>
+    <string name="Rules1">elev yo gen yon akse limite sou platfom lan.yo ka selman chache ak peye dokiman pwofese yo</string>
+    <string name="Rules2">yon Freelancer ka yon elev,yo ka peye li tou poul ede yon elev lan yon sije patikilye</string>
 </resources>

@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="10sp"
                 android:paddingLeft="20sp"
-                android:text="Account Type"
+                android:text="@string/AccountType"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10sp"
                 android:paddingLeft="35sp"
-                android:text="Student has limited access to the platform. They can only check for freelancer and load paid document from professor."
+                android:text="@string/Rules1"
                 android:textStyle="italic"
                 android:textSize="10dp"/>
 
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10sp"
                 android:paddingLeft="35sp"
-                android:text=" Freelancer can be a student and also be paid to help a student in a particular subject."
+                android:text="@string/Rules2"
                 android:textStyle="italic"
                 android:textSize="10dp"/>
 
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10sp"
                 android:paddingLeft="35sp"
-                android:text="A professor has the access of both a student and a freelancer in addition of being able to load paid documents on the platform."
+                android:text="@string/Rules3"
                 android:textStyle="italic"
                 android:textSize="10dp"/>
 

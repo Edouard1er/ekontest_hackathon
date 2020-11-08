@@ -31,4 +31,12 @@
     <string name="strAllReview">Tous les journales</string>
     <string name="hello_blank_fragment">hello blank fragment</string>
     <string name="StrUserDataPolicy">Politique de donnee d\'utilisation</string>
+    <string name="Edit">Modifier</string>
+    <string name="AboutUs">a Propos de Profpam</string>
+    <string name="userName">Nom d\'utilisateur</string>
+    <string name="Logout">Deconnecter</string>
+    <string name="AccountType">Type de compte</string>
+    <string name="Rules1">Les eleve ont un acces limite sur le platforme. ils peuvent chercher et payer les documents d\'un professeur</string>
+    <string name="Rules2">un Freelancer peut etre un etudiant et peut etre aussi peye pour aider un etudiant dans un sujet particulier</string>
+    <string name="Rules3">Un professeur a acces aux etudiants et aux Freelancer, il peut aussi charger des documents payant sur le platforme</string>
 </resources>

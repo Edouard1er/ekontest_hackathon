@@ -31,4 +31,13 @@
     <string name="StrUserDataPolicy">User data policy</string>
     <string name="strTermsOfUse">Terms of use</string>
     <string name="strCopyright">Copyright</string>
+    <string name="Edit">Edit</string>
+    <string name="AboutUs">About us</string>
+    <string name="userName">UserName</string>
+    <string name="Logout">Logout</string>
+    <string name="AccountType"> Account Type</string>
+    <string name="Rules1">Student has limited access to the platform. They can only check for freelancer and load paid document from professor</string>
+    <string name="Rules2">Freelancer can be a student and also be paid to help a student in a particular subject.</string>
+    <string name="Rules3">A professor has the access of both a student and a freelancer in addition of being able to load paid documents on the platform.</string>
+
 </resources>
