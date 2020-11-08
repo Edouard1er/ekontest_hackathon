@@ -26,4 +26,9 @@
     <string name="strTopFreelancer">Top Tutor</string>
     <string name="strAcademicInfo">Academic Information</string>
     <string name="strSearchFreelancer">Freelancer Search</string>
+    <string name="privacySettings">Privacy settings</string>
+    <string name="strLanguage">Language</string>
+    <string name="StrUserDataPolicy">User data policy</string>
+    <string name="strTermsOfUse">Terms of use</string>
+    <string name="strCopyright">Copyright</string>
 </resources>
