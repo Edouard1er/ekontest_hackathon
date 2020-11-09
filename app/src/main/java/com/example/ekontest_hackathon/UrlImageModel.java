@@ -85,11 +85,17 @@ public class UrlImageModel {
                 return url[0];
             }
         }catch (Exception e){
-            constraintLayout.setVisibility(View.VISIBLE);
-          altTxtName.setText(freelancerModel.getPersonalInformationModel().getLastname().charAt(0)+""+freelancerModel.getPersonalInformationModel().getFirstname().charAt(0));
-            imageUser.setVisibility(View.GONE);
-            Toast.makeText(context, " zero", Toast.LENGTH_SHORT).show();
-            return url[0];
+            try{
+                constraintLayout.setVisibility(View.VISIBLE);
+                altTxtName.setText(freelancerModel.getPersonalInformationModel().getLastname().charAt(0)+""+freelancerModel.getPersonalInformationModel().getFirstname().charAt(0));
+                imageUser.setVisibility(View.GONE);
+                Toast.makeText(context, " zero", Toast.LENGTH_SHORT).show();
+                return url[0];
+            }catch (Exception e1){
+                return url[0];
+
+            }
+
         }
 
 
